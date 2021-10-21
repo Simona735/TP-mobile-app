@@ -9,6 +9,10 @@ class BottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
       routes: const [
+        MailboxRouter(),
+        SettingsRouter(),
+        ProfilePageRouter(),
+        AddMailboxRouter()
       ],
     );
   }
