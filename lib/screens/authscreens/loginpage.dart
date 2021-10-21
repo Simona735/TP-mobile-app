@@ -39,6 +39,10 @@ class LoginPage extends StatelessWidget {
             margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
             child: ElevatedButton(
                 onPressed: () {
+                  Navigator.pop(context);
+                  // Navigator.push(
+                  //     context, FadeRoute(page: const ListOfMailboxes()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage()));
                 },
                 child: const Text("Prihlásenie")
             ),
@@ -47,6 +51,9 @@ class LoginPage extends StatelessWidget {
             margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
             child: ElevatedButton(
               onPressed: () {
+                // Navigator.pop(context);
+                Navigator.push(
+                    context, FadeRoute(page: const RegistrationPage()));
               },
               child: const Text("Registrácia"),
               style: ElevatedButton.styleFrom(primary: Colors.red),
