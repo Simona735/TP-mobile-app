@@ -23,6 +23,34 @@ class BottomBar extends StatelessWidget {
         currentIndex: tabsRouter.activeIndex,
         onTap: tabsRouter.setActiveIndex,
         items: [
+          SalomonBottomBarItem(
+            icon: const Icon(
+              Icons.mail,
+              size: 30,
+            ),
+            title: const Text('Schránky'),
+          ),
+          SalomonBottomBarItem(
+            icon: const Icon(
+              Icons.settings_outlined,
+              size: 30,
+            ),
+            title: const Text('Nastavenia'),
+          ),
+          SalomonBottomBarItem(
+            icon: const Icon(
+              Icons.person,
+              size: 30,
+            ),
+            title: const Text('Profil'),
+          ),
+          SalomonBottomBarItem(
+            icon: const Icon(
+              Icons.add,
+              size: 30,
+            ),
+            title: const Text('Pridať'),
+          ),
         ],
       ),
     );
