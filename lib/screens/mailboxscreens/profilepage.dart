@@ -9,6 +9,10 @@ class ProfilePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Profil"),
       ),
+      body: Column(
+        children: [
+        ],
+      ),
     );
   }
 }
