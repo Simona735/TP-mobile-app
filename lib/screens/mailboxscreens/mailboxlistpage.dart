@@ -60,6 +60,15 @@ class ItemMailbox extends StatelessWidget {
             ),
           ],
         ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: const [
+            Text(
+              "Schránka",
+            ),
+          ],
+        ),
       ),
     );
   }
