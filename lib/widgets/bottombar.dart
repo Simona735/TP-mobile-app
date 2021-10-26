@@ -15,6 +15,23 @@ class BottomBar extends StatelessWidget {
         ProfilePageRouter(),
         AddMailboxRouter()
       ],
+      builder: (context, child, animation) {
+        return Scaffold(
+          body: ScaleTransition(
+            scale: Tween<double>(
+              begin: 0.0,
+              end: 1.0,
+            ).animate(
+              CurvedAnimation(
+                parent: animation,
+                // curve: Curves.easeInQuint,
+                curve: Curves.slowMiddle,
+              ),
+            ),
+            child: child,
+          ),
+        );
+      },
       bottomNavigationBuilder: (_, tabsRouter) => SalomonBottomBar(
         margin: const EdgeInsets.symmetric(
           horizontal: 20,
