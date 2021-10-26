@@ -14,6 +14,16 @@ class ListOfMailboxes extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+              child: GridView.builder(
+                padding: const EdgeInsets.all(10),
+                itemCount: 20,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                ),
+                itemBuilder: (context, index) => Container(),
+              ),
             ),
           )
         ],
@@ -21,3 +31,4 @@ class ListOfMailboxes extends StatelessWidget {
     );
   }
 }
+
