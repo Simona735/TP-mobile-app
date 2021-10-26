@@ -20,6 +20,18 @@ class ProfilePage extends StatelessWidget {
               ),
             ],
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text(
+                "Meno",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 32
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
