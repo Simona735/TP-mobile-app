@@ -14,6 +14,12 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: AppBar(
         title: const Text("Nastavenia"),
       ),
+      body: Column(
+        children: [
+          Row(
+          ),
+        ],
+      ),
     );
   }
 }
