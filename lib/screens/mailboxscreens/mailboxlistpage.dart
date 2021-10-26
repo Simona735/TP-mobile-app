@@ -9,6 +9,15 @@ class ListOfMailboxes extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Zoznam schránok"),
       ),
+      body: Column(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
