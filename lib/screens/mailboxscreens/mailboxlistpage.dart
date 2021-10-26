@@ -67,6 +67,10 @@ class ItemMailbox extends StatelessWidget {
             Text(
               "Schránka",
             ),
+            Icon(
+              Icons.bolt,
+              color: Colors.green,
+            ),
           ],
         ),
       ),
