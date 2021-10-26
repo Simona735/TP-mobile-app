@@ -42,6 +42,15 @@ class ProfilePage extends StatelessWidget {
                   child: const Text("Zmeniť heslo"),
                 ),
               ),
+              Container(
+                margin: const EdgeInsets.only(left: 5, right: 5),
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {  },
+                  child: const Text("Odhlásiť sa"),
+                  style: ElevatedButton.styleFrom(primary: Colors.red),
+                ),
+              )
             ],
           )
         ],
