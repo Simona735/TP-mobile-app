@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:developer' as developer;
 
 class ListOfMailboxes extends StatelessWidget {
   const ListOfMailboxes({Key? key}) : super(key: key);
@@ -22,12 +23,29 @@ class ListOfMailboxes extends StatelessWidget {
                   mainAxisSpacing: 10,
                   crossAxisSpacing: 10,
                 ),
-                itemBuilder: (context, index) => Container(),
+                itemBuilder: (context, index) => ItemMailbox(
+                  press: () => developer.log(
+                    "Pressed: " + index.toString(),
+                  ),
+                ),
               ),
             ),
           )
         ],
       ),
+    );
+  }
+}
+
+class ItemMailbox extends StatelessWidget {
+  final VoidCallback press;
+
+  const ItemMailbox({Key? key, required this.press}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: press,
     );
   }
 }
