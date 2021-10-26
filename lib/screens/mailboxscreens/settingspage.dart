@@ -17,6 +17,10 @@ class _SettingsPageState extends State<SettingsPage> {
       body: Column(
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Text("Biometrické prihlásenie"),
+            ],
           ),
         ],
       ),
