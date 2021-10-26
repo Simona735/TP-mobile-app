@@ -8,9 +8,9 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  bool isSwitched = false;
   @override
   Widget build(BuildContext context) {
-    bool isSwitched = false;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Nastavenia"),
