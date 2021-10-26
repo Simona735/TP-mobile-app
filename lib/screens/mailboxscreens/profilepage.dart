@@ -11,6 +11,15 @@ class ProfilePage extends StatelessWidget {
       ),
       body: Column(
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Icon(
+                Icons.account_circle,
+                size: 200,
+              ),
+            ],
+          ),
         ],
       ),
     );
