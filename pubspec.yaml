@@ -31,6 +31,9 @@ dependencies:
         sdk: flutter
     auto_route: ^2.3.2
     salomon_bottom_bar: ^3.1.0
+    firebase_core: ^1.8.0
+    firebase_auth: ^3.1.4
+    firebase_database: ^8.0.1
 
 
     # The following adds the Cupertino Icons font to your application.

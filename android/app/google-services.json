@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "321143401720",
+    "firebase_url": "https://timovy-projekt-97069-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "timovy-projekt-97069",
+    "storage_bucket": "timovy-projekt-97069.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:321143401720:android:fa0032bf185c0a9e959f0d",
+        "android_client_info": {
+          "package_name": "com.example.tp_mobile_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "321143401720-1gs21puchhjrebtqjltq40q9b7lce7ib.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbfdrr3WCov2F5IksKAgwZjmp_utN_Otc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "321143401720-1gs21puchhjrebtqjltq40q9b7lce7ib.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "321143401720-9f3kkop2avajv2t0m80vvt4i9j18c832.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tpMobileApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
