@@ -16,7 +16,22 @@ class Authentication {
 
   Future<void> init() async {
     await Firebase.initializeApp();
+  }
 
+  void verifyEmail(String email) async {
+
+  }
+
+  void signInWithEmailAndPassword(String email, String password) async {
+
+  }
+
+  void registerAccount(String name, String surname, String email, String password) async {
+
+  }
+
+  void signOut() {
+    FirebaseAuth.instance.signOut();
   }
 
 
