@@ -21,7 +21,7 @@ class AppRouter extends _i2.RootStackRouter {
   final Map<String, _i2.PageFactory> pagesMap = {
     BottomBarRoute.name: (routeData) {
       return _i2.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i1.BottomBar());
+          routeData: routeData, child: _i1.BottomBar());
     },
     MailboxRouter.name: (routeData) {
       return _i2.MaterialPageX<dynamic>(
