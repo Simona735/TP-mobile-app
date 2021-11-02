@@ -12,9 +12,6 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Nastavenia"),
-      ),
       body: Column(
         children: [
           Row(
