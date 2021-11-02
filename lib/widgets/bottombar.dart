@@ -34,6 +34,9 @@ class BottomBar extends StatelessWidget {
           ),
         );
       },
+      appBarBuilder: (_, tabsRouter) => AppBar(
+        title: Text(nameOfTabsInAppBar[tabsRouter.activeIndex]),
+      ),
       bottomNavigationBuilder: (_, tabsRouter) => SalomonBottomBar(
         margin: const EdgeInsets.symmetric(
           horizontal: 20,
