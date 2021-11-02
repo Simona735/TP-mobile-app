@@ -4,7 +4,9 @@ import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:tp_mobile_app/routes/router.gr.dart';
 
 class BottomBar extends StatelessWidget {
-  const BottomBar({Key? key}) : super(key: key);
+  BottomBar({Key? key}) : super(key: key);
+
+  final nameOfTabsInAppBar = ['Zoznam schránok', 'Nastavenia', 'Profil', 'Pridanie schránky'];
 
   @override
   Widget build(BuildContext context) {
