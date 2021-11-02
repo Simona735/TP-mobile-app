@@ -19,16 +19,10 @@ class BottomBar extends StatelessWidget {
       ],
       builder: (context, child, animation) {
         return Scaffold(
-          body: ScaleTransition(
-            scale: Tween<double>(
-              begin: 0.0,
-              end: 1.0,
-            ).animate(
-              CurvedAnimation(
-                parent: animation,
-                // curve: Curves.easeInQuint,
-                curve: Curves.slowMiddle,
-              ),
+          body: FadeTransition(
+            opacity: CurvedAnimation(
+              parent: animation,
+              curve: Curves.slowMiddle,
             ),
             child: child,
           ),
