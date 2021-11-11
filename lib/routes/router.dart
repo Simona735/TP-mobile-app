@@ -1,5 +1,6 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:tp_mobile_app/screens/mailboxdetail.dart';
 import 'package:tp_mobile_app/screens/mailboxscreens/addmailbox.dart';
 import 'package:tp_mobile_app/screens/mailboxscreens/mailboxlistpage.dart';
 import 'package:tp_mobile_app/screens/mailboxscreens/profilepage.dart';
@@ -18,6 +19,7 @@ import 'package:tp_mobile_app/widgets/bottombar.dart';
           page: EmptyRouterPage,
           children: [
             AutoRoute(path: '', page: ListOfMailboxes),
+            AutoRoute(path: ':mailboxId', page: MailboxDetail),
           ],
         ),
         AutoRoute(
