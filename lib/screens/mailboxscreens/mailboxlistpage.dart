@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:tp_mobile_app/routes/router.gr.dart';
 import 'dart:developer' as developer;
 
 class ListOfMailboxes extends StatelessWidget {
@@ -20,10 +22,10 @@ class ListOfMailboxes extends StatelessWidget {
                   mainAxisSpacing: 10,
                   crossAxisSpacing: 10,
                 ),
-                itemBuilder: (context, index) => ItemMailbox(
-                  press: () => developer.log(
-                    "Pressed: " + index.toString(),
-                  ),
+                itemBuilder: (_, index) => ItemMailbox(
+                  press: () => {
+                    AutoRouter.of(context).push(MailboxDetailRoute(mailboxId: index))
+                  }
                 ),
               ),
             ),
