@@ -37,7 +37,10 @@ class BottomBar extends StatelessWidget {
           vertical: 10,
         ),
         currentIndex: tabsRouter.activeIndex,
-        onTap: tabsRouter.setActiveIndex,
+        onTap: (index) {
+          tabsRouter.stackRouterOfIndex(index)?.popUntilRoot();
+          tabsRouter.setActiveIndex(index);
+        },
         items: [
           SalomonBottomBarItem(
             icon: const Icon(
