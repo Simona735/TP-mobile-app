@@ -57,6 +57,24 @@ class _MailboxDetailState extends State<MailboxDetail> {
             ),
           ],
         ),
+        Column(
+          children: [
+            Slider(
+              value: limit,
+              onChanged: (value) {
+                setState(() {
+                  limit = value;
+                });
+              },
+              min: 1.0,
+              max: 10.0,
+              activeColor: Colors.yellow,
+              inactiveColor: Colors.yellow[100],
+              label: limit.round().toString(),
+              divisions: 9,
+            ),
+          ],
+        )
       ],
     );
   }
