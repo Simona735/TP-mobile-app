@@ -73,6 +73,29 @@ class _MailboxDetailState extends State<MailboxDetail> {
               label: limit.round().toString(),
               divisions: 9,
             ),
+            Text(
+              "Limit: " + limit.round().toString(),
+              style: const TextStyle(fontSize: 20),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(left: 10),
+                  child: const Text("Low power mode"),
+                ),
+                Switch(
+                  value: isSwitched,
+                  onChanged: (value) => {
+                    setState(
+                      () {
+                        isSwitched = value;
+                      },
+                    )
+                  },
+                )
+              ],
+            )
           ],
         )
       ],
