@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:tp_mobile_app/firebase/authentication.dart';
+import 'package:tp_mobile_app/routes/router.gr.dart';
 
 import '../manager.dart';
 
@@ -86,7 +88,7 @@ class RegistrationPage extends StatelessWidget {
                     emailController.text,
                     password1Controller.text);
                 Navigator.pop(context);
-                Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage()));
+                AutoRouter.of(context).push(BottomBarRoute());
               },
               child: const Text("Registrácia"),
               style: ElevatedButton.styleFrom(primary: Colors.red),
