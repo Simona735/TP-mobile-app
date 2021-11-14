@@ -1,5 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:tp_mobile_app/firebase/authentication.dart';
+import 'package:tp_mobile_app/routes/router.gr.dart';
+import 'package:tp_mobile_app/screens/authscreens/loginpage.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -45,7 +48,7 @@ class ProfilePage extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {
                         Authentication.signOut();
-                        //TODO go back to LoginPage()
+                        AutoRouter.of(context).replace(const LoginPageRoute());
                       },
                       child: const Text("Odhlásiť sa"),
                       style: ElevatedButton.styleFrom(primary: Colors.red),
