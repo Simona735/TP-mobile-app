@@ -73,9 +73,8 @@ class _LoginPage extends State<LoginPage> {
             margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
             child: ElevatedButton(
               onPressed: () {
-                // Navigator.pop(context);
-                Navigator.push(
-                    context, FadeRoute(page: RegistrationPage()));
+                AutoRouter.of(context).pop();
+                AutoRouter.of(context).push(RegistrationPageRoute());
               },
               child: const Text("Registrácia"),
               style: ElevatedButton.styleFrom(primary: Colors.red),
