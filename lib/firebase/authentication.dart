@@ -1,45 +1,38 @@
-import 'package:firebase_core/firebase_core.dart'; // new
 import 'package:firebase_auth/firebase_auth.dart'; // new
 
-enum ApplicationLoginState{
-  loggedOut,
-  loggedIn
-}
+class Authentication{
+  static FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  static bool get isSignedIn => firebaseAuth.currentUser != null;
+  static String get getDisplayName => firebaseAuth.currentUser!.displayName!;
 
-class Authentication {
-  ApplicationLoginState loginState = ApplicationLoginState.loggedOut;
-  String? email;
-
-  Authentication() {
-    init();
-  }
-
-  Future<void> init() async {
-    await Firebase.initializeApp();
-    FirebaseAuth.instance.userChanges().listen((User? user) {
+  static Future<void> init() async {
+    firebaseAuth.userChanges().listen((User? user) {
       if (user == null) {
-        loginState = ApplicationLoginState.loggedOut;
+        print('User is currently signed out!');
       } else {
-        loginState = ApplicationLoginState.loggedIn;
+        print(user.uid);
       }
     });
   }
 
-  void verifyEmail(String email) async {
-    var methods = await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
-    if (methods.contains('password')) {
-      // user and signing method exists
+  static Future<User?> getCurrentUser(String email) async {
+    var currentUser = firebaseAuth.currentUser;
 
+    if (currentUser != null) {
+      print(currentUser.uid);
+      return currentUser;
+    }else{
+      return null;
     }
-    this.email = email;
   }
 
-  void signInWithEmailAndPassword(String email, String password) async {
+  static Future<void> signInWithEmailAndPassword(String email, String password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      UserCredential userCredential = await firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password
       );
+      print(userCredential.user!.uid);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -49,13 +42,13 @@ class Authentication {
     }
   }
 
-  void registerAccount(String name, String surname, String email, String password) async {
+  static Future<void> registerAccount(String name, String surname, String email, String password) async {
     try {
-      var credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      UserCredential userCredential = await firebaseAuth.createUserWithEmailAndPassword(
           email: email,
           password: password
-      ); // user will be signed in, userChange() listener will be activated
-      //TODO write name and surname to DB
+      );
+      userCredential.user!.updateDisplayName(name + " " + surname);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -65,11 +58,10 @@ class Authentication {
     } catch (e) {
       print(e);
     }
-
   }
 
-  void signOut() {
-    FirebaseAuth.instance.signOut();
+  static Future<void> signOut() async {
+    await firebaseAuth.signOut();
   }
 
 }
