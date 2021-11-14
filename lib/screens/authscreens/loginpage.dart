@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:tp_mobile_app/routes/router.gr.dart';
 import 'package:tp_mobile_app/screens/authscreens/registrationpage.dart';
 import 'package:tp_mobile_app/widgets/animations.dart';
 import 'package:tp_mobile_app/firebase/authentication.dart';
@@ -60,11 +62,9 @@ class _LoginPage extends State<LoginPage> {
             child: ElevatedButton(
                 onPressed: () {
                   Authentication.signInWithEmailAndPassword(emailController.text, passwordController.text);
-                  //TODO neuspesne prihlasenie
                   Navigator.pop(context);
-                  // Navigator.push(
-                  //     context, FadeRoute(page: const ListOfMailboxes()));
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage()));
+                  AutoRouter.of(context).push(BottomBarRoute());
+                  //TODO neuspesne prihlasenie
                 },
                 child: const Text("Prihlásenie")
             ),
