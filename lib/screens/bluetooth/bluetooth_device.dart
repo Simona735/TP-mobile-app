@@ -7,6 +7,31 @@ class DeviceScreen extends StatelessWidget {
 
   final BluetoothDevice device;
 
+  List<Widget> _buildServiceTiles(List<BluetoothService> services) {
+    return services
+        .map(
+          (e) => Column(
+            children: [
+              ListTile(
+                title: Text(e.characteristics[0].descriptors.toString()),
+                onTap: () {
+                  developer.log(e.characteristics.toString());
+                  e.characteristics[0].write([0]);
+                },
+              ),
+              ListTile(
+                title: Text(e.characteristics[0].descriptors.toString()),
+                onTap: () {
+                  developer.log(e.characteristics.toString());
+                  e.characteristics[0].write([1]);
+                },
+              ),
+            ],
+          ),
+        )
+        .toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,6 +119,15 @@ class DeviceScreen extends StatelessWidget {
                   ),
                 ),
               ),
+            ),
+            StreamBuilder<List<BluetoothService>>(
+              stream: device.services,
+              initialData: [],
+              builder: (c, snapshot) {
+                return Column(
+                  children: _buildServiceTiles(snapshot.data!),
+                );
+              },
             ),
           ],
         ),
