@@ -1,10 +1,47 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:tp_mobile_app/screens/pin/pinpageview.dart';
+import 'package:tp_mobile_app/screens/pin/scroll_behavior.dart';
 
 class PinPage extends StatelessWidget {
   const PinPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final app = MaterialApp(
+          debugShowCheckedModeBanner: false,
+          scrollBehavior: MyCustomScrollBehavior(),
+          theme: ThemeData(
+            scaffoldBackgroundColor: Colors.white,
+            appBarTheme: const AppBarTheme(color: Colors.white),
+          ),
+          home: const PinPutView(),
+        );
+        if (constraints.maxWidth > 600 && constraints.maxHeight > 600) {
+          return Container(
+            color: Colors.white,
+            alignment: Alignment.center,
+            child: AspectRatio(
+              aspectRatio: .5,
+              child: Container(
+                margin: EdgeInsets.all(20),
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.black,
+                    width: 20,
+                  ),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: app,
+              ),
+            ),
+          );
+        }
+        return app;
+      },
+    );
   }
 }
