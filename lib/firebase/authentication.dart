@@ -43,6 +43,9 @@ class Authentication{
       }else if(e.code == 'invalid-email'){
         print('Email is badly formatted');
         return Future.value(false);
+      } else if(e.code == 'unknown'){
+        print('Given string is empty or null.');
+        return Future.value(false);
       }
     }
     return Future.value(true);
