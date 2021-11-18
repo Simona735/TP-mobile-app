@@ -81,14 +81,16 @@ class RegistrationPage extends StatelessWidget {
             margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
             child: ElevatedButton(
               onPressed: () {
-                //TODO porovnanie hesiel
-                Authentication.registerAccount(
-                    nameController.text,
-                    surnameController.text,
-                    emailController.text,
-                    password1Controller.text);
-                Navigator.pop(context);
-                AutoRouter.of(context).push(BottomBarRoute());
+                if(password1Controller.text == password2Controller.text){
+                  Authentication.registerAccount(
+                      nameController.text,
+                      surnameController.text,
+                      emailController.text,
+                      password1Controller.text);
+                  Navigator.pop(context);
+                  AutoRouter.of(context).push(BottomBarRoute());
+                }
+                //TODO hesla nesedia
               },
               child: const Text("Registrácia"),
               style: ElevatedButton.styleFrom(primary: Colors.red),
