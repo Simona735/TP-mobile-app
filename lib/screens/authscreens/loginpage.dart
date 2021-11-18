@@ -60,11 +60,15 @@ class _LoginPage extends State<LoginPage> {
           Container(
             margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
             child: ElevatedButton(
-                onPressed: () {
-                  Authentication.signInWithEmailAndPassword(emailController.text, passwordController.text);
-                  Navigator.pop(context);
-                  AutoRouter.of(context).push(BottomBarRoute());
-                  //TODO neuspesne prihlasenie
+                onPressed: () async {
+                    bool logged = await Authentication.signInWithEmailAndPassword(emailController.text, passwordController.text);
+                    if(logged){
+                      Navigator.pop(context);
+                      AutoRouter.of(context).push(BottomBarRoute());
+                    }else{
+                      emailController.clear();
+                      passwordController.clear();
+                    }
                 },
                 child: const Text("Prihlásenie")
             ),
