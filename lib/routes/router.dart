@@ -7,6 +7,7 @@ import 'package:tp_mobile_app/screens/mailboxscreens/addmailbox.dart';
 import 'package:tp_mobile_app/screens/mailboxscreens/mailboxlistpage.dart';
 import 'package:tp_mobile_app/screens/mailboxscreens/profilepage.dart';
 import 'package:tp_mobile_app/screens/mailboxscreens/settingspage.dart';
+import 'package:tp_mobile_app/screens/pin/pinpage.dart';
 import 'package:tp_mobile_app/screens/splash_screen.dart';
 import 'package:tp_mobile_app/widgets/bottombar.dart';
 
@@ -23,6 +24,10 @@ import 'package:tp_mobile_app/widgets/bottombar.dart';
     AutoRoute(
       path: '/registration',
       page: RegistrationPage
+    ),
+    AutoRoute(
+      path: '/pin',
+      page: PinPage
     ),
     AutoRoute(
       path: '/bottomBar',
