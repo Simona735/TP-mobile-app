@@ -40,6 +40,9 @@ class Authentication{
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user.');
         return Future.value(false);
+      }else if(e.code == 'invalid-email'){
+        print('Email is badly formatted');
+        return Future.value(false);
       }
     }
     return Future.value(true);
