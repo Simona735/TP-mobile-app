@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart'; // new
 class Authentication{
   static FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   static bool get isSignedIn => firebaseAuth.currentUser != null;
-  static String get getDisplayName => firebaseAuth.currentUser!.displayName!;
+  static String? get getDisplayName => firebaseAuth.currentUser?.displayName;
 
   static Future<void> init() async {
     firebaseAuth.userChanges().listen((User? user) {
