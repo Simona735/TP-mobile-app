@@ -19,15 +19,6 @@ class _LoginPage extends State<LoginPage> {
   final passwordController = TextEditingController();
 
   @override
-  void initState() {
-    if(Authentication.isSignedIn){
-      // Navigator.pop(context);
-      // Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage()));
-    }
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
