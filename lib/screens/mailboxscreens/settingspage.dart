@@ -107,6 +107,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    setState(() {});
     return Scaffold(
       body: Column(
         children: [
@@ -118,10 +119,111 @@ class _SettingsPageState extends State<SettingsPage> {
                 value: isSwitched,
                 onChanged: (value) => {
                   setState(
-                        () {
+                    () {
                       isSwitched = value;
+                      saveSwitchState(value);
+                      if (isSwitched == true) {
+                        pin.clear();
+                        confirmPin.clear();
+                        showMaterialModalBottomSheet(
+                          barrierColor: Colors.black26,
+                          context: context,
+                          builder: (context) => WillPopScope(
+                            onWillPop: () async {
+                              deletePin();
+                              setState(() {
+                                isSwitched = false;
+                                saveSwitchState(false);
+                              });
+                              return true;
+                            },
+                            child: SingleChildScrollView(
+                              controller: ModalScrollController.of(context),
+                              child: Container(
+                                margin: const EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 20),
+                                child: Column(
+                                  children: [
+                                    Form(
+                                      key: _formKey,
+                                      child: Column(
+                                        children: [
+                                          TextFormField(
+                                            obscureText: true,
+                                            maxLength: pinSize,
+                                            style: const TextStyle(fontSize: 20),
+                                            textAlign: TextAlign.center,
+                                            textInputAction: TextInputAction.next,
+                                            controller: pin,
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return 'Pole je prázdne';
+                                              }
+                                              if (value.length < pinSize) {
+                                                return 'PIN je príliš krátky';
+                                              }
+                                              return null;
+                                            },
+                                            keyboardType: TextInputType.number,
+                                            inputFormatters: <
+                                                TextInputFormatter>[
+                                              FilteringTextInputFormatter.allow(
+                                                  RegExp(r'[0-9]')),
+                                            ],
+                                            decoration: const InputDecoration(
+                                                labelText: 'Zadaj PIN'),
+                                          ),
+                                          TextFormField(
+                                            obscureText: true,
+                                            maxLength: pinSize,
+                                            style: const TextStyle(fontSize: 20),
+                                            textAlign: TextAlign.center,
+                                            textInputAction: TextInputAction.next,
+                                            controller: confirmPin,
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return 'Pole je prázdne';
+                                              }
+                                              if (value.length < pinSize) {
+                                                return 'PIN je príliš krátky';
+                                              }
+                                              return null;
+                                            },
+                                            keyboardType: TextInputType.number,
+                                            inputFormatters: <
+                                                TextInputFormatter>[
+                                              FilteringTextInputFormatter.allow(
+                                                  RegExp(r'[0-9]')),
+                                            ],
+                                            decoration: const InputDecoration(
+                                                labelText: 'Potvrď PIN'),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        if (_formKey.currentState!.validate()) {
+                                          checkPin()
+                                              ? Navigator.of(context).pop()
+                                              : showErrorDialog(context);
+                                        }
+                                      },
+                                      child: const Text("Uložiť"),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      }
                     },
-                  )
+                  ),
+                  if (isSwitched == false)
+                    {
+                      deletePin(),
+                    }
                 },
               )
             ],
