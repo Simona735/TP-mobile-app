@@ -27,7 +27,7 @@ class ProfilePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    Authentication.getDisplayName,
+                    (Authentication.getDisplayName) ?? "Meno Priezvisko",
                     style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
                   ),
                 ],
