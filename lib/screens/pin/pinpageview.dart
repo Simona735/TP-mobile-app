@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 import 'dart:developer' as developer;
 
@@ -27,6 +28,46 @@ class PinPutViewState extends State<PinPutView> {
     return Scaffold(
       body: onlySelectedBorderPinPut(),
     );
+  }
+
+  final LocalAuthentication auth = LocalAuthentication();
+  String _authorized = 'Not Authorized';
+  bool _isAuthenticating = false;
+
+  Future<bool> authenticateIsAvailable() async {
+    final isAvailable = await auth.canCheckBiometrics;
+    final isDeviceSupported = await auth.isDeviceSupported();
+    return isAvailable && isDeviceSupported;
+  }
+
+  Future<void> _authenticate() async {
+    if (await auth.canCheckBiometrics && await auth.isDeviceSupported()) {
+      bool authenticated = false;
+      try {
+        setState(() {
+          _isAuthenticating = true;
+          _authorized = 'Authenticating';
+        });
+        authenticated = await auth.authenticate(
+          // localizedReason: 'Let OS determine authentication method',
+            localizedReason: 'Prilož prstik na senzor',
+            useErrorDialogs: true,
+            stickyAuth: false);
+        setState(() {
+          _isAuthenticating = false;
+        });
+      } on PlatformException catch (e) {
+        developer.log(e.toString());
+        setState(() {
+          _isAuthenticating = false;
+          _authorized = "Error - ${e.message}";
+        });
+        return;
+      }
+      if (!mounted) return;
+
+      authenticated ? AutoRouter.of(context).replace(BottomBarRoute()) : Future.value(false);
+    }
   }
 
   Widget pinView() {
@@ -129,6 +170,7 @@ class PinPutViewState extends State<PinPutView> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30))),
                   onPressed: () {
+                    _authenticate();
                   },
                 ),
               ],
