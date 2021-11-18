@@ -11,6 +11,9 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final EncryptedSharedPreferences encryptedSharedPreferences =
+      EncryptedSharedPreferences();
+
   @override
   void initState() {
     super.initState();
