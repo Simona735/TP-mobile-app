@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:tp_mobile_app/screens/authscreens/loginpage.dart';
+import 'package:tp_mobile_app/firebase/database.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  Database.getData();
   runApp(const MyApp());
 }
 
