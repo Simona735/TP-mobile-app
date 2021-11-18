@@ -26,7 +26,7 @@ class Authentication{
     }
   }
 
-  static Future<void> signInWithEmailAndPassword(String email, String password) async {
+  static Future<bool> signInWithEmailAndPassword(String email, String password) async {
     try {
       UserCredential userCredential = await firebaseAuth.signInWithEmailAndPassword(
         email: email,
@@ -36,10 +36,13 @@ class Authentication{
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
+        return Future.value(false);
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user.');
+        return Future.value(false);
       }
     }
+    return Future.value(true);
   }
 
   static Future<void> registerAccount(String name, String surname, String email, String password) async {
