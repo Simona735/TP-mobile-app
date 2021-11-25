@@ -55,7 +55,7 @@ class Authentication{
     return Future.value('');
   }
 
-  static Future<void> registerAccount(String name, String surname, String email, String password) async {
+  static Future<String> registerAccount(String name, String surname, String email, String password) async {
     try {
       UserCredential userCredential = await firebaseAuth.createUserWithEmailAndPassword(
           email: email,
@@ -64,13 +64,24 @@ class Authentication{
       userCredential.user!.updateDisplayName(name + " " + surname);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        return Future.value('Chyba siete');
+      } else if (e.code == 'invalid-password') {
+        return Future.value('Heslo musí obsahovať aspoň 6 znakov');
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        return Future.value('Konto pre tento e-mail už existuje');
+      } else if (e.code == 'invalid-display-name') {
+        return Future.value('Zadaj meno a priezvisko');
+      } else if (e.code == 'invalid-email') {
+        return Future.value('Neplatný e-mail');
+      } else if(e.code == 'network-request-failed'){
+        return Future.value('Chyba siete');
+      } else if(e.code == 'unknown'){
+        return Future.value('Neznáma chyba');
       }
     } catch (e) {
       print(e);
     }
+    return Future.value('');
   }
 
   static Future<void> signOut() async {
