@@ -7,6 +7,7 @@ import 'package:tp_mobile_app/screens/mailboxscreens/addmailbox.dart';
 import 'package:tp_mobile_app/screens/mailboxscreens/mailboxlistpage.dart';
 import 'package:tp_mobile_app/screens/mailboxscreens/profilepage.dart';
 import 'package:tp_mobile_app/screens/mailboxscreens/settingspage.dart';
+import 'package:tp_mobile_app/screens/passwordchange.dart';
 import 'package:tp_mobile_app/screens/pin/pinpage.dart';
 import 'package:tp_mobile_app/screens/splash_screen.dart';
 import 'package:tp_mobile_app/widgets/bottombar.dart';
@@ -64,6 +65,7 @@ import 'package:tp_mobile_app/widgets/bottombar.dart';
           page: EmptyRouterPage,
           children: [
             AutoRoute(path: '', page: ProfilePage),
+            AutoRoute(path: 'passwordchange', page: PasswordChangePage),
           ],
         ),
       ],
