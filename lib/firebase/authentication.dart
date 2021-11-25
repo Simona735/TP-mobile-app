@@ -112,6 +112,11 @@ class Authentication{
     return Future.value('NOK');
   }
 
+  static Future<void> sendPasswordResetEmail(String email) async {
+    firebaseAuth.sendPasswordResetEmail(email: email);
+    print("Password reset email sent successfully.");
+  }
+
   static Future<void> signOut() async {
     await firebaseAuth.signOut();
   }
