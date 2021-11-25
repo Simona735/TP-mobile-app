@@ -42,8 +42,20 @@ class PasswordResetPage extends StatelessWidget {
             margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
             child: ElevatedButton(
               onPressed: () async {
+                await Authentication.sendPasswordResetEmail(emailController.text);
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: const Text("Skontrolujte si emailovú schránku"),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, 'OK'),
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    )
+                );
                 Navigator.pop(context);
-                AutoRouter.of(context).push(BottomBarRoute());
               },
               child: const Text("Resetuj heslo"),
             ),
