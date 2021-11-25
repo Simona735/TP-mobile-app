@@ -46,7 +46,7 @@ class Authentication{
         return Future.value('Neplatný e-mail');
       } else if(e.code == 'network-request-failed'){
         print('Network error');
-        return Future.value('NChyba siete');
+        return Future.value('Chyba siete');
       } else if(e.code == 'unknown'){
         print('Given string is empty or null.');
         return Future.value('Vyplň prihlasovacie údaje');
