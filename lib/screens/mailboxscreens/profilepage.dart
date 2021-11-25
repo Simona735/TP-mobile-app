@@ -37,7 +37,7 @@ class ProfilePage extends StatelessWidget {
               Column(
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(left: 5, right: 5),
+                    margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
@@ -47,7 +47,7 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(left: 5, right: 5),
+                    margin: const EdgeInsets.only(top: 5, left: 20, right: 20),
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
