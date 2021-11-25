@@ -1,11 +1,22 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:tp_mobile_app/routes/router.gr.dart';
 import 'package:tp_mobile_app/screens/authscreens/registrationpage.dart';
 import 'package:tp_mobile_app/widgets/animations.dart';
+import 'package:tp_mobile_app/firebase/authentication.dart';
 
 import '../manager.dart';
-
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget{
   const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  _LoginPage createState() => _LoginPage();
+}
+
+
+class _LoginPage extends State<LoginPage> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -22,27 +33,33 @@ class LoginPage extends StatelessWidget {
           ),
           Container(
             margin: const EdgeInsets.all(10),
-            child: const TextField(
-              decoration: InputDecoration(
+            child: TextField(
+              controller: emailController,
+              decoration: const InputDecoration(
                   border: OutlineInputBorder(), labelText: 'E-mail'),
             ),
           ),
           Container(
             margin: const EdgeInsets.all(10),
-            child: const TextField(
+            child: TextField(
+              controller: passwordController,
               obscureText: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   border: OutlineInputBorder(), labelText: 'Heslo'),
             ),
           ),
           Container(
             margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
             child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  // Navigator.push(
-                  //     context, FadeRoute(page: const ListOfMailboxes()));
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage()));
+                onPressed: () async {
+                    bool logged = await Authentication.signInWithEmailAndPassword(emailController.text, passwordController.text);
+                    if(logged){
+                      Navigator.pop(context);
+                      AutoRouter.of(context).push(BottomBarRoute());
+                    }else{
+                      emailController.clear();
+                      passwordController.clear();
+                    }
                 },
                 child: const Text("Prihlásenie")
             ),
@@ -51,9 +68,8 @@ class LoginPage extends StatelessWidget {
             margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
             child: ElevatedButton(
               onPressed: () {
-                // Navigator.pop(context);
-                Navigator.push(
-                    context, FadeRoute(page: const RegistrationPage()));
+                AutoRouter.of(context).pop();
+                AutoRouter.of(context).push(RegistrationPageRoute());
               },
               child: const Text("Registrácia"),
               style: ElevatedButton.styleFrom(primary: Colors.red),

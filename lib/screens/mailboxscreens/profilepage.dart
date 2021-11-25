@@ -1,4 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:tp_mobile_app/firebase/authentication.dart';
+import 'package:tp_mobile_app/routes/router.gr.dart';
+import 'package:tp_mobile_app/screens/authscreens/loginpage.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -21,10 +25,10 @@ class ProfilePage extends StatelessWidget {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Text(
-                    "Meno",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
+                    (Authentication.getDisplayName) ?? "Meno Priezvisko",
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
                   ),
                 ],
               ),
@@ -42,7 +46,10 @@ class ProfilePage extends StatelessWidget {
                     margin: const EdgeInsets.only(left: 5, right: 5),
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Authentication.signOut();
+                        AutoRouter.of(context).replace(const LoginPageRoute());
+                      },
                       child: const Text("Odhlásiť sa"),
                       style: ElevatedButton.styleFrom(primary: Colors.red),
                     ),
