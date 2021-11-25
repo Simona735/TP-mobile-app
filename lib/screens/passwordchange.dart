@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:tp_mobile_app/firebase/authentication.dart';
+import 'package:tp_mobile_app/routes/router.gr.dart';
 
 class PasswordChangePage extends StatelessWidget {
   PasswordChangePage({Key? key}) : super(key: key);
@@ -66,7 +68,8 @@ class PasswordChangePage extends StatelessWidget {
                           ],
                         )
                     );
-                    //TODO go back to profile
+                    Navigator.pop(context);
+                    AutoRouter.of(context).push(const ProfilePageRoute());
                   }else{
                     oldPasswordController.clear();
                     newPassword1Controller.clear();
