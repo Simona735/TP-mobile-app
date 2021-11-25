@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:tp_mobile_app/routes/router.gr.dart';
 import 'package:tp_mobile_app/firebase/authentication.dart';
@@ -44,6 +45,32 @@ class _LoginPage extends State<LoginPage> {
               obscureText: true,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(), labelText: 'Heslo'),
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.fromLTRB(0, 5.0, 0, 5.0),
+            child: (
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: "Zabudli ste heslo?",
+                          style: const TextStyle(
+                            color: Colors.blue,
+                            fontSize: 16),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              //TODO reset password
+                            },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              )
             ),
           ),
           Container(
