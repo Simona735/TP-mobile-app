@@ -1,10 +1,10 @@
 import 'package:firebase_database/firebase_database.dart';
 
 class Database{
-  static DatabaseReference _messagesRef =
+  static final DatabaseReference _messagesRef =
   FirebaseDatabase.instance.reference();// Instance on DB
 
-   static void createRecord(){
+  static void createRecord(){
     _messagesRef.child( "1" ).set({ // Create record with "id":1
       'title' : 'test' // The content of the title record is a test
     });
