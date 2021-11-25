@@ -52,7 +52,7 @@ class _LoginPage extends State<LoginPage> {
             margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
             child: ElevatedButton(
                 onPressed: () async {
-                    bool logged = await Authentication.signInWithEmailAndPassword(emailController.text, passwordController.text);
+                    bool logged = await Authentication.signInWithEmailAndPassword(emailController.text.trim(), passwordController.text);
                     if(logged){
                       Navigator.pop(context);
                       AutoRouter.of(context).push(BottomBarRoute());
