@@ -50,8 +50,8 @@ class _LoginPage extends State<LoginPage> {
             margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
             child: ElevatedButton(
               onPressed: () async {
-                bool logged = await Authentication.signInWithEmailAndPassword(emailController.text.trim(), passwordController.text);
-                if(logged){
+                String message = await Authentication.signInWithEmailAndPassword(emailController.text.trim(), passwordController.text);
+                if(Authentication.isSignedIn){
                   Navigator.pop(context);
                   AutoRouter.of(context).push(BottomBarRoute());
                 }else{
@@ -59,7 +59,7 @@ class _LoginPage extends State<LoginPage> {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
-                      title: const Text('Error here'),
+                      title: Text(message),
                       actions: <Widget>[
                         TextButton(
                           onPressed: () => Navigator.pop(context, 'OK'),

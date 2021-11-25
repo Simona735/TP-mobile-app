@@ -26,32 +26,33 @@ class Authentication{
     }
   }
 
-  static Future<bool> signInWithEmailAndPassword(String email, String password) async {
+  static Future<String> signInWithEmailAndPassword(String email, String password) async {
     try {
       UserCredential userCredential = await firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password
       );
       print(userCredential.user!.uid);
+      return Future.value(userCredential.user!.uid);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('User not found, please register');
-        return Future.value(false);
+        print('User not found');
+        return Future.value('User not found');
       } else if (e.code == 'wrong-password') {
         print('Wrong password');
-        return Future.value(false);
+        return Future.value('Wrong password');
       }else if(e.code == 'invalid-email'){
         print('Invalid email');
-        return Future.value(false);
+        return Future.value('Invalid email');
       } else if(e.code == 'network-request-failed'){
         print('Network error');
-        return Future.value(false);
+        return Future.value('Network error');
       } else if(e.code == 'unknown'){
         print('Given string is empty or null.');
-        return Future.value(false);
+        return Future.value('Given string is empty or null');
       }
     }
-    return Future.value(true);
+    return Future.value('');
   }
 
   static Future<void> registerAccount(String name, String surname, String email, String password) async {
