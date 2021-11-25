@@ -93,7 +93,7 @@ class Authentication{
     try {
       user!.reauthenticateWithCredential(cred).then((value) {
         user.updatePassword(newPassword).then((_) {
-          return Future.value('ok');
+          return Future.value('OK');
         });
       });
     } on FirebaseAuthException catch (e) {

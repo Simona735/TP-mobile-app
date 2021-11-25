@@ -51,17 +51,29 @@ class PasswordChangePage extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () async {
                 if(newPassword1Controller.text == newPassword2Controller.text){
-                  //TODO change password
-                  //TODO AlertDialog for success
-                  //TODO go back to profile
-                  if(Authentication.isSignedIn){
-                    Navigator.pop(context);
-                    AutoRouter.of(context).push(BottomBarRoute());
-                  }else{
+                  String message = await Authentication.changePassword(oldPasswordController.text, newPassword1Controller.text);
+                  if(message == 'OK'){
                     showDialog(
                         context: context,
                         builder: (BuildContext context) => AlertDialog(
-                          title: const Text('message'),
+                          title: const Text('Heslo bolo zmenené'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, 'OK'),
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        )
+                    );
+                    //TODO go back to profile
+                  }else{
+                    oldPasswordController.clear();
+                    newPassword1Controller.clear();
+                    newPassword2Controller.clear();
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: Text(message),
                           actions: <Widget>[
                             TextButton(
                               onPressed: () => Navigator.pop(context, 'OK'),
