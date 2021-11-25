@@ -1,6 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:tp_mobile_app/screens/authscreens/loginpage.dart';
+import 'package:tp_mobile_app/screens/authscreens/passwordreset.dart';
 import 'package:tp_mobile_app/screens/authscreens/registrationpage.dart';
 import 'package:tp_mobile_app/screens/mailboxdetail.dart';
 import 'package:tp_mobile_app/screens/mailboxscreens/addmailbox.dart';
@@ -25,6 +26,10 @@ import 'package:tp_mobile_app/widgets/bottombar.dart';
     AutoRoute(
       path: '/registration',
       page: RegistrationPage
+    ),
+    AutoRoute(
+        path: '/passwordreset',
+        page: PasswordResetPage
     ),
     AutoRoute(
       path: '/pin',

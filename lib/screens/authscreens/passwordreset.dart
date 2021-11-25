@@ -56,6 +56,7 @@ class PasswordResetPage extends StatelessWidget {
                     )
                 );
                 Navigator.pop(context);
+                AutoRouter.of(context).push(const LoginPageRoute());
               },
               child: const Text("Resetuj heslo"),
             ),

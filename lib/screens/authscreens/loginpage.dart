@@ -63,7 +63,8 @@ class _LoginPage extends State<LoginPage> {
                             fontSize: 16),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
-                              //TODO reset password
+                              AutoRouter.of(context).pop();
+                              AutoRouter.of(context).push(PasswordResetPageRoute());
                             },
                         ),
                       ],
