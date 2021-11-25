@@ -89,8 +89,22 @@ class RegistrationPage extends StatelessWidget {
                       password1Controller.text);
                   Navigator.pop(context);
                   AutoRouter.of(context).push(BottomBarRoute());
+                }else{
+                  password1Controller.clear();
+                  password2Controller.clear();
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: const Text("Heslá sa nezhodujú"),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, 'OK'),
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      )
+                  );
                 }
-                //TODO hesla nesedia
               },
               child: const Text("Registrácia"),
               style: ElevatedButton.styleFrom(primary: Colors.red),
