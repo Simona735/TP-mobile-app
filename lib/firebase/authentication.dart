@@ -64,7 +64,7 @@ class Authentication{
       userCredential.user!.updateDisplayName(name + " " + surname);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        return Future.value('Chyba siete');
+        return Future.value('Slabé heslo');
       } else if (e.code == 'invalid-password') {
         return Future.value('Heslo musí obsahovať aspoň 6 znakov');
       } else if (e.code == 'email-already-in-use') {
@@ -82,6 +82,34 @@ class Authentication{
       print(e);
     }
     return Future.value('');
+  }
+
+  static Future<String> changePassword(String currentPassword, String newPassword) async {
+    final user = firebaseAuth.currentUser;
+    final cred = EmailAuthProvider.credential(
+        email: firebaseAuth.currentUser?.email ?? '',
+        password: currentPassword
+    );
+    try {
+      user!.reauthenticateWithCredential(cred).then((value) {
+        user.updatePassword(newPassword).then((_) {
+          return Future.value('ok');
+        });
+      });
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        return Future.value('Slabé heslo');
+      } else if (e.code == 'invalid-password') {
+        return Future.value('Heslo musí obsahovať aspoň 6 znakov');
+      } else if(e.code == 'network-request-failed'){
+        return Future.value('Chyba siete');
+      } else if(e.code == 'unknown'){
+        return Future.value('Neznáma chyba');
+      }
+    } catch (e) {
+      print(e);
+    }
+    return Future.value('NOK');
   }
 
   static Future<void> signOut() async {
