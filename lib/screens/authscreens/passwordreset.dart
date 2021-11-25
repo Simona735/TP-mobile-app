@@ -17,17 +17,13 @@ class PasswordResetPage extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           Container(
-            margin: const EdgeInsets.only(top: 80),
-            color: Colors.blue,
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 80),
-            color: Colors.blue,
+            margin: const EdgeInsets.all(30),
             child: (
-                const Text(
-                    "Zadajte emailovú adresu, na ktorú vám odošleme email, pomocou ktorého si obnovíte heslo.",
-                    style: TextStyle(fontSize: 16)
-                )
+              const Text(
+                "Zadajte emailovú adresu, na ktorú vám odošleme email.",
+                style: TextStyle(fontSize: 20),
+                textAlign: TextAlign.center,
+              )
             ),
           ),
           Container(
@@ -42,7 +38,7 @@ class PasswordResetPage extends StatelessWidget {
             margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
             child: ElevatedButton(
               onPressed: () async {
-                await Authentication.sendPasswordResetEmail(emailController.text);
+                await Authentication.sendPasswordResetEmail(emailController.text.trim());
                 showDialog(
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
