@@ -35,13 +35,13 @@ class Authentication{
       print(userCredential.user!.uid);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        print('User not found, please register');
         return Future.value(false);
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+        print('Wrong password');
         return Future.value(false);
       }else if(e.code == 'invalid-email'){
-        print('Email is badly formatted');
+        print('Invalid email');
         return Future.value(false);
       } else if(e.code == 'network-request-failed'){
         print('Network error');
