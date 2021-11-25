@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:tp_mobile_app/firebase/authentication.dart';
 import 'package:tp_mobile_app/routes/router.gr.dart';
 
-import '../manager.dart';
-
 class RegistrationPage extends StatelessWidget {
   RegistrationPage({Key? key}) : super(key: key);
 
