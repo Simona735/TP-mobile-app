@@ -78,15 +78,30 @@ class RegistrationPage extends StatelessWidget {
           Container(
             margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
             child: ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 if(password1Controller.text == password2Controller.text){
-                  Authentication.registerAccount(
-                      nameController.text,
-                      surnameController.text,
-                      emailController.text,
-                      password1Controller.text);
-                  Navigator.pop(context);
-                  AutoRouter.of(context).push(BottomBarRoute());
+                  String message = await Authentication.registerAccount(
+                    nameController.text,
+                    surnameController.text,
+                    emailController.text,
+                    password1Controller.text);
+                  if(Authentication.isSignedIn){
+                    Navigator.pop(context);
+                    AutoRouter.of(context).push(BottomBarRoute());
+                  }else{
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: Text(message),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, 'OK'),
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        )
+                    );
+                  }
                 }else{
                   password1Controller.clear();
                   password2Controller.clear();
