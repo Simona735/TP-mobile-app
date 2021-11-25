@@ -37,19 +37,19 @@ class Authentication{
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('User not found');
-        return Future.value('User not found');
+        return Future.value('Používateľ sa nenašiel');
       } else if (e.code == 'wrong-password') {
         print('Wrong password');
-        return Future.value('Wrong password');
+        return Future.value('Nesprávne heslo');
       }else if(e.code == 'invalid-email'){
         print('Invalid email');
-        return Future.value('Invalid email');
+        return Future.value('Neplatný e-mail');
       } else if(e.code == 'network-request-failed'){
         print('Network error');
-        return Future.value('Network error');
+        return Future.value('NChyba siete');
       } else if(e.code == 'unknown'){
         print('Given string is empty or null.');
-        return Future.value('Given string is empty or null');
+        return Future.value('Vyplň prihlasovacie údaje');
       }
     }
     return Future.value('');
