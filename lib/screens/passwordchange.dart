@@ -24,6 +24,7 @@ class PasswordChangePage extends StatelessWidget {
             margin: const EdgeInsets.all(10),
             child: TextField(
               controller: oldPasswordController,
+              obscureText: true,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(), labelText: 'Aktuálne heslo'),
             ),
@@ -32,6 +33,7 @@ class PasswordChangePage extends StatelessWidget {
             margin: const EdgeInsets.all(10),
             child: TextField(
               controller: newPassword1Controller,
+              obscureText: true,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(), labelText: 'Nové heslo'),
             ),
@@ -40,6 +42,7 @@ class PasswordChangePage extends StatelessWidget {
             margin: const EdgeInsets.all(10),
             child: TextField(
               controller: newPassword2Controller,
+              obscureText: true,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(), labelText: 'Zopakuj nové heslo'),
             ),
