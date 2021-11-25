@@ -1,7 +1,5 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:tp_mobile_app/firebase/authentication.dart';
-import 'package:tp_mobile_app/routes/router.gr.dart';
 
 class PasswordChangePage extends StatelessWidget {
   PasswordChangePage({Key? key}) : super(key: key);
