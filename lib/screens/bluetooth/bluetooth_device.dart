@@ -52,9 +52,6 @@ class DeviceScreen extends StatelessWidget {
                 case BluetoothDeviceState.disconnected:
                   onPressed = () async {
                     try {
-                      final mtu = await device.mtu.first;
-                      developer.log(mtu.toString());
-                      await device.requestMtu(512);
                       await device.connect(autoConnect: true);
                     } catch (e) {
                       device.disconnect();
