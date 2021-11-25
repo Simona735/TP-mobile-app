@@ -18,8 +18,9 @@ class ListOfMailboxes extends StatelessWidget {
               child: GridView.builder(
                 padding: const EdgeInsets.all(10),
                 itemCount: 20,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
+                  childAspectRatio: (orientation == Orientation.landscape) ? 2 : 1,
                   mainAxisSpacing: 10,
                   crossAxisSpacing: 10,
                 ),
