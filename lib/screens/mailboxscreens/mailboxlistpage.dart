@@ -43,7 +43,9 @@ class ItemMailbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
+      borderRadius: BorderRadius.circular(10),
+      splashColor: const Color.fromRGBO(194, 187, 33, 0.7019607843137254),
       onTap: press,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
