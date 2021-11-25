@@ -4,6 +4,8 @@ import 'package:tp_mobile_app/firebase/authentication.dart';
 import 'package:tp_mobile_app/routes/router.gr.dart';
 import 'package:tp_mobile_app/screens/authscreens/loginpage.dart';
 
+import '../passwordchange.dart';
+
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -38,7 +40,9 @@ class ProfilePage extends StatelessWidget {
                     margin: const EdgeInsets.only(left: 5, right: 5),
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        AutoRouter.of(context).push(PasswordChangePageRoute());
+                      },
                       child: const Text("Zmeniť heslo"),
                     ),
                   ),

@@ -5,7 +5,7 @@
 // **************************************************************************
 
 import 'package:auto_route/auto_route.dart' as _i6;
-import 'package:flutter/material.dart' as _i12;
+import 'package:flutter/material.dart' as _i13;
 
 import '../screens/authscreens/loginpage.dart' as _i2;
 import '../screens/authscreens/registrationpage.dart' as _i3;
@@ -14,12 +14,13 @@ import '../screens/mailboxscreens/addmailbox.dart' as _i10;
 import '../screens/mailboxscreens/mailboxlistpage.dart' as _i7;
 import '../screens/mailboxscreens/profilepage.dart' as _i11;
 import '../screens/mailboxscreens/settingspage.dart' as _i9;
+import '../screens/passwordchange.dart' as _i12;
 import '../screens/pin/pinpage.dart' as _i4;
 import '../screens/splash_screen.dart' as _i1;
 import '../widgets/bottombar.dart' as _i5;
 
 class AppRouter extends _i6.RootStackRouter {
-  AppRouter([_i12.GlobalKey<_i12.NavigatorState>? navigatorKey])
+  AppRouter([_i13.GlobalKey<_i13.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
@@ -88,6 +89,12 @@ class AppRouter extends _i6.RootStackRouter {
     ProfilePageRoute.name: (routeData) {
       return _i6.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i11.ProfilePage());
+    },
+    PasswordChangePageRoute.name: (routeData) {
+      final args = routeData.argsAs<PasswordChangePageRouteArgs>(
+          orElse: () => const PasswordChangePageRouteArgs());
+      return _i6.MaterialPageX<dynamic>(
+          routeData: routeData, child: _i12.PasswordChangePage(key: args.key));
     }
   };
 
@@ -110,7 +117,11 @@ class AppRouter extends _i6.RootStackRouter {
               children: [_i6.RouteConfig(AddMailboxRoute.name, path: '')]),
           _i6.RouteConfig(ProfilePageRouter.name,
               path: 'profilepage',
-              children: [_i6.RouteConfig(ProfilePageRoute.name, path: '')])
+              children: [
+                _i6.RouteConfig(ProfilePageRoute.name, path: ''),
+                _i6.RouteConfig(PasswordChangePageRoute.name,
+                    path: 'passwordchange')
+              ])
         ])
       ];
 }
@@ -132,7 +143,7 @@ class LoginPageRoute extends _i6.PageRouteInfo<void> {
 /// generated route for [_i3.RegistrationPage]
 class RegistrationPageRoute
     extends _i6.PageRouteInfo<RegistrationPageRouteArgs> {
-  RegistrationPageRoute({_i12.Key? key})
+  RegistrationPageRoute({_i13.Key? key})
       : super(name,
             path: '/registration', args: RegistrationPageRouteArgs(key: key));
 
@@ -142,7 +153,7 @@ class RegistrationPageRoute
 class RegistrationPageRouteArgs {
   const RegistrationPageRouteArgs({this.key});
 
-  final _i12.Key? key;
+  final _i13.Key? key;
 }
 
 /// generated route for [_i4.PinPage]
@@ -154,7 +165,7 @@ class PinPageRoute extends _i6.PageRouteInfo<void> {
 
 /// generated route for [_i5.BottomBar]
 class BottomBarRoute extends _i6.PageRouteInfo<BottomBarRouteArgs> {
-  BottomBarRoute({_i12.Key? key, List<_i6.PageRouteInfo>? children})
+  BottomBarRoute({_i13.Key? key, List<_i6.PageRouteInfo>? children})
       : super(name,
             path: '/bottomBar',
             args: BottomBarRouteArgs(key: key),
@@ -166,7 +177,7 @@ class BottomBarRoute extends _i6.PageRouteInfo<BottomBarRouteArgs> {
 class BottomBarRouteArgs {
   const BottomBarRouteArgs({this.key});
 
-  final _i12.Key? key;
+  final _i13.Key? key;
 }
 
 /// generated route for [_i6.EmptyRouterPage]
@@ -210,7 +221,7 @@ class ListOfMailboxesRoute extends _i6.PageRouteInfo<void> {
 
 /// generated route for [_i8.MailboxDetail]
 class MailboxDetailRoute extends _i6.PageRouteInfo<MailboxDetailRouteArgs> {
-  MailboxDetailRoute({_i12.Key? key, required dynamic mailboxId})
+  MailboxDetailRoute({_i13.Key? key, required dynamic mailboxId})
       : super(name,
             path: ':mailboxId',
             args: MailboxDetailRouteArgs(key: key, mailboxId: mailboxId),
@@ -222,7 +233,7 @@ class MailboxDetailRoute extends _i6.PageRouteInfo<MailboxDetailRouteArgs> {
 class MailboxDetailRouteArgs {
   const MailboxDetailRouteArgs({this.key, required this.mailboxId});
 
-  final _i12.Key? key;
+  final _i13.Key? key;
 
   final dynamic mailboxId;
 }
@@ -246,4 +257,21 @@ class ProfilePageRoute extends _i6.PageRouteInfo<void> {
   const ProfilePageRoute() : super(name, path: '');
 
   static const String name = 'ProfilePageRoute';
+}
+
+/// generated route for [_i12.PasswordChangePage]
+class PasswordChangePageRoute
+    extends _i6.PageRouteInfo<PasswordChangePageRouteArgs> {
+  PasswordChangePageRoute({_i13.Key? key})
+      : super(name,
+            path: 'passwordchange',
+            args: PasswordChangePageRouteArgs(key: key));
+
+  static const String name = 'PasswordChangePageRoute';
+}
+
+class PasswordChangePageRouteArgs {
+  const PasswordChangePageRouteArgs({this.key});
+
+  final _i13.Key? key;
 }
