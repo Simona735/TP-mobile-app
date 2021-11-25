@@ -49,17 +49,28 @@ class _LoginPage extends State<LoginPage> {
           Container(
             margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
             child: ElevatedButton(
-                onPressed: () async {
-                    bool logged = await Authentication.signInWithEmailAndPassword(emailController.text.trim(), passwordController.text);
-                    if(logged){
-                      Navigator.pop(context);
-                      AutoRouter.of(context).push(BottomBarRoute());
-                    }else{
-                      emailController.clear();
-                      passwordController.clear();
-                    }
-                },
-                child: const Text("Prihlásenie")
+              onPressed: () async {
+                bool logged = await Authentication.signInWithEmailAndPassword(emailController.text.trim(), passwordController.text);
+                if(logged){
+                  Navigator.pop(context);
+                  AutoRouter.of(context).push(BottomBarRoute());
+                }else{
+                  passwordController.clear();
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: const Text('Error here'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, 'OK'),
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    )
+                  );
+                }
+              },
+              child: const Text("Prihlásenie")
             ),
           ),
           Container(
