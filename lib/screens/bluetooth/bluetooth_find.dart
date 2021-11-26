@@ -34,6 +34,7 @@ class FindDevicesScreen extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) {
                             result.device.connect();
+                            result.device.discoverServices();
                             // AutoRouter.of(context).push(DeviceScreenRoute(device: result.device));
                             return DeviceScreen(device: result.device);
                           },
