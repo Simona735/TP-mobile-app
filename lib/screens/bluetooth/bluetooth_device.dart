@@ -4,58 +4,12 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 
 class DeviceScreen extends StatelessWidget {
-  const DeviceScreen({Key? key, required this.device}) : super(key: key);
+  DeviceScreen({Key? key, required this.device}) : super(key: key);
 
+  final nameController = TextEditingController();
+  final passwordController = TextEditingController();
   final BluetoothDevice device;
 
-  Widget buildWiFiField(List<BluetoothService> services) {
-    final nameController = TextEditingController();
-    final passwordController = TextEditingController();
-
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-              margin: const EdgeInsets.all(10),
-              child: const Text('Nastavenie WiFi',
-                style: TextStyle(fontSize: 20),
-              )
-          ),
-          Container(
-              margin: const EdgeInsets.all(10),
-              child: TextField(
-                controller: nameController,
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Názov siete'),
-              )
-          ),
-          Container(
-            margin: const EdgeInsets.all(10),
-            child: TextField(
-              controller: passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Heslo'),
-            ),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              await services[2].characteristics[0].write(utf8.encode(
-                nameController.text.trim() + ';' + passwordController.text)
-              );
-              //TODO after data send
-            },
-            child: const Text("Pripojiť"),
-          ),
-        ],
-      )
-      ,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +42,61 @@ class DeviceScreen extends StatelessWidget {
                     const Divider(
                       thickness: 1,
                     ),
-                    buildWiFiField(snapshot.data!)
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                              margin: const EdgeInsets.all(10),
+                              child: const Text('Nastavenie WiFi',
+                                style: TextStyle(fontSize: 20),
+                              )
+                          ),
+                          Container(
+                              margin: const EdgeInsets.all(10),
+                              child: TextField(
+                                controller: nameController,
+                                decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    labelText: 'Názov siete'),
+                              )
+                          ),
+                          Container(
+                            margin: const EdgeInsets.all(10),
+                            child: TextField(
+                              controller: passwordController,
+                              obscureText: true,
+                              decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Heslo'),
+                            ),
+                          ),
+                          ElevatedButton(
+                            onPressed: () async {
+                              await snapshot.data![2].characteristics[0].write(utf8.encode(
+                                  nameController.text.trim() + ';' + passwordController.text)
+                              );
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) => AlertDialog(
+                                    title: const Text("Zariadenie sa pokúsi pripojiť k sieti."),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(context, 'OK'),
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  )
+                              );
+                              //TODO after data send
+                            },
+                            child: const Text("Pripojiť"),
+                          ),
+                        ],
+                      )
+                      ,
+                    )
                   ]
                 );
               },
