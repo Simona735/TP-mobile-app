@@ -27,9 +27,6 @@ class FindDevicesScreen extends StatelessWidget {
                           : result.device.name,
                         style: const TextStyle(fontSize: 20),
                       ),
-                      // subtitle: Text(
-                      //   result.device.id.toString(),
-                      // ),
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) {
