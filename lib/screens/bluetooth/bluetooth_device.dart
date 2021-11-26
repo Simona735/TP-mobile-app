@@ -37,6 +37,7 @@ class DeviceScreen extends StatelessWidget {
             margin: const EdgeInsets.all(10),
             child: TextField(
               controller: passwordController,
+              obscureText: true,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Heslo'),
