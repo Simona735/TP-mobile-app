@@ -1,5 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:tp_mobile_app/screens/bluetooth/service_tile.dart';
+import 'dart:convert';
 import 'dart:developer' as developer;
 
 class DeviceScreen extends StatelessWidget {
@@ -7,29 +11,53 @@ class DeviceScreen extends StatelessWidget {
 
   final BluetoothDevice device;
 
-  List<Widget> _buildServiceTiles(List<BluetoothService> services) {
-    return services
-        .map(
-          (e) => Column(
-            children: [
-              ListTile(
-                title: Text(e.characteristics[0].descriptors.toString()),
-                onTap: () {
-                  developer.log(e.characteristics.toString());
-                  e.characteristics[0].write([0]);
-                },
-              ),
-              ListTile(
-                title: Text(e.characteristics[0].descriptors.toString()),
-                onTap: () {
-                  developer.log(e.characteristics.toString());
-                  e.characteristics[0].write([1]);
-                },
-              ),
-            ],
+
+  Widget buildWiFiField(BluetoothService service) {
+    final nameController = TextEditingController();
+    final passwordController = TextEditingController();
+
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Container(
+              margin: const EdgeInsets.all(10),
+              child: const Text('Nastavenie WiFi',
+                style: TextStyle(fontSize: 20),
+              )
           ),
-        )
-        .toList();
+          Container(
+              margin: const EdgeInsets.all(10),
+              child: TextField(
+                controller: nameController,
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Názov siete'),
+              )
+          ),
+          Container(
+            margin: const EdgeInsets.all(10),
+            child: TextField(
+              controller: passwordController,
+              decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Heslo'),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              await service.characteristics[0].write(utf8.encode(
+                nameController.text.trim() + passwordController.text)
+              );
+              //TODO after data send
+            },
+            child: const Text("Pripojiť"),
+          ),
+        ],
+      )
+      ,
+    );
   }
 
   @override
@@ -90,11 +118,12 @@ class DeviceScreen extends StatelessWidget {
               initialData: BluetoothDeviceState.connecting,
               builder: (c, snapshot) => ListTile(
                 leading: (snapshot.data == BluetoothDeviceState.connected)
-                    ? const Icon(Icons.bluetooth_connected)
+                    ? const Icon(Icons.bluetooth_connected,
+                                  color: Colors.blue,)
                     : const Icon(Icons.bluetooth_disabled),
                 title: Text(
                     'Device is ${snapshot.data.toString().split('.')[1]}.'),
-                subtitle: Text('${device.id}'),
+                // subtitle: Text('${device.id}'),
                 trailing: StreamBuilder<bool>(
                   stream: device.isDiscoveringServices,
                   initialData: false,
@@ -125,7 +154,12 @@ class DeviceScreen extends StatelessWidget {
               initialData: [],
               builder: (c, snapshot) {
                 return Column(
-                  children: _buildServiceTiles(snapshot.data!),
+                  children: [
+                    const Divider(
+                      thickness: 1,
+                    ),
+                    buildWiFiField(snapshot.data![2])
+                  ]
                 );
               },
             ),
