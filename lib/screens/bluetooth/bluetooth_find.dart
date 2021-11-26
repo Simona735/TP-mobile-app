@@ -16,28 +16,35 @@ class FindDevicesScreen extends StatelessWidget {
               initialData: [],
               builder: (c, snapshot) => Column(
                 children: snapshot.data!.map((result) {
-                  // if (result.device.name.isNotEmpty) {
-                  return ListTile(
-                    title: Text(result.device.name == ""
-                        ? "No Name "
-                        : result.device.name),
-                    subtitle: Text(
-                      result.device.id.toString(),
-                    ),
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          result.device.connect();
-                          // AutoRouter.of(context).push(DeviceScreenRoute(device: result.device));
-                          return DeviceScreen(device: result.device);
-                        },
+                  if (result.device.name == "MailBox") {
+                    return ListTile(
+                      leading: const Icon(
+                        Icons.markunread_mailbox_outlined,
+                        size: 30.0,
                       ),
-                    ),
-                  );
-                  // } else {
-                  //   developer.log("None: " + result.device.id.toString());
-                  //   return const SizedBox.shrink();
-                  // }
+                      title: Text(result.device.name == ""
+                          ? "No Name "
+                          : result.device.name,
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                      // subtitle: Text(
+                      //   result.device.id.toString(),
+                      // ),
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            result.device.connect();
+                            // AutoRouter.of(context).push(DeviceScreenRoute(device: result.device));
+                            return DeviceScreen(device: result.device);
+                          },
+                        ),
+                      ),
+                    );
+                  }
+                  else {
+                    print("None: " + result.device.id.toString());
+                    return const SizedBox.shrink();
+                  }
                 }).toList(),
               ),
             ),
