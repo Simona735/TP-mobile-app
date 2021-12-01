@@ -16,21 +16,19 @@ class FindDevicesScreen extends StatelessWidget {
               initialData: [],
               builder: (c, snapshot) => Column(
                 children: snapshot.data!.map((result) {
-                  if (result.device.name == "MailBox") {
+                  if (result.device.name != "") {
                     return ListTile(
                       leading: const Icon(
                         Icons.markunread_mailbox_outlined,
                         size: 30.0,
                       ),
-                      title: Text(result.device.name == ""
-                          ? "No Name "
-                          : result.device.name,
+                      title: Text(result.device.name,
                         style: const TextStyle(fontSize: 20),
                       ),
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) {
-                            result.device.connect();
+                            result.device.connect(autoConnect: false);
                             result.device.discoverServices();
                             // AutoRouter.of(context).push(DeviceScreenRoute(device: result.device));
                             return DeviceScreen(device: result.device);

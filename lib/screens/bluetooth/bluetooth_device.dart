@@ -89,6 +89,7 @@ class DeviceScreen extends StatelessWidget {
                                     ],
                                   )
                               );
+                              device.disconnect();
                               //TODO after data send
                             },
                             child: const Text("Pripojiť"),
