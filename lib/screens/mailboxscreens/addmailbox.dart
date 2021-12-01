@@ -9,6 +9,9 @@ class AddMailbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Pridanie schránky"),
+      ),
       body: StreamBuilder<BluetoothState>(
         stream: FlutterBlue.instance.state,
         initialData: BluetoothState.unknown,
