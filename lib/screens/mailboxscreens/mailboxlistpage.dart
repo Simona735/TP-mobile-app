@@ -9,6 +9,9 @@ class ListOfMailboxes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Zoznam schránok"),
+      ),
       body: Column(
         children: [
           Expanded(
