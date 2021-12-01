@@ -110,7 +110,7 @@ class _LoginPage extends State<LoginPage> {
             child: ElevatedButton(
               onPressed: () {
                 AutoRouter.of(context).pop();
-                AutoRouter.of(context).push(RegistrationPageRoute());
+                Navigator.of(context).push(swipeRouteAnimation(RegistrationPage()));
               },
               child: const Text("Registrácia"),
               style: ElevatedButton.styleFrom(primary: Colors.red),
