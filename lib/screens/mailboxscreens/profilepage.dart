@@ -2,6 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:tp_mobile_app/firebase/authentication.dart';
 import 'package:tp_mobile_app/routes/router.gr.dart';
+import 'package:tp_mobile_app/screens/passwordchange.dart';
+import 'package:tp_mobile_app/widgets/animations.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -41,7 +43,8 @@ class ProfilePage extends StatelessWidget {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        AutoRouter.of(context).push(PasswordChangePageRoute());
+                        Navigator.of(context).push(swipeRouteAnimation(PasswordChangePage()));
+                        // AutoRouter.of(context).push(PasswordChangePageRoute());
                       },
                       child: const Text("Zmeniť heslo"),
                     ),
