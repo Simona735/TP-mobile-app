@@ -6,7 +6,6 @@ import 'package:tp_mobile_app/routes/router.gr.dart';
 class BottomBar extends StatelessWidget {
   BottomBar({Key? key}) : super(key: key);
 
-  final nameOfTabsInAppBar = ['Zoznam schránok', 'Nastavenia', 'Profil', 'Pridanie schránky'];
 
   @override
   Widget build(BuildContext context) {
