@@ -86,7 +86,7 @@ class RegistrationPage extends StatelessWidget {
                     emailController.text,
                     password1Controller.text);
                   if(Authentication.isSignedIn){
-                    Navigator.pop(context);
+                    Navigator.of(context)..pop()..pop();
                     AutoRouter.of(context).push(BottomBarRoute());
                   }else{
                     showDialog(
