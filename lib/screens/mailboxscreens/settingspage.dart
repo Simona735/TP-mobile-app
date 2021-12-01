@@ -109,6 +109,9 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     setState(() {});
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Nastavenia"),
+      ),
       body: Column(
         children: [
           Padding(
