@@ -8,6 +8,7 @@ class ListOfMailboxes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Orientation orientation = MediaQuery.of(context).orientation;
     return Scaffold(
       body: Column(
         children: [
@@ -17,8 +18,9 @@ class ListOfMailboxes extends StatelessWidget {
               child: GridView.builder(
                 padding: const EdgeInsets.all(10),
                 itemCount: 20,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
+                  childAspectRatio: (orientation == Orientation.landscape) ? 2 : 1,
                   mainAxisSpacing: 10,
                   crossAxisSpacing: 10,
                 ),
@@ -43,7 +45,9 @@ class ItemMailbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
+      borderRadius: BorderRadius.circular(10),
+      splashColor: const Color.fromRGBO(194, 187, 33, 0.7019607843137254),
       onTap: press,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),

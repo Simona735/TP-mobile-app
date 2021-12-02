@@ -112,18 +112,6 @@ class _LoginPage extends State<LoginPage> {
               style: ElevatedButton.styleFrom(primary: Colors.red),
             ),
           ),
-          Container(
-            margin: const EdgeInsets.all(15),
-            child: IconButton(
-              color: Colors.blue,
-              onPressed: () {},
-              iconSize: 60,
-              icon: const Icon(
-                Icons.fingerprint_outlined,
-                size: 60,
-              ),
-            ),
-          ),
         ],
       ),
     );

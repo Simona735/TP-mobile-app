@@ -1,8 +1,6 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
-import 'package:syncfusion_flutter_sliders/sliders.dart';
-import 'dart:math' as math;
 
 class MailboxDetail extends StatefulWidget {
   final mailboxId;
@@ -17,8 +15,8 @@ class MailboxDetail extends StatefulWidget {
 }
 
 class _MailboxDetailState extends State<MailboxDetail> {
-  double limit = 5;
-  int listCount = 3;
+  double limit = 30;
+  int listPercentage = 30;
   bool isSwitched = false;
 
   @override
@@ -32,10 +30,10 @@ class _MailboxDetailState extends State<MailboxDetail> {
               margin: const EdgeInsets.all(10),
               child: CircularStepProgressIndicator(
                 totalSteps: limit.round(),
-                currentStep: listCount,
+                currentStep: listPercentage,
                 stepSize: 5,
                 selectedColor:
-                    listCount <= limit.round() ? Colors.yellow : Colors.red,
+                    listPercentage <= limit.round() ? Colors.yellow : Colors.red,
                 unselectedColor: Colors.grey[200],
                 padding: 0,
                 width: 150,
@@ -47,7 +45,7 @@ class _MailboxDetailState extends State<MailboxDetail> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      listCount.toString(),
+                      listPercentage.toString() + "%",
                       style: const TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 25),
                     ),
@@ -67,14 +65,14 @@ class _MailboxDetailState extends State<MailboxDetail> {
                 });
               },
               min: 1.0,
-              max: 10.0,
+              max: 100.0,
               activeColor: Colors.yellow,
               inactiveColor: Colors.yellow[100],
               label: limit.round().toString(),
-              divisions: 9,
+              divisions: 99,
             ),
             Text(
-              "Limit: " + limit.round().toString(),
+              "Limit: " + limit.round().toString() + "%",
               style: const TextStyle(fontSize: 20),
             ),
             Row(

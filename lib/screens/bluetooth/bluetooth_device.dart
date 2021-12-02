@@ -16,6 +16,47 @@ class DeviceScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(device.name),
+        actions: <Widget>[
+          StreamBuilder<BluetoothDeviceState>(
+            stream: device.state,
+            initialData: BluetoothDeviceState.connecting,
+            builder: (c, snapshot) {
+              VoidCallback? onPressed;
+              String text;
+              switch (snapshot.data) {
+                case BluetoothDeviceState.connected:
+                  onPressed = () => device.disconnect();
+                  text = 'DISCONNECT';
+                  break;
+                case BluetoothDeviceState.disconnected:
+                  onPressed = () async {
+                    try {
+                      await device.connect(autoConnect: true);
+                    } catch (e) {
+                      device.disconnect();
+                      developer.log(e.toString());
+                    }
+                  };
+                  text = 'CONNECT';
+                  break;
+                default:
+                  onPressed = null;
+                  text = snapshot.data.toString().substring(21).toUpperCase();
+                  break;
+              }
+              return TextButton(
+                onPressed: onPressed,
+                child: Text(
+                  text,
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .button
+                      ?.copyWith(color: Colors.white),
+                ),
+              );
+            },
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
