@@ -1,6 +1,8 @@
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:developer' as developer;
@@ -29,15 +31,16 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   getSwitchValues() async {
-    isSwitched = (await getSwitchState())!;
+    isSwitched = (await getSwitchState("switchState")) ?? false;
+    isDarkTheme = (await getSwitchState("darkTheme")) ?? false;
     setState(() {});
   }
 
-  Future<bool> saveSwitchState(bool value) async {
+  Future<bool> saveSwitchState(String keyName, bool value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool("switchState", value);
-    print('Switch Value saved $value');
-    return prefs.setBool("switchState", value);
+    prefs.setBool(keyName, value);
+    print('Switch Value saved $value on key $keyName');
+    return prefs.setBool(keyName, value);
   }
 
   Future<void> deletePin() async {
@@ -46,9 +49,9 @@ class _SettingsPageState extends State<SettingsPage> {
     developer.log("pin deleted");
   }
 
-  Future<bool?> getSwitchState() async {
+  Future<bool?> getSwitchState(String keyName) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool? isSwitchedFT = prefs.getBool("switchState");
+    bool? isSwitchedFT = prefs.getBool(keyName);
     developer.log(isSwitchedFT.toString());
 
     return isSwitchedFT;
@@ -136,7 +139,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     setState(
                       () {
                         isSwitched = value;
-                        saveSwitchState(value);
+                        saveSwitchState("switchState", value);
                         if (isSwitched == true) {
                           pin.clear();
                           confirmPin.clear();
@@ -148,7 +151,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 deletePin();
                                 setState(() {
                                   isSwitched = false;
-                                  saveSwitchState(false);
+                                  saveSwitchState("switchState", false);
                                 });
                                 return true;
                               },
