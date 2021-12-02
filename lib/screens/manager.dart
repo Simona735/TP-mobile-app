@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:tp_mobile_app/routes/router.gr.dart';
 
 class MainPage extends StatelessWidget {
@@ -8,7 +9,7 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return GetMaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Mailbox',
       routerDelegate: _appRouter.delegate(),
