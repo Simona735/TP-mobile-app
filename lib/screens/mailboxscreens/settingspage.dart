@@ -17,6 +17,7 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   final pinSize = 4;
   bool isSwitched = false;
+  bool isDarkTheme = false;
   final TextEditingController pin = TextEditingController();
   final TextEditingController confirmPin = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -254,6 +255,41 @@ class _SettingsPageState extends State<SettingsPage> {
               ],
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: const [
+                    Icon(
+                        Icons.dark_mode_outlined, size: 35
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 5),
+                      child: Text("Tmavá téma", style: TextStyle(fontSize: 16)),
+                    ),
+                  ],
+                ),
+                Switch(
+                  value: isDarkTheme,
+                  onChanged: (value) {
+                    setState(() {
+                      isDarkTheme = value;
+                      saveSwitchState("darkTheme", value);
+                      if (value) {
+                        Get.changeThemeMode(ThemeMode.dark);
+                        // SettingsPage.is_dark = false;
+                      } else {
+                        Get.changeThemeMode(ThemeMode.light);
+                        // SettingsPage.is_dark = true;
+                      }
+                    });
+                  },
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );
