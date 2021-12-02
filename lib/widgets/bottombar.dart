@@ -33,6 +33,7 @@ class BottomBar extends StatelessWidget {
         );
       },
       bottomNavigationBuilder: (_, tabsRouter) => SalomonBottomBar(
+        selectedItemColor: Theme.of(context).bottomAppBarColor,
         margin: const EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 10,
