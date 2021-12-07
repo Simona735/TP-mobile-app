@@ -51,7 +51,7 @@ class Notifications {
 
   static showToastMessage(String message) {
     Fluttertoast.showToast(
-        msg: "This is Center Short Toast",
+        msg: message,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         backgroundColor: Colors.blue,
