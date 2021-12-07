@@ -1,4 +1,6 @@
+import 'dart:developer';
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -55,5 +57,10 @@ class Notifications {
         backgroundColor: Colors.blue,
         textColor: Colors.black38,
         fontSize: 16.0);
+  }
+
+  static Future<void> pushMessage(RemoteMessage message) async {
+    log(message.data.toString());
+    AwesomeNotifications().createNotificationFromJsonData(message.data);
   }
 }
