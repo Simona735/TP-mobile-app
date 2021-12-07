@@ -1,5 +1,6 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Notifications {
   static SnackBar snackBar(IconData icon, String text) {
@@ -44,5 +45,15 @@ class Notifications {
           bigPicture: picture,
           notificationLayout: NotificationLayout.BigPicture),
     );
+  }
+
+  static showToastMessage(String message) {
+    Fluttertoast.showToast(
+        msg: "This is Center Short Toast",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.blue,
+        textColor: Colors.black38,
+        fontSize: 16.0);
   }
 }
