@@ -8,7 +8,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   Authentication.init();
-  Database.getDataService('user_id', 'mailbox_id');
+  Database.getDataService('user01', 'mailbox01');
+  Database.updateDataService('user01','mailbox01','8888','8888');
   runApp(MainPage());
 }
 
