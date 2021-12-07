@@ -22,6 +22,7 @@ class _MailboxDetailState extends State<MailboxDetail> {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      padding: const EdgeInsets.all(10),
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -31,6 +32,7 @@ class _MailboxDetailState extends State<MailboxDetail> {
               child: CircularStepProgressIndicator(
                 totalSteps: limit.round(),
                 currentStep: listPercentage,
+                circularDirection: CircularDirection.counterclockwise,
                 stepSize: 5,
                 selectedColor:
                     listPercentage <= limit.round() ? Colors.yellow : Colors.red,
@@ -41,11 +43,11 @@ class _MailboxDetailState extends State<MailboxDetail> {
                 selectedStepSize: 15,
                 roundedCap: (_, __) => true,
                 child: Center(
-                    child: Column(
+                  child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      listPercentage.toString() + "%",
+                      (limit.round() < listPercentage) ? 'Full': listPercentage.toString() + "%",
                       style: const TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 25),
                     ),
@@ -80,7 +82,9 @@ class _MailboxDetailState extends State<MailboxDetail> {
               children: [
                 Container(
                   margin: const EdgeInsets.only(left: 10),
-                  child: const Text("Low power mode"),
+                  child: const Text("Low power mode",
+                    style: TextStyle(fontSize: 16),
+                  ),
                 ),
                 Switch(
                   value: isSwitched,
@@ -94,6 +98,55 @@ class _MailboxDetailState extends State<MailboxDetail> {
                 )
               ],
             )
+          ],
+        ),
+        Column(
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                    title: RichText(
+                      text: const TextSpan(
+                        children: [
+                          WidgetSpan(
+                            child: Icon(Icons.warning,
+                              size: 20,
+                              color: Colors.red,
+                            ),
+                          ),
+                          TextSpan(
+                            text: " Reset schránky",
+                            style: TextStyle(color: Colors.red,
+                              fontWeight: FontWeight.bold,
+                            )
+                          ),
+                        ],
+                      ),
+                    ),
+                    content: const Text('Nejaky popis toho co to je za reset a ci si je isty'),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'Cancel'),
+                        child: const Text('Cancel'),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'OK'),
+                        child: const Text('OK',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                );
+              },
+              child: const Text("Reset"),
+              style: ElevatedButton.styleFrom(primary: Colors.red),
+            ),
           ],
         )
       ],
