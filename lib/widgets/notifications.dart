@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 
 class Notifications {
@@ -21,6 +22,14 @@ class Notifications {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
+    );
+  }
+
+  static void basicNotification(String title, String body, int id,
+      {String key = 'key1'}) async {
+    await AwesomeNotifications().createNotification(
+      content: NotificationContent(
+          id: id, channelKey: key, title: title, body: body),
     );
   }
 }
