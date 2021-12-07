@@ -32,4 +32,17 @@ class Notifications {
           id: id, channelKey: key, title: title, body: body),
     );
   }
+
+  static pictureNotification(String title, String body, String picture, int id,
+      {String key = 'key1'}) async {
+    await AwesomeNotifications().createNotification(
+      content: NotificationContent(
+          id: id,
+          channelKey: key,
+          title: title,
+          body: body,
+          bigPicture: picture,
+          notificationLayout: NotificationLayout.BigPicture),
+    );
+  }
 }
