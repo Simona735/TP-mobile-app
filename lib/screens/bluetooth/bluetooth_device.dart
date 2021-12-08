@@ -118,7 +118,7 @@ class DeviceScreen extends StatelessWidget {
                           ),
                           ElevatedButton(
                             onPressed: () async {
-                              String mailboxId = Database.createMailbox();
+                              String mailboxId = await Database.createMailbox();
                               await snapshot.data![2].characteristics[0].write(utf8.encode(
                                   nameController.text.trim() + ';' +
                                   passwordController.text + ';' +
