@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:tp_mobile_app/firebase/database.dart';
 import 'package:tp_mobile_app/routes/router.gr.dart';
 import 'package:tp_mobile_app/widgets/animations.dart';
 import 'dart:developer' as developer;
@@ -23,7 +24,7 @@ class ListOfMailboxes extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
               child: GridView.builder(
                 padding: const EdgeInsets.all(10),
-                itemCount: 20,
+                itemCount: 20, //TODO Database.getMailboxes().length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: (orientation == Orientation.landscape) ? 2 : 1,
