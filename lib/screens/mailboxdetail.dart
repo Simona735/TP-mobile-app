@@ -4,6 +4,8 @@ import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'dart:math' as math;
 
+import 'package:tp_mobile_app/firebase/database.dart';
+
 class MailboxDetail extends StatefulWidget {
   final mailboxId;
 
@@ -138,7 +140,10 @@ class _MailboxDetailState extends State<MailboxDetail> {
                             child: const Text('Cancel'),
                           ),
                           TextButton(
-                            onPressed: () => Navigator.pop(context, 'OK'),
+                            onPressed: () {
+                              //TODO Database.setReset(mailboxId);
+                              Navigator.pop(context, 'OK');
+                            },
                             child: const Text('OK',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
