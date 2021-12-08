@@ -12,6 +12,7 @@ class ListOfMailboxes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Map<dynamic, dynamic> mailboxes = Database.getMailboxes();
     Orientation orientation = MediaQuery.of(context).orientation;
     return Scaffold(
       appBar: AppBar(
@@ -24,18 +25,22 @@ class ListOfMailboxes extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
               child: GridView.builder(
                 padding: const EdgeInsets.all(10),
-                itemCount: 20, //TODO Database.getMailboxes().length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: (orientation == Orientation.landscape) ? 2 : 1,
                   mainAxisSpacing: 10,
                   crossAxisSpacing: 10,
                 ),
+                itemCount: mailboxes.length,
                 itemBuilder: (_, index) => ItemMailbox(
                   press: () => {
                     Navigator.of(context).push(
-                        swipeRouteAnimation(MailboxDetail(mailboxId: index))),
+                        swipeRouteAnimation(MailboxDetail(
+                            mailboxId: mailboxes.keys.firstWhere((k) => mailboxes[k] == mailboxes[index])
+                        ))
+                    ),
                   },
+                  name: mailboxes[index],
                 ),
               ),
             ),
@@ -48,8 +53,9 @@ class ListOfMailboxes extends StatelessWidget {
 
 class ItemMailbox extends StatelessWidget {
   final VoidCallback press;
+  final String name;
 
-  const ItemMailbox({Key? key, required this.press}) : super(key: key);
+  const ItemMailbox({Key? key, required this.press, required this.name}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -74,11 +80,11 @@ class ItemMailbox extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
-          children: const [
+          children: [
             Text(
-              "Schránka",
+              name,
             ),
-            Icon(
+            const Icon(
               Icons.bolt,
               color: Colors.green,
             ),
