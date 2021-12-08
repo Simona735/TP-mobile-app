@@ -22,12 +22,26 @@ class _MailboxDetailState extends State<MailboxDetail> {
   double limit = 30;
   int listPercentage = 30;
   bool isSwitched = false;
+  late Future<Map> mailboxData;
+
+  @override
+  initState() {
+    super.initState();
+    // TODO get all values
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Detail schránky"),
+        title: const Text("Schránka 1"),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.edit),
+            tooltip: 'Edit',
+            onPressed: () { },
+          ),
+        ],
       ),
       body: ListView(
         padding: const EdgeInsets.all(10),
