@@ -40,7 +40,7 @@ class Database{
     });
     await _messagesRef.child((Authentication.getUserId ?? '') + '/mailbox' + mailboxId + '/settings/').set({
       'duty_cycle': 'time',
-      'name': 'name' + mailboxId,
+      'name': 'Schránka ' + mailboxId,
     });
     return 'mailbox' + updateMailboxIter(mailboxId);
   }
