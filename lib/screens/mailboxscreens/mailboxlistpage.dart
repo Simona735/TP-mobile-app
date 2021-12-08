@@ -7,46 +7,84 @@ import 'dart:developer' as developer;
 
 import '../mailboxdetail.dart';
 
-class ListOfMailboxes extends StatelessWidget {
+class ListOfMailboxes extends StatefulWidget {
   const ListOfMailboxes({Key? key}) : super(key: key);
 
   @override
+  State<StatefulWidget> createState() => _ListOfMailboxes();
+}
+
+
+class _ListOfMailboxes extends State<ListOfMailboxes> {
+  late Future<Map> mailboxes;
+
+  @override
+  initState() {
+    super.initState();
+    mailboxes = Database.getMailboxes();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    Map<dynamic, dynamic> mailboxes = Database.getMailboxes();
     Orientation orientation = MediaQuery.of(context).orientation;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Zoznam schránok"),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-              child: GridView.builder(
-                padding: const EdgeInsets.all(10),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: (orientation == Orientation.landscape) ? 2 : 1,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
+      body: FutureBuilder(
+        future: mailboxes,
+        initialData: 'Loading...',
+        builder: (BuildContext context, AsyncSnapshot<Object> snapshot){
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(
+                  '${snapshot.error} occurred',
+                  style: const TextStyle(fontSize: 18),
                 ),
-                itemCount: mailboxes.length,
-                itemBuilder: (_, index) => ItemMailbox(
-                  press: () => {
-                    Navigator.of(context).push(
-                        swipeRouteAnimation(MailboxDetail(
-                            mailboxId: mailboxes.keys.firstWhere((k) => mailboxes[k] == mailboxes[index])
-                        ))
+              );
+            } else if (snapshot.hasData) {
+              final data = snapshot.data as Map;
+              return Column(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                      child: GridView.builder(
+                        padding: const EdgeInsets.all(10),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: (orientation == Orientation.landscape) ? 2 : 1,
+                          mainAxisSpacing: 10,
+                          crossAxisSpacing: 10,
+                        ),
+                        itemCount: data.length,
+                        itemBuilder: (_, index) {
+                          String key = data.keys.elementAt(index);
+                          String value = data.values.elementAt(index);
+                          return ItemMailbox(
+                            press: () => {
+                              Navigator.of(context).push(
+                                  swipeRouteAnimation(MailboxDetail(
+                                      mailboxId: key
+                                  ))
+                              ),
+                            },
+                            name: value,
+                          );
+                        }
+                      ),
                     ),
-                  },
-                  name: mailboxes[index],
-                ),
-              ),
-            ),
-          )
-        ],
-      ),
+                  )
+                ],
+              );
+            }
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      )
     );
   }
 }
