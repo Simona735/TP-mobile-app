@@ -51,7 +51,9 @@ class Database{
 
   static Map<dynamic, dynamic> getMailboxes(){
     var mailboxes = {};
-    _messagesRef.child((Authentication.getUserId ?? '') +'/').once().then((DataSnapshot snapshot) {
+    //TODO
+    // _messagesRef.child((Authentication.getUserId ?? '') +'/').once().then((DataSnapshot snapshot) {
+    _messagesRef.child('user01/').once().then((DataSnapshot snapshot) {
       var data = snapshot.value;
       data.remove('mailbox_iter');
       if (data.length > 0) {
