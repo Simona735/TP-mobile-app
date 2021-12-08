@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:tp_mobile_app/screens/pin/pinpageview.dart';
-import 'package:tp_mobile_app/screens/pin/scroll_behavior.dart';
 
 class PinPage extends StatelessWidget {
   const PinPage({Key? key}) : super(key: key);
@@ -10,14 +9,8 @@ class PinPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        final app = MaterialApp(
-          debugShowCheckedModeBanner: false,
-          scrollBehavior: MyCustomScrollBehavior(),
-          theme: ThemeData(
-            scaffoldBackgroundColor: Colors.white,
-            appBarTheme: const AppBarTheme(color: Colors.white),
-          ),
-          home: const PinPutView(),
+        const app = Scaffold(
+          body: PinPutView()
         );
         if (constraints.maxWidth > 600 && constraints.maxHeight > 600) {
           return Container(
