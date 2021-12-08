@@ -82,9 +82,9 @@ class RegistrationPage extends StatelessWidget {
               onPressed: () async {
                 if(password1Controller.text == password2Controller.text){
                   String message = await Authentication.registerAccount(
-                    nameController.text,
-                    surnameController.text,
-                    emailController.text,
+                    nameController.text.trim(),
+                    surnameController.text.trim(),
+                    emailController.text.trim(),
                     password1Controller.text);
                   if(Authentication.isSignedIn){
                     Database.createUser();
