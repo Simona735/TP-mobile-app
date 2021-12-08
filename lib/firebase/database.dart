@@ -1,4 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 
 import 'authentication.dart';
 
@@ -11,6 +12,12 @@ class Database{
     _messagesRef.child(Authentication.getUserId ?? '').set({
       'mailbox_iter': 0,
     });
+  }
+
+  static String getMailboxIter(){
+    String data = '';
+    data = _messagesRef.child((Authentication.getUserId ?? '') + '/mailbox_iter').key;
+    return data;
   }
 
   // Create record with child "user_id": user_id ,"mailbox_id":mailbox_id
