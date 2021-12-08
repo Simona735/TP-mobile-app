@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
@@ -45,6 +47,20 @@ class Database{
     _messagesRef.child((Authentication.getUserId ?? '') + '/' + mailboxId + '/service/').update({
       'reset': true,
     });
+  }
+
+  static Map<dynamic, dynamic> getMailboxes(){
+    var mailboxes = {};
+    _messagesRef.child((Authentication.getUserId ?? '') +'/').once().then((DataSnapshot snapshot) {
+      var data = snapshot.value;
+      data.remove('mailbox_iter');
+      if (data.length > 0) {
+        for (var k in data.keys) {
+          mailboxes[k] = data[k]['settings']['name'];
+        }
+      }
+    });
+    return mailboxes;
   }
 
   //Writing data and returning a string with data from the service table
