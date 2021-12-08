@@ -49,23 +49,7 @@ class Database{
     });
   }
 
-  static Map<dynamic, dynamic> getMailboxes(){
-    var mailboxes = {};
-    //TODO prvy riadok bude oficialne, druhy je na testovanie
-    // _messagesRef.child((Authentication.getUserId ?? '') +'/').once().then((DataSnapshot snapshot) {
-    _messagesRef.child('user01/').once().then((DataSnapshot snapshot) {
-      var data = snapshot.value;
-      data.remove('mailbox_iter');
-      if (data.length > 0) {
-        for (var k in data.keys) {
-          mailboxes[k] = data[k]['settings']['name'];
-        }
-      }
-    });
-    return mailboxes;
-  }
-
-  static Future<Map> getMailboxesAsync() async{
+  static Future<Map> getMailboxes() async{
     var mailboxes = {};
     //TODO prvy riadok bude oficialne, druhy je na testovanie
     // await _messagesRef.child((Authentication.getUserId ?? '') +'/').once().then((DataSnapshot snapshot) {
