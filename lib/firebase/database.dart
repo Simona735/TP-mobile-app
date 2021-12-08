@@ -6,6 +6,12 @@ class Database{
   static final DatabaseReference _messagesRef =
   FirebaseDatabase.instance.reference();// Instance on DB
 
+  // Create user
+  static void createUser(){
+    _messagesRef.child(Authentication.getUserId ?? '').set({
+      'mailbox_iter': 0,
+    });
+  }
 
   // Create record with child "user_id": user_id ,"mailbox_id":mailbox_id
   static void createRecordService(String mailboxId, String counter, String distance){
