@@ -20,6 +20,19 @@ class Database{
     return data;
   }
 
+  static void createMailbox(){
+    String mailboxId = getMailboxIter();
+    _messagesRef.child((Authentication.getUserId ?? '') +'/'+mailboxId+'/service/').set({
+      'counter': 0,
+      'distance_from_senzor': 100,
+      'reset': false,
+    });
+    _messagesRef.child((Authentication.getUserId ?? '') +'/'+mailboxId+'/settings/').set({
+      'duty_cycle': 'time',
+    });
+    
+  }
+
   // Create record with child "user_id": user_id ,"mailbox_id":mailbox_id
   static void createRecordService(String mailboxId, String counter, String distance){
     _messagesRef.child((Authentication.getUserId ?? '') +'/'+mailboxId+'/service/').set({
