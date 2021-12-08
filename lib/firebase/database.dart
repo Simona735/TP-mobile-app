@@ -7,7 +7,6 @@ class Database{
   static final DatabaseReference _messagesRef =
   FirebaseDatabase.instance.reference();// Instance on DB
 
-  // Create user
   static void createUser(){
     _messagesRef.child(Authentication.getUserId ?? '').set({
       'mailbox_iter': 0,
