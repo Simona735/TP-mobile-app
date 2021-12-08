@@ -30,8 +30,7 @@ class _MailboxDetailState extends State<MailboxDetail> {
   initState() {
     super.initState();
     //TODO get all values
-    //TODO set correct ID
-    title = Database.getTitleById('mailbox2');
+    title = Database.getTitleById(widget.mailboxId);
   }
 
   @override
@@ -174,7 +173,7 @@ class _MailboxDetailState extends State<MailboxDetail> {
                                   ),
                                   TextButton(
                                     onPressed: () {
-                                      //TODO Database.setReset(mailboxId);
+                                      Database.setReset(widget.mailboxId);
                                       Navigator.pop(context, 'OK');
                                     },
                                     child: const Text('OK',
