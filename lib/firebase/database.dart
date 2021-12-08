@@ -20,6 +20,17 @@ class Database{
     return data;
   }
 
+  static String updateMailboxIter(String current){
+    var num = int.parse(current) + 1;
+    _messagesRef.child(Authentication.getUserId ?? '').update({
+      'mailbox_iter': num,
+    });
+
+    String data = '';
+    data = _messagesRef.child((Authentication.getUserId ?? '') + '/mailbox_iter').key;
+    return data;
+  }
+
   static void createMailbox(){
     String mailboxId = getMailboxIter();
     _messagesRef.child((Authentication.getUserId ?? '') +'/'+mailboxId+'/service/').set({
@@ -30,7 +41,7 @@ class Database{
     _messagesRef.child((Authentication.getUserId ?? '') +'/'+mailboxId+'/settings/').set({
       'duty_cycle': 'time',
     });
-    
+
   }
 
   // Create record with child "user_id": user_id ,"mailbox_id":mailbox_id
