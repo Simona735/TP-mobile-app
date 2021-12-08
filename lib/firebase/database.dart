@@ -15,9 +15,11 @@ class Database{
     });
   }
 
-  static String getMailboxIter(){
+  static Future<String> getMailboxIter() async {
     String data = '';
-    data = _messagesRef.child((Authentication.getUserId ?? '') + '/mailbox_iter').key;
+    await _messagesRef.child((Authentication.getUserId ?? '') + '/mailbox_iter').once().then((DataSnapshot snapshot) {
+      data = snapshot.value.toString();
+    });
     return data;
   }
 
@@ -29,16 +31,16 @@ class Database{
     return num.toString();
   }
 
-  static String createMailbox(){
-    String mailboxId = getMailboxIter();
-    _messagesRef.child((Authentication.getUserId ?? '') + '/' + mailboxId + '/service/').set({
+  static Future<String> createMailbox() async {
+    String mailboxId = await getMailboxIter();
+    await _messagesRef.child((Authentication.getUserId ?? '') + '/mailbox' + mailboxId + '/service/').set({
       'counter': 0,
       'distance_from_senzor': 100,
       'reset': false,
     });
-    _messagesRef.child((Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/').set({
+    await _messagesRef.child((Authentication.getUserId ?? '') + '/mailbox' + mailboxId + '/settings/').set({
       'duty_cycle': 'time',
-      'name': mailboxId,
+      'name': 'name' + mailboxId,
     });
     return 'mailbox' + updateMailboxIter(mailboxId);
   }
@@ -51,9 +53,7 @@ class Database{
 
   static Future<Map> getMailboxes() async{
     var mailboxes = {};
-    //TODO prvy riadok bude oficialne, druhy je na testovanie
-    // await _messagesRef.child((Authentication.getUserId ?? '') +'/').once().then((DataSnapshot snapshot) {
-    await _messagesRef.child('user01/').once().then((DataSnapshot snapshot) {
+    await _messagesRef.child((Authentication.getUserId ?? '') +'/').once().then((DataSnapshot snapshot) {
       var data = snapshot.value;
       data.remove('mailbox_iter');
       if (data.length > 0) {
