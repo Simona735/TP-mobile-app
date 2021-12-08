@@ -1,13 +1,15 @@
 import 'package:firebase_database/firebase_database.dart';
 
+import 'authentication.dart';
+
 class Database{
   static final DatabaseReference _messagesRef =
   FirebaseDatabase.instance.reference();// Instance on DB
 
 
   // Create record with child "user_id": user_id ,"mailbox_id":mailbox_id
-  static void createRecordService(String user_id, String mailbox_id, String counter, String distance){
-    _messagesRef.child(user_id +'/'+mailbox_id+'/service/').set({
+  static void createRecordService(String mailboxId, String counter, String distance){
+    _messagesRef.child((Authentication.getUserId ?? '') +'/'+mailboxId+'/service/').set({
       // service -> "counter": counter
       'counter': counter,
       // service -> "distance_from_senzor: distance"
@@ -16,10 +18,10 @@ class Database{
   }
 
   //Writing data and returning a string with data from the service table
-  static String getDataService(String user_id, String mailbox_id){
+  static String getDataService(String mailboxId){
     String data = '';
     //Redirect to service table
-    _messagesRef.child(user_id +'/'+mailbox_id+'/service/').once().then((DataSnapshot snapshot) {
+    _messagesRef.child((Authentication.getUserId ?? '') +'/'+mailboxId+'/service/').once().then((DataSnapshot snapshot) {
       // Print all data from the service table
       print( 'Data SERVICE: ${snapshot. value } ' );
       data = snapshot.value.toString();
@@ -28,18 +30,18 @@ class Database{
   }
 
   // To change the data for a user's mailbox service table
-  static void updateDataService(String user_id, String mailbox_id, String counter, String distance){
+  static void updateDataService(String mailboxId, String counter, String distance){
     //Redirect to service table and update
-    _messagesRef.child(user_id).child(mailbox_id).child('service').update({
+    _messagesRef.child(Authentication.getUserId ?? '').child(mailboxId).child('service').update({
       'counter': counter,
       'distance_from_senzor': distance
     });
   }
 
   //Removing data from the service table for a user's mailbox
-   static void deleteDataService(String user_id, String mailbox_id){
+   static void deleteDataService(String mailboxId){
     //Redirect to service table an remove
-    _messagesRef.child(user_id).child(mailbox_id).child('service').remove();
+    _messagesRef.child(Authentication.getUserId ?? '').child(mailboxId).child('service').remove();
   }
 
 }
