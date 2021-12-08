@@ -41,16 +41,6 @@ class Database{
     return 'mailbox' + updateMailboxIter(mailboxId);
   }
 
-  // Create record with child "user_id": user_id ,"mailbox_id":mailbox_id
-  static void createRecordService(String mailboxId, String counter, String distance){
-    _messagesRef.child((Authentication.getUserId ?? '') +'/'+mailboxId+'/service/').set({
-      // service -> "counter": counter
-      'counter': counter,
-      // service -> "distance_from_senzor: distance"
-      'distance_from_senzor': distance,
-    });
-  }
-
   //Writing data and returning a string with data from the service table
   static String getDataService(String mailboxId){
     String data = '';
