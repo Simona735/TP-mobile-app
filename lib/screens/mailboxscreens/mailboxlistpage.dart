@@ -1,7 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:tp_mobile_app/routes/router.gr.dart';
+import 'package:tp_mobile_app/widgets/animations.dart';
 import 'dart:developer' as developer;
+
+import '../mailboxdetail.dart';
 
 class ListOfMailboxes extends StatelessWidget {
   const ListOfMailboxes({Key? key}) : super(key: key);
@@ -10,6 +13,9 @@ class ListOfMailboxes extends StatelessWidget {
   Widget build(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Zoznam schránok"),
+      ),
       body: Column(
         children: [
           Expanded(
@@ -26,8 +32,9 @@ class ListOfMailboxes extends StatelessWidget {
                 ),
                 itemBuilder: (_, index) => ItemMailbox(
                   press: () => {
-                    AutoRouter.of(context).push(MailboxDetailRoute(mailboxId: index))
-                  }
+                    Navigator.of(context).push(
+                        swipeRouteAnimation(MailboxDetail(mailboxId: index))),
+                  },
                 ),
               ),
             ),

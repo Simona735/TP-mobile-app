@@ -3,6 +3,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:tp_mobile_app/routes/router.gr.dart';
 import 'package:tp_mobile_app/firebase/authentication.dart';
+import 'package:tp_mobile_app/screens/authscreens/passwordreset.dart';
+import 'package:tp_mobile_app/screens/authscreens/registrationpage.dart';
+import 'package:tp_mobile_app/widgets/animations.dart';
 
 
 class LoginPage extends StatefulWidget{
@@ -63,8 +66,9 @@ class _LoginPage extends State<LoginPage> {
                             fontSize: 16),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
-                              AutoRouter.of(context).pop();
-                              AutoRouter.of(context).push(PasswordResetPageRoute());
+                              Navigator.of(context).push(swipeRouteAnimation(PasswordResetPage()));
+                              // AutoRouter.of(context).pop();
+                              // AutoRouter.of(context).push(PasswordResetPageRoute());
                             },
                         ),
                       ],
@@ -106,7 +110,7 @@ class _LoginPage extends State<LoginPage> {
             child: ElevatedButton(
               onPressed: () {
                 AutoRouter.of(context).pop();
-                AutoRouter.of(context).push(RegistrationPageRoute());
+                Navigator.of(context).push(swipeRouteAnimation(RegistrationPage()));
               },
               child: const Text("Registrácia"),
               style: ElevatedButton.styleFrom(primary: Colors.red),

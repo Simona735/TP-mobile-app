@@ -6,7 +6,6 @@ import 'package:tp_mobile_app/routes/router.gr.dart';
 class BottomBar extends StatelessWidget {
   BottomBar({Key? key}) : super(key: key);
 
-  final nameOfTabsInAppBar = ['Zoznam schránok', 'Nastavenia', 'Profil', 'Pridanie schránky'];
 
   @override
   Widget build(BuildContext context) {
@@ -19,18 +18,20 @@ class BottomBar extends StatelessWidget {
       ],
       builder: (context, child, animation) {
         return Scaffold(
-          body: FadeTransition(
-            opacity: CurvedAnimation(
-              parent: animation,
-              curve: Curves.slowMiddle,
+          body: ScaleTransition(
+            scale: Tween<double>(
+              begin: 1.0,
+              end: 1.0,
+            ).animate(
+              CurvedAnimation(
+                parent: animation,
+                curve: Curves.fastOutSlowIn,
+              ),
             ),
             child: child,
           ),
         );
       },
-      appBarBuilder: (_, tabsRouter) => AppBar(
-        title: Text(nameOfTabsInAppBar[tabsRouter.activeIndex]),
-      ),
       bottomNavigationBuilder: (_, tabsRouter) => SalomonBottomBar(
         margin: const EdgeInsets.symmetric(
           horizontal: 20,

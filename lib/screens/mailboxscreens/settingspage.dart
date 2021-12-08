@@ -109,6 +109,9 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     setState(() {});
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Nastavenia"),
+      ),
       body: Column(
         children: [
           Padding(
@@ -122,11 +125,8 @@ class _SettingsPageState extends State<SettingsPage> {
                     Icon(Icons.fingerprint, size: 35),
                     Padding(
                       padding: EdgeInsets.fromLTRB(5.0, 0, 0, 0),
-                      child:
-                        Text(
-                            "Biometrické prihlásenie",
-                            style: TextStyle(fontSize: 16)
-                        ),
+                      child: Text("Biometrické prihlásenie",
+                          style: TextStyle(fontSize: 16)),
                     ),
                   ],
                 ),
@@ -134,7 +134,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   value: isSwitched,
                   onChanged: (value) => {
                     setState(
-                          () {
+                      () {
                         isSwitched = value;
                         saveSwitchState(value);
                         if (isSwitched == true) {
@@ -166,9 +166,11 @@ class _SettingsPageState extends State<SettingsPage> {
                                             TextFormField(
                                               obscureText: true,
                                               maxLength: pinSize,
-                                              style: const TextStyle(fontSize: 20),
+                                              style:
+                                                  const TextStyle(fontSize: 20),
                                               textAlign: TextAlign.center,
-                                              textInputAction: TextInputAction.next,
+                                              textInputAction:
+                                                  TextInputAction.next,
                                               controller: pin,
                                               validator: (value) {
                                                 if (value!.isEmpty) {
@@ -179,11 +181,12 @@ class _SettingsPageState extends State<SettingsPage> {
                                                 }
                                                 return null;
                                               },
-                                              keyboardType: TextInputType.number,
+                                              keyboardType:
+                                                  TextInputType.number,
                                               inputFormatters: <
                                                   TextInputFormatter>[
-                                                FilteringTextInputFormatter.allow(
-                                                    RegExp(r'[0-9]')),
+                                                FilteringTextInputFormatter
+                                                    .allow(RegExp(r'[0-9]')),
                                               ],
                                               decoration: const InputDecoration(
                                                   labelText: 'Zadaj PIN'),
@@ -191,9 +194,11 @@ class _SettingsPageState extends State<SettingsPage> {
                                             TextFormField(
                                               obscureText: true,
                                               maxLength: pinSize,
-                                              style: const TextStyle(fontSize: 20),
+                                              style:
+                                                  const TextStyle(fontSize: 20),
                                               textAlign: TextAlign.center,
-                                              textInputAction: TextInputAction.next,
+                                              textInputAction:
+                                                  TextInputAction.next,
                                               controller: confirmPin,
                                               validator: (value) {
                                                 if (value!.isEmpty) {
@@ -204,11 +209,12 @@ class _SettingsPageState extends State<SettingsPage> {
                                                 }
                                                 return null;
                                               },
-                                              keyboardType: TextInputType.number,
+                                              keyboardType:
+                                                  TextInputType.number,
                                               inputFormatters: <
                                                   TextInputFormatter>[
-                                                FilteringTextInputFormatter.allow(
-                                                    RegExp(r'[0-9]')),
+                                                FilteringTextInputFormatter
+                                                    .allow(RegExp(r'[0-9]')),
                                               ],
                                               decoration: const InputDecoration(
                                                   labelText: 'Potvrď PIN'),
@@ -218,7 +224,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                       ),
                                       ElevatedButton(
                                         onPressed: () {
-                                          if (_formKey.currentState!.validate()) {
+                                          if (_formKey.currentState!
+                                              .validate()) {
                                             checkPin()
                                                 ? Navigator.of(context).pop()
                                                 : showErrorDialog(context);
