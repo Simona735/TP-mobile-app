@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:tp_mobile_app/firebase/authentication.dart';
 import 'dart:convert';
 import 'dart:developer' as developer;
+
+import 'package:tp_mobile_app/firebase/database.dart';
 
 class DeviceScreen extends StatelessWidget {
   DeviceScreen({Key? key, required this.device}) : super(key: key);
@@ -115,8 +118,12 @@ class DeviceScreen extends StatelessWidget {
                           ),
                           ElevatedButton(
                             onPressed: () async {
+                              String mailboxId = Database.createMailbox();
                               await snapshot.data![2].characteristics[0].write(utf8.encode(
-                                  nameController.text.trim() + ';' + passwordController.text)
+                                  nameController.text.trim() + ';' +
+                                  passwordController.text + ';' +
+                                  (Authentication.getUserId ?? '-') + ';' +
+                                  mailboxId)
                               );
                               showDialog(
                                   context: context,
