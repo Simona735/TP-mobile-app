@@ -36,6 +36,7 @@ class Database{
     });
     _messagesRef.child((Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/').set({
       'duty_cycle': 'time',
+      'name': mailboxId,
     });
     return 'mailbox' + updateMailboxIter(mailboxId);
   }
