@@ -65,6 +65,14 @@ class Database{
     return mailboxes;
   }
 
+  static Future<String> getTitleById(String mailboxId) async{
+    String data = '';
+    await _messagesRef.child((Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/name').once().then((DataSnapshot snapshot) {
+      data = snapshot.value.toString();
+    });
+    return data;
+  }
+
   //Writing data and returning a string with data from the service table
   static String getDataService(String mailboxId){
     String data = '';
