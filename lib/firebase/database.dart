@@ -29,15 +29,21 @@ class Database{
 
   static String createMailbox(){
     String mailboxId = getMailboxIter();
-    _messagesRef.child((Authentication.getUserId ?? '') +'/'+mailboxId+'/service/').set({
+    _messagesRef.child((Authentication.getUserId ?? '') + '/' + mailboxId + '/service/').set({
       'counter': 0,
       'distance_from_senzor': 100,
       'reset': false,
     });
-    _messagesRef.child((Authentication.getUserId ?? '') +'/'+mailboxId+'/settings/').set({
+    _messagesRef.child((Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/').set({
       'duty_cycle': 'time',
     });
     return 'mailbox' + updateMailboxIter(mailboxId);
+  }
+
+  static void setReset(String mailboxId){
+    _messagesRef.child((Authentication.getUserId ?? '') + '/' + mailboxId + '/service/').update({
+      'reset': true,
+    });
   }
 
   //Writing data and returning a string with data from the service table
