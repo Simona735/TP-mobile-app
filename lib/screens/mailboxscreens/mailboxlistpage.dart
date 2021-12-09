@@ -121,6 +121,7 @@ class ItemMailbox extends StatelessWidget {
           children: [
             Text(
               name,
+              style: const TextStyle(color: Colors.black, fontSize: 18),
             ),
             const Icon(
               Icons.bolt,
