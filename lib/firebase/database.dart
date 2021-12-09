@@ -84,6 +84,12 @@ class Database{
     return data;
   }
 
+  static void updateLimit(String mailboxId, int limit) async{
+    _messagesRef.child((Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/').update({
+      'limit': limit,
+    });
+  }
+
   //------------------------------------------------------------------------
   //Writing data and returning a string with data from the service table
   static String getDataService(String mailboxId){
