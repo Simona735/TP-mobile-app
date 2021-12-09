@@ -90,6 +90,12 @@ class Database{
     });
   }
 
+  static void updateLowPower(String mailboxId, bool value){
+    _messagesRef.child((Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/').update({
+      'low_power': value,
+    });
+  }
+
   //------------------------------------------------------------------------
   //Writing data and returning a string with data from the service table
   static String getDataService(String mailboxId){
