@@ -7,5 +7,6 @@ class Themes {
   static final dark = ThemeData.dark().copyWith(
     bottomAppBarColor: Colors.blue,
     toggleableActiveColor: Colors.blue,
+    colorScheme: ThemeData.dark().colorScheme.copyWith(secondary: Colors.blue),
   );
 }
