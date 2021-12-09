@@ -20,7 +20,6 @@ class MailboxDetail extends StatefulWidget {
 
 class _MailboxDetailState extends State<MailboxDetail> {
   int listPercentage = 30;
-  bool isSwitched = false;
   late Future<Map> mailboxData;
 
   @override
