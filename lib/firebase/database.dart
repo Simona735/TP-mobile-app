@@ -84,7 +84,7 @@ class Database{
     return data;
   }
 
-  static void updateLimit(String mailboxId, int limit) async{
+  static void updateLimit(String mailboxId, int limit){
     _messagesRef.child((Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/').update({
       'limit': limit,
     });
