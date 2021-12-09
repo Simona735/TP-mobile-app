@@ -41,6 +41,8 @@ class Database{
     });
     await _messagesRef.child((Authentication.getUserId ?? '') + '/mailbox' + mailboxId + '/settings/').set({
       'duty_cycle': 'time',
+      'limit': 100,
+      'mode': 2,
       'name': 'Schránka ' + mailboxId,
     });
     return 'mailbox' + mailboxId;
@@ -74,6 +76,7 @@ class Database{
     return data;
   }
 
+  //------------------------------------------------------------------------
   //Writing data and returning a string with data from the service table
   static String getDataService(String mailboxId){
     String data = '';
