@@ -55,8 +55,8 @@ class _ListOfMailboxes extends State<ListOfMailboxes> {
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: (orientation == Orientation.landscape) ? 2 : 1,
                           childAspectRatio: 2,
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10,
+                          mainAxisSpacing: (data.isNotEmpty) ? 10 : 0,
+                          crossAxisSpacing: (data.isNotEmpty) ? 10 : 0,
                         ),
                         itemCount: data.length,
                         itemBuilder: (_, index) {
