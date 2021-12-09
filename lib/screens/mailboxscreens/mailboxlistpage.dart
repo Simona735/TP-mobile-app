@@ -53,8 +53,8 @@ class _ListOfMailboxes extends State<ListOfMailboxes> {
                       child: GridView.builder(
                         padding: const EdgeInsets.all(10),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: (orientation == Orientation.landscape) ? 2 : 1,
+                          crossAxisCount: (orientation == Orientation.landscape) ? 2 : 1,
+                          childAspectRatio: 2,
                           mainAxisSpacing: 10,
                           crossAxisSpacing: 10,
                         ),
