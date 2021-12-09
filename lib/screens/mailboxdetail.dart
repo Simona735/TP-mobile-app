@@ -133,7 +133,8 @@ class _MailboxDetailState extends State<MailboxDetail> {
                             onChanged: (value) => {
                               setState(
                                 () {
-                                  isSwitched = value;
+                                  data['low_power'] = value;
+                                  Database.updateLowPower(widget.mailboxId, value);
                                 },
                               )
                             },
