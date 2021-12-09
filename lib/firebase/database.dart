@@ -23,9 +23,9 @@ class Database{
     return data;
   }
 
-  static String updateMailboxIter(String current){
+  static Future<String> updateMailboxIter(String current)async{
     var num = int.parse(current) + 1;
-    _messagesRef.child(Authentication.getUserId ?? '').update({
+    await _messagesRef.child(Authentication.getUserId ?? '').update({
       'mailbox_iter': num,
     });
     return num.toString();
@@ -33,6 +33,7 @@ class Database{
 
   static Future<String> createMailbox() async {
     String mailboxId = await getMailboxIter();
+    mailboxId = await updateMailboxIter(mailboxId);
     await _messagesRef.child((Authentication.getUserId ?? '') + '/mailbox' + mailboxId + '/service/').set({
       'counter': 0,
       'distance_from_senzor': 100,
@@ -42,7 +43,7 @@ class Database{
       'duty_cycle': 'time',
       'name': 'Schránka ' + mailboxId,
     });
-    return 'mailbox' + updateMailboxIter(mailboxId);
+    return 'mailbox' + mailboxId;
   }
 
   static void setReset(String mailboxId){
