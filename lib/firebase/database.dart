@@ -42,7 +42,7 @@ class Database{
     await _messagesRef.child((Authentication.getUserId ?? '') + '/mailbox' + mailboxId + '/settings/').set({
       'duty_cycle': 'time',
       'limit': 100,
-      'mode': 2,
+      'low_power': false,
       'name': 'Schránka ' + mailboxId,
     });
     return 'mailbox' + mailboxId;
@@ -72,6 +72,14 @@ class Database{
     String data = '';
     await _messagesRef.child((Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/name').once().then((DataSnapshot snapshot) {
       data = snapshot.value.toString();
+    });
+    return data;
+  }
+
+  static Future<Map> getMailboxDetailById(String mailboxId) async{
+    var data = {};
+    await _messagesRef.child((Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/').once().then((DataSnapshot snapshot) {
+      data = snapshot.value ?? {};
     });
     return data;
   }
