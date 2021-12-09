@@ -99,12 +99,12 @@ class ItemMailbox extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(10),
-      splashColor: const Color.fromRGBO(194, 187, 33, 0.7019607843137254),
+      splashColor: Colors.yellow,
       onTap: press,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         decoration: BoxDecoration(
-          color: const Color.fromRGBO(255, 220, 0, 0.7),
+          color: Colors.yellow,
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
