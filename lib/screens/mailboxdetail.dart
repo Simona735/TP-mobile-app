@@ -19,27 +19,23 @@ class MailboxDetail extends StatefulWidget {
 }
 
 class _MailboxDetailState extends State<MailboxDetail> {
-  double limit = 30;
   int listPercentage = 30;
   bool isSwitched = false;
   late Future<Map> mailboxData;
-  late Future<String> title;
-  late String title1;
 
   @override
   initState() {
     super.initState();
-    //TODO get all values
-    title = Database.getTitleById(widget.mailboxId);
+    mailboxData = Database.getMailboxDetailById(widget.mailboxId);
   }
 
   @override
   Widget build(BuildContext context) {
     return
       FutureBuilder(
-        future: title,
+        future: mailboxData,
         initialData: 'Loading...',
-        builder: (BuildContext context, AsyncSnapshot<String> snapshot){
+        builder: (BuildContext context, AsyncSnapshot<Object> snapshot){
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
               return Center(
@@ -49,10 +45,10 @@ class _MailboxDetailState extends State<MailboxDetail> {
                 ),
               );
             } else if (snapshot.hasData) {
-              final data = snapshot.data as String;
+              final data = snapshot.data as Map;
               return Scaffold(
               appBar: AppBar(
-                title: Text(data),
+                title: Text(data['name']),
                 actions: <Widget>[
                   IconButton(
                     icon: const Icon(Icons.edit),
@@ -70,12 +66,12 @@ class _MailboxDetailState extends State<MailboxDetail> {
                       Container(
                         margin: const EdgeInsets.all(10),
                         child: CircularStepProgressIndicator(
-                          totalSteps: limit.round(),
+                          totalSteps: data['limit'].round(),
                           currentStep: listPercentage,
                           circularDirection: CircularDirection.counterclockwise,
                           stepSize: 5,
                           selectedColor:
-                          listPercentage <= limit.round() ? Colors.yellow : Colors.red,
+                          listPercentage <= data['limit'].round() ? Colors.yellow : Colors.red,
                           unselectedColor: Colors.grey[200],
                           padding: 0,
                           width: 150,
@@ -87,7 +83,7 @@ class _MailboxDetailState extends State<MailboxDetail> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                (limit.round() < listPercentage) ? 'Full': listPercentage.toString() + "%",
+                                (data['limit'].round() < listPercentage) ? 'Full': listPercentage.toString() + "%",
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 25),
                               ),
@@ -100,21 +96,27 @@ class _MailboxDetailState extends State<MailboxDetail> {
                   Column(
                     children: [
                       Slider(
-                        value: limit,
+                        value: 1.0 * data['limit'],
                         onChanged: (value) {
                           setState(() {
-                            limit = value;
+                            data['limit'] = value;
+                          });
+                        },
+                        onChangeEnd: (value){
+                          setState(() {
+                            data['limit'] = value;
+                            //TODO write to DB
                           });
                         },
                         min: 1.0,
                         max: 100.0,
                         activeColor: Colors.yellow,
                         inactiveColor: Colors.yellow[100],
-                        label: limit.round().toString(),
+                        label: data['limit'].round().toString(),
                         divisions: 99,
                       ),
                       Text(
-                        "Limit: " + limit.round().toString() + "%",
+                        "Limit: " + data['limit'].round().toString() + "%",
                         style: const TextStyle(fontSize: 20),
                       ),
                       Row(
@@ -127,7 +129,7 @@ class _MailboxDetailState extends State<MailboxDetail> {
                             ),
                           ),
                           Switch(
-                            value: isSwitched,
+                            value: data['low_power'],
                             onChanged: (value) => {
                               setState(
                                 () {
