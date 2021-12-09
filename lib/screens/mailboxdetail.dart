@@ -105,7 +105,7 @@ class _MailboxDetailState extends State<MailboxDetail> {
                         onChangeEnd: (value){
                           setState(() {
                             data['limit'] = value;
-                            //TODO write to DB
+                            Database.updateLimit(widget.mailboxId, data['limit']);
                           });
                         },
                         min: 1.0,
