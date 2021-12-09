@@ -96,6 +96,12 @@ class Database{
     });
   }
 
+  static void updateTitle(String mailboxId, String title){
+    _messagesRef.child((Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/').update({
+      'name': title,
+    });
+  }
+
   //------------------------------------------------------------------------
   //Writing data and returning a string with data from the service table
   static String getDataService(String mailboxId){
