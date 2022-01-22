@@ -1,10 +1,17 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
-import 'dart:math' as math;
+import 'package:tp_mobile_app/bindings/bottom_bar_binding.dart';
+import 'package:tp_mobile_app/controllers/bottom_bar_controller.dart';
+import 'package:tp_mobile_app/controllers/mailboxdetail_controller.dart';
+import 'package:tp_mobile_app/controllers/mailboxlist_controller.dart';
 
 import 'package:tp_mobile_app/firebase/database.dart';
+import 'package:tp_mobile_app/models/settings.dart';
+import 'package:tp_mobile_app/screens/mailboxscreens/mailboxlistpage.dart';
+import 'package:tp_mobile_app/widgets/bottombar.dart';
 
 class MailboxDetail extends StatelessWidget {
   const MailboxDetail({
@@ -13,11 +20,17 @@ class MailboxDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return
-      FutureBuilder(
-        future: mailboxData,
-        initialData: 'Loading...',
-        builder: (BuildContext context, AsyncSnapshot<Object> snapshot){
+    final controller = Get.put(MailboxDetailController());
+    final listOfMailboxesController = Get.find<ListOfMailboxesController>();
+    return WillPopScope(
+      onWillPop: () async {
+        listOfMailboxesController.onInit();
+        return true;
+      },
+      child: FutureBuilder<Settings>(
+        future: controller.futureMailbox,
+        initialData: Settings("", 1, false, ""),
+        builder: (BuildContext context, AsyncSnapshot<Settings> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
               return Center(
@@ -213,7 +226,8 @@ class MailboxDetail extends StatelessWidget {
           return const Center(
             child: CircularProgressIndicator(),
           );
-        }
-      );
+        },
+      ),
+    );
   }
 }
