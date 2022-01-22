@@ -8,6 +8,7 @@ import 'package:tp_mobile_app/firebase/database.dart';
 import 'package:tp_mobile_app/models/mailbox.dart';
 import 'package:tp_mobile_app/routes/router.gr.dart';
 import 'package:tp_mobile_app/widgets/animations.dart';
+import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'dart:developer' as developer;
 
 import '../mailboxdetail.dart';
@@ -136,17 +137,75 @@ class ItemMailbox extends StatelessWidget {
             ),
           ],
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.end,
+        alignment: Alignment.bottomCenter,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Text(
-              name,
-              style: const TextStyle(color: Colors.black, fontSize: 18),
+            Flexible(
+              flex: 4,
+              fit: FlexFit.loose,
+              child: Container(
+                alignment: Alignment.center,
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10)),
+                ),
+                child: CircularStepProgressIndicator(
+                  totalSteps: mailbox.settings.limit,
+                  currentStep: 30,
+                  circularDirection: CircularDirection.counterclockwise,
+                  stepSize: 3,
+                  selectedColor: Colors.red,
+                  unselectedColor: Colors.grey[200],
+                  padding: 0,
+                  width: context.mediaQueryShortestSide * .25,
+                  height: context.mediaQueryShortestSide * .25,
+                  selectedStepSize: 10,
+                  roundedCap: (_, __) => true,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          "30 %",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.black),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ),
-            const Icon(
-              Icons.bolt,
-              color: Colors.green,
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10)),
+                color: Colors.yellow[600],
+              ),
+              child: Row(
+                children: [
+                  Text(
+                    mailbox.settings.name,
+                    style: const TextStyle(color: Colors.black, fontSize: 18),
+                  ),
+                  const Spacer(),
+                  Icon(
+                    Icons.bolt,
+                    size: 30,
+                    color: (mailbox.settings.lowPower)
+                        ? Colors.green
+                        : Colors.white,
+                  ),
+                ],
+              ),
             ),
           ],
         ),
