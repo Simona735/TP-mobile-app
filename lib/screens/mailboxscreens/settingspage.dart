@@ -55,11 +55,10 @@ class SettingsPage extends StatelessWidget {
                             context: context,
                             builder: (context) => WillPopScope(
                               onWillPop: () async {
-                                deletePin();
-                                setState(() {
-                                  isSwitched = false;
-                                  saveSwitchState("switchState", false);
-                                });
+                                controller.deletePin();
+                                // controller.isSwitched.value = false;
+                                // controller.saveSwitchState(
+                                //     "switchState", false);
                                 return true;
                               },
                               child: SingleChildScrollView(
