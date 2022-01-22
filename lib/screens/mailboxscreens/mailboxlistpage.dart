@@ -11,20 +11,6 @@ class ListOfMailboxes extends StatelessWidget {
   const ListOfMailboxes({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _ListOfMailboxes();
-}
-
-
-class _ListOfMailboxes extends State<ListOfMailboxes> {
-  late Future<Map> mailboxes;
-
-  @override
-  initState() {
-    super.initState();
-    mailboxes = Database.getMailboxes();
-  }
-
-  @override
   Widget build(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
     return Scaffold(
