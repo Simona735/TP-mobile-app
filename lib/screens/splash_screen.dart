@@ -4,9 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tp_mobile_app/bindings/bottom_bar_binding.dart';
+import 'package:tp_mobile_app/controllers/bottom_bar_controller.dart';
 import 'package:tp_mobile_app/firebase/authentication.dart';
 import 'package:tp_mobile_app/routes/router.gr.dart';
+import 'package:tp_mobile_app/screens/authscreens/loginpage.dart';
 import 'dart:developer' as developer;
+
+import 'package:tp_mobile_app/screens/pin/pinpage.dart';
+import 'package:tp_mobile_app/widgets/bottombar.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -35,22 +41,17 @@ class _SplashScreenState extends State<SplashScreen> {
       if (value != null) {
         developer.log(value);
         if (Authentication.isSignedIn && value.isNotEmpty) {
-          Navigator.of(context).pop();
-          AutoRouter.of(context).push(const PinPageRoute());
+          Get.offAll(() => const PinPage());
         } else if (Authentication.isSignedIn && value.isEmpty) {
-          Navigator.of(context).pop();
-          AutoRouter.of(context).push(BottomBarRoute());
+          Get.offAll(() => BottomBar(), binding: BottomBarBinding());
         } else {
-          Navigator.of(context).pop();
-          AutoRouter.of(context).push(const LoginPageRoute());
+          Get.offAll(() => const LoginPage());
         }
       } else {
         if (Authentication.isSignedIn) {
-          Navigator.of(context).pop();
-          AutoRouter.of(context).push(BottomBarRoute());
+          Get.offAll(() => BottomBar(), binding: BottomBarBinding());
         } else {
-          Navigator.of(context).pop();
-          AutoRouter.of(context).push(const LoginPageRoute());
+          Get.offAll(() => const LoginPage());
         }
       }
     });
