@@ -1,5 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:tp_mobile_app/controllers/mailboxdetail_controller.dart';
+import 'package:tp_mobile_app/controllers/mailboxlist_controller.dart';
 import 'package:tp_mobile_app/firebase/database.dart';
 import 'package:tp_mobile_app/routes/router.gr.dart';
 import 'package:tp_mobile_app/widgets/animations.dart';
@@ -13,6 +17,8 @@ class ListOfMailboxes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
+    final controller = Get.find<ListOfMailboxesController>();
+    // final controller = Get.put(ListOfMailboxesController());
     return Scaffold(
       appBar: AppBar(
         title: const Text("Zoznam schránok"),
