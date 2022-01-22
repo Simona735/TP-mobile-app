@@ -177,12 +177,12 @@ class SettingsPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                Switch(
-                  value: isDarkTheme,
-                  onChanged: (value) {
-                    setState(() {
-                      isDarkTheme = value;
-                      saveSwitchState("darkTheme", value);
+                Obx(
+                  () => Switch(
+                    value: controller.isDarkTheme.value,
+                    onChanged: (value) {
+                      controller.isDarkTheme.value = value;
+                      controller.saveSwitchState("darkTheme", value);
                       if (value) {
                         Get.changeThemeMode(ThemeMode.dark);
                         // SettingsPage.is_dark = false;
@@ -190,12 +190,12 @@ class SettingsPage extends StatelessWidget {
                         Get.changeThemeMode(ThemeMode.light);
                         // SettingsPage.is_dark = true;
                       }
-                    });
-                  },
-                ),
+                    },
+                  ),
+                )
               ],
             ),
-          )
+          ),
         ],
       ),
     );
