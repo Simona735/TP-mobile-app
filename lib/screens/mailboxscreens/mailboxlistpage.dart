@@ -113,9 +113,10 @@ class ListOfMailboxes extends StatelessWidget {
 
 class ItemMailbox extends StatelessWidget {
   final VoidCallback press;
-  final String name;
+  final Mailbox mailbox;
 
-  const ItemMailbox({Key? key, required this.press, required this.name}) : super(key: key);
+  const ItemMailbox({Key? key, required this.press, required this.mailbox})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
