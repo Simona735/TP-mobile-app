@@ -7,7 +7,7 @@ import 'dart:developer' as developer;
 
 import '../mailboxdetail.dart';
 
-class ListOfMailboxes extends StatefulWidget {
+class ListOfMailboxes extends StatelessWidget {
   const ListOfMailboxes({Key? key}) : super(key: key);
 
   @override
