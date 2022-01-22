@@ -5,6 +5,7 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:tp_mobile_app/controllers/mailboxdetail_controller.dart';
 import 'package:tp_mobile_app/controllers/mailboxlist_controller.dart';
 import 'package:tp_mobile_app/firebase/database.dart';
+import 'package:tp_mobile_app/models/mailbox.dart';
 import 'package:tp_mobile_app/routes/router.gr.dart';
 import 'package:tp_mobile_app/widgets/animations.dart';
 import 'dart:developer' as developer;
