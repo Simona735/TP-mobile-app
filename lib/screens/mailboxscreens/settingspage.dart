@@ -139,11 +139,12 @@ class SettingsPage extends StatelessWidget {
                                       ),
                                       ElevatedButton(
                                         onPressed: () {
-                                          if (_formKey.currentState!
+                                          if (controller.formKey.currentState!
                                               .validate()) {
-                                            checkPin()
+                                            controller.checkPin()
                                                 ? Navigator.of(context).pop()
-                                                : showErrorDialog(context);
+                                                : controller
+                                                    .showErrorDialog(context);
                                           }
                                         },
                                         child: const Text("Uložiť"),
