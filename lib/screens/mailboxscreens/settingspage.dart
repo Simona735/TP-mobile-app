@@ -40,16 +40,16 @@ class SettingsPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                Switch(
-                  value: isSwitched,
-                  onChanged: (value) => {
-                    setState(
-                      () {
-                        isSwitched = value;
-                        saveSwitchState("switchState", value);
-                        if (isSwitched == true) {
-                          pin.clear();
-                          confirmPin.clear();
+                Obx(
+                  () => Switch(
+                    value: controller.isSwitched.value,
+                    onChanged: (value) => {
+                      controller.isSwitched.value = value,
+                      controller.saveSwitchState("switchState", value),
+                      if (controller.isSwitched.value == true)
+                        {
+                          controller.pin.clear(),
+                          controller.confirmPin.clear(),
                           showMaterialModalBottomSheet(
                             barrierColor: Colors.black26,
                             context: context,
@@ -154,16 +154,15 @@ class SettingsPage extends StatelessWidget {
                                 ),
                               ),
                             ),
-                          );
+                          ),
+                        },
+                      if (controller.isSwitched.value == false)
+                        {
+                          controller.deletePin(),
                         }
-                      },
-                    ),
-                    if (isSwitched == false)
-                      {
-                        deletePin(),
-                      }
-                  },
-                )
+                    },
+                  ),
+                ),
               ],
             ),
           ),
