@@ -62,7 +62,11 @@ class SettingsPage extends StatelessWidget {
                                 return true;
                               },
                               child: SingleChildScrollView(
-                                controller: ModalScrollController.of(context),
+                                padding: EdgeInsets.only(
+                                    bottom: MediaQuery.of(context)
+                                        .viewInsets
+                                        .bottom),
+                                // controller: ModalScrollController.of(context),
                                 child: Container(
                                   margin: const EdgeInsets.symmetric(
                                       vertical: 10, horizontal: 20),
