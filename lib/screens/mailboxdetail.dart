@@ -6,28 +6,10 @@ import 'dart:math' as math;
 
 import 'package:tp_mobile_app/firebase/database.dart';
 
-class MailboxDetail extends StatefulWidget {
-  final mailboxId;
-
+class MailboxDetail extends StatelessWidget {
   const MailboxDetail({
     Key? key,
-    @PathParam() required this.mailboxId,
   }) : super(key: key);
-
-  @override
-  State<MailboxDetail> createState() => _MailboxDetailState();
-}
-
-class _MailboxDetailState extends State<MailboxDetail> {
-  int listPercentage = 30;
-  final titleController = TextEditingController();
-  late Future<Map> mailboxData;
-
-  @override
-  initState() {
-    super.initState();
-    mailboxData = Database.getMailboxDetailById(widget.mailboxId);
-  }
 
   @override
   Widget build(BuildContext context) {
