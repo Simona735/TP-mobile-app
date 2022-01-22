@@ -125,7 +125,6 @@ class ItemMailbox extends StatelessWidget {
       splashColor: Colors.yellow,
       onTap: press,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         decoration: BoxDecoration(
           color: Colors.yellow,
           borderRadius: BorderRadius.circular(10),
