@@ -73,23 +73,24 @@ class SettingsPage extends StatelessWidget {
                                   child: Column(
                                     children: [
                                       Form(
-                                        key: _formKey,
+                                        key: controller.formKey,
                                         child: Column(
                                           children: [
                                             TextFormField(
                                               obscureText: true,
-                                              maxLength: pinSize,
+                                              maxLength: controller.pinSize,
                                               style:
                                                   const TextStyle(fontSize: 20),
                                               textAlign: TextAlign.center,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: pin,
+                                              controller: controller.pin,
                                               validator: (value) {
                                                 if (value!.isEmpty) {
                                                   return 'Pole je prázdne';
                                                 }
-                                                if (value.length < pinSize) {
+                                                if (value.length <
+                                                    controller.pinSize) {
                                                   return 'PIN je príliš krátky';
                                                 }
                                                 return null;
@@ -106,18 +107,19 @@ class SettingsPage extends StatelessWidget {
                                             ),
                                             TextFormField(
                                               obscureText: true,
-                                              maxLength: pinSize,
+                                              maxLength: controller.pinSize,
                                               style:
                                                   const TextStyle(fontSize: 20),
                                               textAlign: TextAlign.center,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: confirmPin,
+                                              controller: controller.confirmPin,
                                               validator: (value) {
                                                 if (value!.isEmpty) {
                                                   return 'Pole je prázdne';
                                                 }
-                                                if (value.length < pinSize) {
+                                                if (value.length <
+                                                    controller.pinSize) {
                                                   return 'PIN je príliš krátky';
                                                 }
                                                 return null;
