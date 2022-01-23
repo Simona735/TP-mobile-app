@@ -2,10 +2,17 @@ import 'dart:ffi';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:tp_mobile_app/models/mailbox.dart';
+import 'package:tp_mobile_app/models/service.dart';
+import 'package:tp_mobile_app/models/settings.dart';
 
 import 'authentication.dart';
 
-class Database{
+class Database {
+  static final Map<String, Mailbox> _mailboxes = <String, Mailbox>{};
+
   static final DatabaseReference _messagesRef =
   FirebaseDatabase.instance.reference();// Instance on DB
 
