@@ -136,6 +136,10 @@ class Database {
     // _messagesRef.child(('user01') + '/' + mailboxId + '/settings/').update({
       'low_power': value,
     });
+
+    Mailbox? mailbox = _mailboxes[mailboxId];
+    mailbox!.settings.lowPower = value;
+    _mailboxes.update(mailboxId, (value) => mailbox);
   }
 
   static void updateTitle(String mailboxId, String title){
