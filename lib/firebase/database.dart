@@ -107,6 +107,7 @@ class Database {
 
   static void updateLimit(String mailboxId, int limit){
     _messagesRef.child((Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/').update({
+    // _messagesRef.child(('user01') + '/' + mailboxId + '/settings/').update({
       'limit': limit,
     });
   }
