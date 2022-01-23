@@ -93,7 +93,7 @@ class Database {
     //     .then((DataSnapshot snapshot) {
       data = snapshot.value.toString();
     });
-    return data;
+    return _mailboxes[mailboxId]!.settings.name;
   }
 
   static Future<Map> getMailboxDetailById(String mailboxId) async{
