@@ -169,10 +169,13 @@ class Database {
   // To change the data for a user's mailbox service table
   static void updateDataService(String mailboxId, String counter, String distance){
     //Redirect to service table and update
-    _messagesRef.child(Authentication.getUserId ?? '').child(mailboxId).child('service').update({
-      'counter': counter,
-      'distance_from_senzor': distance
-    });
+    _messagesRef
+        .child(Authentication.getUserId ?? '')
+        .child(mailboxId)
+        .child('service')
+        .update({'counter': counter, 'distance_from_senzor': distance});
+    _mailboxes[mailboxId]!.service.counter = counter;
+    _mailboxes[mailboxId]!.service.distanceFromSensor = distance;
   }
 
   //Removing data from the service table for a user's mailbox
