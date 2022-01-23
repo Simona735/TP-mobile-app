@@ -125,6 +125,10 @@ class Database {
     // _messagesRef.child(('user01') + '/' + mailboxId + '/settings/').update({
       'limit': limit,
     });
+
+    Mailbox? mailbox = _mailboxes[mailboxId];
+    mailbox!.settings.limit = limit;
+    _mailboxes.update(mailboxId, (value) => mailbox);
   }
 
   static void updateLowPower(String mailboxId, bool value){
