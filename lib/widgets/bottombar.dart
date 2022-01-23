@@ -1,11 +1,16 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+import 'package:tp_mobile_app/controllers/bottom_bar_controller.dart';
 import 'package:tp_mobile_app/routes/router.gr.dart';
+import 'package:tp_mobile_app/screens/mailboxscreens/addmailbox.dart';
+import 'package:tp_mobile_app/screens/mailboxscreens/mailboxlistpage.dart';
+import 'package:tp_mobile_app/screens/mailboxscreens/profilepage.dart';
+import 'package:tp_mobile_app/screens/mailboxscreens/settingspage.dart';
 
 class BottomBar extends StatelessWidget {
-  BottomBar({Key? key}) : super(key: key);
-
+  const BottomBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
