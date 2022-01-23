@@ -1,12 +1,15 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tp_mobile_app/bindings/bottom_bar_binding.dart';
 import 'package:tp_mobile_app/routes/router.gr.dart';
 import 'package:tp_mobile_app/firebase/authentication.dart';
 import 'package:tp_mobile_app/screens/authscreens/passwordreset.dart';
 import 'package:tp_mobile_app/screens/authscreens/registrationpage.dart';
+import 'package:tp_mobile_app/screens/passwordchange.dart';
 import 'package:tp_mobile_app/widgets/animations.dart';
-
+import 'package:tp_mobile_app/widgets/bottombar.dart';
 
 class LoginPage extends StatefulWidget{
   const LoginPage({Key? key}) : super(key: key);
@@ -52,31 +55,29 @@ class _LoginPage extends State<LoginPage> {
           ),
           Container(
             margin: const EdgeInsets.fromLTRB(0, 5.0, 0, 5.0),
-            child: (
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: "Zabudli ste heslo?",
-                          style: const TextStyle(
-                            color: Colors.blue,
-                            fontSize: 16),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.of(context).push(swipeRouteAnimation(PasswordResetPage()));
-                              // AutoRouter.of(context).pop();
-                              // AutoRouter.of(context).push(PasswordResetPageRoute());
-                            },
-                        ),
-                      ],
-                    ),
+            child: (Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "Zabudli ste heslo?",
+                        style:
+                            const TextStyle(color: Colors.blue, fontSize: 16),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Get.to(() => const PasswordChangePage(), transition: Transition.leftToRight);
+                            // Navigator.of(context).push(swipeRouteAnimation(PasswordResetPage()));
+                            // AutoRouter.of(context).pop();
+                            // AutoRouter.of(context).push(PasswordResetPageRoute());
+                          },
+                      ),
+                    ],
                   ),
-                ],
-              )
-            ),
+                ),
+              ],
+            )),
           ),
           Container(
             margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
