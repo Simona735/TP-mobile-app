@@ -185,67 +185,69 @@ class MailboxDetail extends StatelessWidget {
                                 onChanged: (value) => {
                                   controller.updateLowPowerMode(value),
                                 },
-                              )
-                            },
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) => AlertDialog(
-                              title: RichText(
-                                text: const TextSpan(
-                                  children: [
-                                    WidgetSpan(
-                                      child: Icon(Icons.warning,
-                                        size: 20,
-                                        color: Colors.red,
-                                      ),
-                                    ),
-                                    TextSpan(
-                                        text: " Reset schránky",
-                                        style: TextStyle(color: Colors.red,
-                                          fontWeight: FontWeight.bold,
-                                        )
-                                    ),
-                                  ],
-                                ),
                               ),
-                              content: const Text('Nejaky popis toho co to je za reset a ci si je isty'),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () => Navigator.pop(context, 'Cancel'),
-                                  child: const Text('Cancel'),
-                                ),
-                                TextButton(
-                                  onPressed: () {
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                      title: RichText(
+                                        text: const TextSpan(
+                                          children: [
+                                            WidgetSpan(
+                                              child: Icon(
+                                                Icons.warning,
+                                                size: 20,
+                                                color: Colors.red,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                                text: " Reset schránky",
+                                                style: TextStyle(
+                                                  color: Colors.red,
+                                                  fontWeight: FontWeight.bold,
+                                                )),
+                                          ],
+                                        ),
+                                      ),
+                                      content: const Text(
+                                          'Nejaky popis toho co to je za reset a ci si je isty'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context, 'Cancel'),
+                                          child: const Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
                                     Database.setReset(widget.mailboxId);
-                                    Navigator.pop(context, 'OK');
-                                  },
-                                  child: const Text('OK',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.red,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
-                          );
-                        },
-                        child: const Text("Reset"),
-                        style: ElevatedButton.styleFrom(primary: Colors.red),
-                      ),
-                    ],
-                  )
-                ],
-              ),
+                                            Navigator.pop(context, 'OK');
+                                          },
+                                          child: const Text(
+                                            'OK',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ));
+                          },
+                          child: const Text("Reset"),
+                          style: ElevatedButton.styleFrom(primary: Colors.red),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               );
             }
           }
