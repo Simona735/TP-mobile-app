@@ -42,122 +42,148 @@ class MailboxDetail extends StatelessWidget {
             } else if (snapshot.hasData) {
               controller.setData(snapshot.data);
               return Scaffold(
-              appBar: AppBar(
-                title: Text(data['name']),
-                actions: <Widget>[
-                  IconButton(
-                    icon: const Icon(Icons.edit),
-                    tooltip: 'Edit',
+                appBar: AppBar(
+                  title: Obx(
+                    () => Text(controller.mailbox.name),
+                  ),
+                  leading: IconButton(
                     onPressed: () {
-                      titleController.text = data['name'];
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          title: const Text('Edituj názov'),
-                          content: TextField(
-                            controller: titleController,
-                            // decoration: InputDecoration(hintText: "Text Field in Dialog"),
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () => Navigator.pop(context, 'Cancel'),
-                              child: const Text('Cancel'),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                Database.updateTitle(widget.mailboxId, titleController.text);
-                                setState(() {
-                                  data['name'] = titleController.text;
-                                });
-                                Navigator.pop(context, 'OK');
-                              },
-                              child: const Text('OK'),
-                            ),
-                          ],
-                        )
-                      );
+                      listOfMailboxesController.onInit();
+                      Get.back();
                     },
+                    icon: const Icon(
+                      Icons.arrow_back_outlined,
+                    ),
                   ),
-                ],
-              ),
-              body: ListView(
-                padding: const EdgeInsets.all(10),
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.all(10),
-                        child: CircularStepProgressIndicator(
-                          totalSteps: data['limit'].round(),
-                          currentStep: listPercentage,
-                          circularDirection: CircularDirection.counterclockwise,
-                          stepSize: 5,
-                          selectedColor:
-                          listPercentage <= data['limit'].round() ? Colors.yellow : Colors.red,
-                          unselectedColor: Colors.grey[200],
-                          padding: 0,
-                          width: 150,
-                          height: 150,
-                          selectedStepSize: 15,
-                          roundedCap: (_, __) => true,
-                          child: Center(
-                              child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                (data['limit'].round() < listPercentage) ? 'Full': listPercentage.toString() + "%",
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 25),
-                              ),
-                            ],
-                          )),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Slider(
-                        value: 1.0 * data['limit'],
-                        onChanged: (value) {
-                          setState(() {
-                            data['limit'] = value;
-                          });
-                        },
-                        onChangeEnd: (value){
-                          setState(() {
-                            data['limit'] = value;
-                            Database.updateLimit(widget.mailboxId, data['limit'].toInt());
-                          });
-                        },
-                        min: 1.0,
-                        max: 100.0,
-                        activeColor: Colors.yellow,
-                        inactiveColor: Colors.yellow[100],
-                        label: data['limit'].round().toString(),
-                        divisions: 99,
-                      ),
-                      Text(
-                        "Limit: " + data['limit'].round().toString() + "%",
-                        style: const TextStyle(fontSize: 20),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(left: 10),
-                            child: const Text("Low power mode",
-                              style: TextStyle(fontSize: 16),
+                  actions: <Widget>[
+                    IconButton(
+                      icon: const Icon(Icons.edit),
+                      tooltip: 'Edit',
+                      onPressed: () {
+                        controller.titleController.text =
+                            controller.mailbox.name;
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                                  title: const Text('Edituj názov'),
+                                  content: TextField(
+                                    controller: controller.titleController,
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, 'Cancel'),
+                                      child: const Text('Cancel'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        controller.updateMailboxName();
+                                        Navigator.pop(context, 'OK');
+                                      },
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                ));
+                      },
+                    ),
+                  ],
+                ),
+                body: ListView(
+                  padding: const EdgeInsets.all(10),
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.all(10),
+                          child: Obx(
+                            () => CircularStepProgressIndicator(
+                              // totalSteps: controller.data['limit'].round(),
+                              // totalSteps: controller.mailbox.limit.round(),
+                              totalSteps: controller.mailbox.limit.round(),
+                              currentStep: controller.listPercentage,
+                              circularDirection:
+                                  CircularDirection.counterclockwise,
+                              stepSize: 5,
+                              selectedColor: controller.listPercentage <=
+                                      controller.mailbox.limit.round()
+                                  ? Colors.yellow
+                                  : Colors.red,
+                              unselectedColor: Colors.grey[200],
+                              padding: 0,
+                              width: 150,
+                              height: 150,
+                              selectedStepSize: 15,
+                              roundedCap: (_, __) => true,
+                              child: Center(
+                                  child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    (controller.mailbox.limit.round() <
+                                            controller.listPercentage)
+                                        ? 'Full'
+                                        : controller.listPercentage.toString() +
+                                            "%",
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 25),
+                                  ),
+                                ],
+                              )),
                             ),
                           ),
-                          Switch(
-                            value: data['low_power'],
-                            onChanged: (value) => {
-                              setState(
-                                () {
-                                  data['low_power'] = value;
-                                  Database.updateLowPower(widget.mailboxId, value);
+                        )
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Obx(
+                          () => Slider(
+                            // value: 1.0 * data['limit'],
+                            // value: controller.sliderValue.value,
+                            value: snapshot.data!.limit.toDouble(),
+                            onChanged: (value) {
+                              controller.updateLimit(value);
+                            },
+                            onChangeEnd: (value) {
+                              controller.updateLimit(value);
+                              Database.updateLimit(controller.mailboxId,
+                                  controller.mailbox.limit.toInt());
+                            },
+                            min: 1.0,
+                            max: 100.0,
+                            activeColor: Colors.yellow,
+                            inactiveColor: Colors.yellow[100],
+                            label: controller.mailbox.limit.round().toString(),
+                            divisions: 99,
+                          ),
+                        ),
+                        Obx(
+                          () => Text(
+                            "Limit: " +
+                                // controller.mailbox.limit.round().toString() +
+                                controller.mailbox.limit.round().toString() +
+                                "%",
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(left: 10),
+                              child: const Text(
+                                "Low power mode",
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ),
+                            Obx(
+                              () => Switch(
+                                // value: controller.data["low_power"],
+                                value: controller.mailbox.lowPower,
+                                onChanged: (value) => {
+                                  controller.updateLowPowerMode(value),
                                 },
                               )
                             },
