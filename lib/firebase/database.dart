@@ -96,6 +96,10 @@ class Database {
   static Future<Map> getMailboxDetailById(String mailboxId) async{
     var data = {};
     await _messagesRef.child((Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/').once().then((DataSnapshot snapshot) {
+    // await _messagesRef
+    //     .child(('user01') + '/' + mailboxId + '/settings/')
+    //     .once()
+    //     .then((DataSnapshot snapshot) {
       data = snapshot.value ?? {};
     });
     return data;
