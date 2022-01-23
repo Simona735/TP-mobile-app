@@ -1,7 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tp_mobile_app/controllers/settings_controller.dart';
 import 'package:tp_mobile_app/firebase/authentication.dart';
 import 'package:tp_mobile_app/routes/router.gr.dart';
+import 'package:tp_mobile_app/screens/authscreens/loginpage.dart';
 import 'package:tp_mobile_app/screens/passwordchange.dart';
 import 'package:tp_mobile_app/widgets/animations.dart';
 
@@ -10,6 +13,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final settingsController = Get.find<SettingsController>();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Profil"),
