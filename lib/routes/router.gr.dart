@@ -83,7 +83,7 @@ class AppRouter extends _i7.RootStackRouter {
               MailboxDetailRouteArgs(mailboxId: pathParams.get('mailboxId')));
       return _i7.MaterialPageX<dynamic>(
           routeData: routeData,
-          child: _i9.MailboxDetail(key: args.key, mailboxId: args.mailboxId));
+          child: _i9.MailboxDetail(key: args.key));
     },
     SettingsPageRoute.name: (routeData) {
       return _i7.MaterialPageX<dynamic>(
