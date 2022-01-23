@@ -1,14 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tp_mobile_app/controllers/passwordchange_controller.dart';
 import 'package:tp_mobile_app/firebase/authentication.dart';
 import 'package:tp_mobile_app/routes/router.gr.dart';
+import 'package:tp_mobile_app/screens/mailboxscreens/profilepage.dart';
 
 class PasswordChangePage extends StatelessWidget {
-  PasswordChangePage({Key? key}) : super(key: key);
-
-  final oldPasswordController = TextEditingController();
-  final newPassword1Controller = TextEditingController();
-  final newPassword2Controller = TextEditingController();
+  const PasswordChangePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
