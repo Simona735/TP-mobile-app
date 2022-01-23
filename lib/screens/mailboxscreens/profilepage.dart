@@ -47,7 +47,8 @@ class ProfilePage extends StatelessWidget {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).push(swipeRouteAnimation(PasswordChangePage()));
+                        Get.to(() => const PasswordChangePage(), transition: Transition.leftToRight);
+                        // Navigator.of(context).push(swipeRouteAnimation(PasswordChangePage()));
                         // AutoRouter.of(context).push(PasswordChangePageRoute());
                       },
                       child: const Text("Zmeniť heslo"),
