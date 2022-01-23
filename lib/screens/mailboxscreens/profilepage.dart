@@ -60,7 +60,9 @@ class ProfilePage extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {
                         Authentication.signOut();
-                        AutoRouter.of(context).replace(const LoginPageRoute());
+                        settingsController.deletePin();
+                        // settingsController.saveSwitchState("switchState", false);
+                        Get.offAll(() => const LoginPage());
                       },
                       child: const Text("Odhlásiť sa"),
                       style: ElevatedButton.styleFrom(primary: Colors.red),
