@@ -68,8 +68,9 @@ class PasswordChangePage extends StatelessWidget {
                           ],
                         )
                     );
-                    Navigator.of(context)..pop()..pop();
-                    AutoRouter.of(context).push(const ProfilePageRoute());
+                    // Navigator.of(context)..pop()..pop();
+                    // AutoRouter.of(context).push(const ProfilePageRoute());
+                    Get.back();
                   }else{
                     controller.oldPasswordController.clear();
                     controller.newPassword1Controller.clear();
