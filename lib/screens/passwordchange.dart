@@ -53,8 +53,8 @@ class PasswordChangePage extends StatelessWidget {
             margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
             child: ElevatedButton(
               onPressed: () async {
-                if(newPassword1Controller.text == newPassword2Controller.text){
-                  String message = await Authentication.changePassword(oldPasswordController.text, newPassword1Controller.text);
+                if(controller.newPassword1Controller.text == controller.newPassword2Controller.text){
+                  String message = await Authentication.changePassword(controller.oldPasswordController.text, controller.newPassword1Controller.text);
                   if(message == 'OK'){
                     showDialog(
                         context: context,
