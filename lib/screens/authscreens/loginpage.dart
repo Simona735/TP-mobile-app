@@ -82,29 +82,30 @@ class _LoginPage extends State<LoginPage> {
           Container(
             margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
             child: ElevatedButton(
-              onPressed: () async {
-                String message = await Authentication.signInWithEmailAndPassword(emailController.text.trim(), passwordController.text);
-                if(Authentication.isSignedIn){
-                  Navigator.pop(context);
-                  AutoRouter.of(context).push(BottomBarRoute());
-                }else{
-                  passwordController.clear();
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) => AlertDialog(
-                      title: Text(message),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, 'OK'),
-                          child: const Text('OK'),
-                        ),
-                      ],
-                    )
-                  );
-                }
-              },
-              child: const Text("Prihlásenie")
-            ),
+                onPressed: () async {
+                  String message =
+                      await Authentication.signInWithEmailAndPassword(
+                          emailController.text.trim(), passwordController.text);
+                  if (Authentication.isSignedIn) {
+                    Get.offAll(() => BottomBar(), binding: BottomBarBinding());
+                    // Navigator.pop(context);
+                    // AutoRouter.of(context).push(BottomBarRoute());
+                  } else {
+                    passwordController.clear();
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                              title: Text(message),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, 'OK'),
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            ));
+                  }
+                },
+                child: const Text("Prihlásenie")),
           ),
           Container(
             margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
