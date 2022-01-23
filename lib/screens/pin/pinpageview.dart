@@ -4,11 +4,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:pinput/pin_put/pin_put.dart';
+import 'package:tp_mobile_app/bindings/bottom_bar_binding.dart';
 import 'dart:developer' as developer;
 
 import 'package:tp_mobile_app/routes/router.gr.dart';
+import 'package:tp_mobile_app/widgets/bottombar.dart';
 
 class PinPutView extends StatefulWidget {
   const PinPutView({Key? key}) : super(key: key);
@@ -66,7 +69,8 @@ class PinPutViewState extends State<PinPutView> {
       }
       if (!mounted) return;
 
-      authenticated ? AutoRouter.of(context).replace(BottomBarRoute()) : Future.value(false);
+      // authenticated ? AutoRouter.of(context).replace(BottomBarRoute()) : Future.value(false);
+      authenticated ? Get.offAll(() => BottomBar(), binding: BottomBarBinding()) : Future.value(false);
     }
   }
 
