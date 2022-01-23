@@ -11,6 +11,7 @@ class PasswordChangePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(PasswordChangeController());
     return Scaffold(
       appBar: AppBar(
         title: const Text("Zmena hesla"),
