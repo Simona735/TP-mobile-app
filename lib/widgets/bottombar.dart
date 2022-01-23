@@ -14,71 +14,77 @@ class BottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AutoTabsScaffold(
-      routes: const [
-        MailboxRouter(),
-        SettingsRouter(),
-        ProfilePageRouter(),
-        AddMailboxRouter()
-      ],
-      builder: (context, child, animation) {
-        return Scaffold(
-          body: ScaleTransition(
-            scale: Tween<double>(
-              begin: 1.0,
-              end: 1.0,
-            ).animate(
-              CurvedAnimation(
-                parent: animation,
-                curve: Curves.fastOutSlowIn,
-              ),
-            ),
-            child: child,
+    // final controller = Get.find<BottomBarController>();
+    final controller = Get.put(BottomBarController());
+    return Scaffold(
+        body: SizedBox.expand(
+          child: PageView(
+            controller: controller.pageController,
+            onPageChanged: (index) {
+              controller.updateIndex(index);
+            },
+            children: const [
+              ListOfMailboxes(),
+              SettingsPage(),
+              ProfilePage(),
+              AddMailbox()
+            ],
           ),
-        );
-      },
-      bottomNavigationBuilder: (_, tabsRouter) => SalomonBottomBar(
-        selectedItemColor: Theme.of(context).bottomAppBarColor,
-        margin: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 10,
         ),
-        currentIndex: tabsRouter.activeIndex,
-        onTap: (index) {
-          tabsRouter.stackRouterOfIndex(index)?.popUntilRoot();
-          tabsRouter.setActiveIndex(index);
-        },
-        items: [
-          SalomonBottomBarItem(
-            icon: const Icon(
-              Icons.mail,
-              size: 30,
+        // body: Obx(() =>
+        //   IndexedStack(
+        //     index: controller.index.value,
+        //     children: const [
+        //       ListOfMailboxes(),
+        //       SettingsPage(),
+        //       ProfilePage(),
+        //       AddMailbox()
+        //     ],
+        //   ),
+        // ),
+        bottomNavigationBar: Obx(
+          () => SalomonBottomBar(
+            selectedItemColor: Theme.of(context).bottomAppBarColor,
+            margin: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 10,
             ),
-            title: const Text('Schránky'),
+            currentIndex: controller.index.value,
+            onTap: (index) {
+              controller.updateIndex(index);
+              controller.pageController.jumpToPage(controller.index.value);
+            },
+            items: [
+              SalomonBottomBarItem(
+                icon: const Icon(
+                  Icons.mail,
+                  size: 30,
+                ),
+                title: const Text('Schránky'),
+              ),
+              SalomonBottomBarItem(
+                icon: const Icon(
+                  Icons.settings_outlined,
+                  size: 30,
+                ),
+                title: const Text('Nastavenia'),
+              ),
+              SalomonBottomBarItem(
+                icon: const Icon(
+                  Icons.person,
+                  size: 30,
+                ),
+                title: const Text('Profil'),
+              ),
+              SalomonBottomBarItem(
+                icon: const Icon(
+                  Icons.add,
+                  size: 30,
+                ),
+                title: const Text('Pridať'),
+              ),
+            ],
           ),
-          SalomonBottomBarItem(
-            icon: const Icon(
-              Icons.settings_outlined,
-              size: 30,
-            ),
-            title: const Text('Nastavenia'),
-          ),
-          SalomonBottomBarItem(
-            icon: const Icon(
-              Icons.person,
-              size: 30,
-            ),
-            title: const Text('Profil'),
-          ),
-          SalomonBottomBarItem(
-            icon: const Icon(
-              Icons.add,
-              size: 30,
-            ),
-            title: const Text('Pridať'),
-          ),
-        ],
-      ),
-    );
+        ));
   }
 }
