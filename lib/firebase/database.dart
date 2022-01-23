@@ -74,7 +74,10 @@ class Database {
       data.remove('mailbox_iter');
       if (data.length > 0) {
         for (var k in data.keys) {
-          mailboxes[k] = data[k]['settings']['name'];
+          Settings settings = Settings.fromJson(Map<String, dynamic>.from(data[k]['settings']));
+          Service service = Service.fromJson(Map<String, dynamic>.from(data[k]['service']));
+          Mailbox mailbox = Mailbox(service, settings);
+          _mailboxes.addAll({k: mailbox});
         }
       }
     });
