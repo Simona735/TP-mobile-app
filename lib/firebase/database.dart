@@ -147,6 +147,10 @@ class Database {
     // _messagesRef.child(('user01') + '/' + mailboxId + '/settings/').update({
       'name': title,
     });
+
+    Mailbox? mailbox = _mailboxes[mailboxId];
+    mailbox!.settings.name = title;
+    _mailboxes.update(mailboxId, (value) => mailbox);
   }
 
   //------------------------------------------------------------------------
