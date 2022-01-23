@@ -63,8 +63,7 @@ class Database {
     _mailboxes[mailboxId]!.service.reset = true;
   }
 
-  static Future<Map> getMailboxes() async{
-    var mailboxes = {};
+  static Future<Map<String, Mailbox>> getMailboxes() async {
     await _messagesRef.child((Authentication.getUserId ?? '') +'/').once().then((DataSnapshot snapshot) {
     // await _messagesRef
     //     .child(('user01') + '/')
@@ -79,7 +78,7 @@ class Database {
         }
       }
     });
-    return mailboxes;
+    return _mailboxes;
   }
 
   static Future<String> getTitleById(String mailboxId) async{
