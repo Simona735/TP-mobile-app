@@ -40,7 +40,7 @@ class MailboxDetail extends StatelessWidget {
                 ),
               );
             } else if (snapshot.hasData) {
-              final data = snapshot.data as Map;
+              controller.setData(snapshot.data);
               return Scaffold(
               appBar: AppBar(
                 title: Text(data['name']),
