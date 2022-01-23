@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:get/get.dart';
 import 'package:tp_mobile_app/screens/bluetooth/bluetooth_device.dart';
 
 class FindDevicesScreen extends StatelessWidget {
@@ -25,16 +26,19 @@ class FindDevicesScreen extends StatelessWidget {
                       title: Text(result.device.name,
                         style: const TextStyle(fontSize: 20),
                       ),
-                      onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) {
-                            result.device.connect(autoConnect: false);
-                            result.device.discoverServices();
-                            // AutoRouter.of(context).push(DeviceScreenRoute(device: result.device));
-                            return DeviceScreen(device: result.device);
-                          },
-                        ),
-                      ),
+                      onTap: () {
+                          result.device.connect(autoConnect: false);
+                          result.device.discoverServices();
+                          Get.to(() => DeviceScreen(device: result.device), transition: Transition.leftToRight);
+                        //   Navigator.of(context).push(
+                        //   MaterialPageRoute(
+                        //     builder: (context) {
+                        //       // AutoRouter.of(context).push(DeviceScreenRoute(device: result.device));
+                        //       return DeviceScreen(device: result.device);
+                        //     },
+                        //   ),
+                        // );
+                      }
                     );
                   }
                   else {
