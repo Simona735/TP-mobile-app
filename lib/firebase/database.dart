@@ -65,6 +65,11 @@ class Database {
   static Future<Map> getMailboxes() async{
     var mailboxes = {};
     await _messagesRef.child((Authentication.getUserId ?? '') +'/').once().then((DataSnapshot snapshot) {
+    // await _messagesRef
+    //     .child(('user01') + '/')
+    //     .once()
+    //     .then((DataSnapshot snapshot) {
+      _mailboxes.clear();
       var data = snapshot.value ?? {};
       data.remove('mailbox_iter');
       if (data.length > 0) {
