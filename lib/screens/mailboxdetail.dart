@@ -227,7 +227,8 @@ class MailboxDetail extends StatelessWidget {
                                         ),
                                         TextButton(
                                           onPressed: () {
-                                    Database.setReset(widget.mailboxId);
+                                            Database.setReset(
+                                                controller.mailboxId);
                                             Navigator.pop(context, 'OK');
                                           },
                                           child: const Text(
