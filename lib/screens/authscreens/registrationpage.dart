@@ -1,8 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tp_mobile_app/bindings/bottom_bar_binding.dart';
 import 'package:tp_mobile_app/firebase/authentication.dart';
 import 'package:tp_mobile_app/firebase/database.dart';
 import 'package:tp_mobile_app/routes/router.gr.dart';
+import 'package:tp_mobile_app/widgets/bottombar.dart';
 
 class RegistrationPage extends StatelessWidget {
   RegistrationPage({Key? key}) : super(key: key);
@@ -88,8 +91,9 @@ class RegistrationPage extends StatelessWidget {
                     password1Controller.text);
                   if(Authentication.isSignedIn){
                     Database.createUser();
-                    Navigator.of(context)..pop()..pop();
-                    AutoRouter.of(context).push(BottomBarRoute());
+                    Get.offAll(() => BottomBar(), binding: BottomBarBinding());
+                    // Navigator.of(context)..pop()..pop();
+                    // AutoRouter.of(context).push(BottomBarRoute());
                   }else{
                     showDialog(
                         context: context,
