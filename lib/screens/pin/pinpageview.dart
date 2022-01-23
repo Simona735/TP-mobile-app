@@ -239,22 +239,23 @@ class PinPutViewState extends State<PinPutView> {
           // AutoRouter.of(context).replace(BottomBarRoute());
         });
       } else {
-        const snackBar = SnackBar(
-          duration: Duration(seconds: 3),
-          content: SizedBox(
-            height: 80.0,
-            child: Center(
-              child: Text(
-                'Nesprávny PIN',
-                style: TextStyle(fontSize: 25.0),
-              ),
-            ),
-          ),
-          backgroundColor: Colors.deepPurpleAccent,
-        );
-        ScaffoldMessenger.of(context)
-          ..hideCurrentSnackBar()
-          ..showSnackBar(snackBar);
+        Get.snackbar('Chyba', 'Nesprávny pin');
+        // const snackBar = SnackBar(
+        //   duration: Duration(seconds: 3),
+        //   content: SizedBox(
+        //     height: 80.0,
+        //     child: Center(
+        //       child: Text(
+        //         'Nesprávny PIN',
+        //         style: TextStyle(fontSize: 25.0),
+        //       ),
+        //     ),
+        //   ),
+        //   backgroundColor: Colors.deepPurpleAccent,
+        // );
+        // ScaffoldMessenger.of(context)
+        //   ..hideCurrentSnackBar()
+        //   ..showSnackBar(snackBar);
       }
     });
   }
