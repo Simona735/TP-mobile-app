@@ -25,7 +25,7 @@ class PasswordChangePage extends StatelessWidget {
           Container(
             margin: const EdgeInsets.all(10),
             child: TextField(
-              controller: oldPasswordController,
+              controller: controller.oldPasswordController,
               obscureText: true,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(), labelText: 'Aktuálne heslo'),
@@ -34,7 +34,7 @@ class PasswordChangePage extends StatelessWidget {
           Container(
             margin: const EdgeInsets.all(10),
             child: TextField(
-              controller: newPassword1Controller,
+              controller: controller.newPassword1Controller,
               obscureText: true,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(), labelText: 'Nové heslo'),
@@ -43,7 +43,7 @@ class PasswordChangePage extends StatelessWidget {
           Container(
             margin: const EdgeInsets.all(10),
             child: TextField(
-              controller: newPassword2Controller,
+              controller: controller.newPassword2Controller,
               obscureText: true,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(), labelText: 'Zopakuj nové heslo'),
@@ -71,9 +71,9 @@ class PasswordChangePage extends StatelessWidget {
                     Navigator.of(context)..pop()..pop();
                     AutoRouter.of(context).push(const ProfilePageRoute());
                   }else{
-                    oldPasswordController.clear();
-                    newPassword1Controller.clear();
-                    newPassword2Controller.clear();
+                    controller.oldPasswordController.clear();
+                    controller.newPassword1Controller.clear();
+                    controller.newPassword2Controller.clear();
                     showDialog(
                         context: context,
                         builder: (BuildContext context) => AlertDialog(
@@ -88,8 +88,8 @@ class PasswordChangePage extends StatelessWidget {
                     );
                   }
                 }else{
-                  newPassword1Controller.clear();
-                  newPassword2Controller.clear();
+                  controller.newPassword1Controller.clear();
+                  controller.newPassword2Controller.clear();
                   showDialog(
                       context: context,
                       builder: (BuildContext context) => AlertDialog(
