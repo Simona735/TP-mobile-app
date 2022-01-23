@@ -7,15 +7,15 @@ class MailboxDetailController extends GetxController {
   int listPercentage = 30;
   final titleController = TextEditingController();
   final mailboxId = Get.arguments['mailboxId'];
-  final mailboxSettings = Settings.empty().obs;
-  final mailboxFutureSettings = Future.value(Settings.empty()).obs;
+  final _mailboxSettings = Settings.empty().obs;
+  final _mailboxFutureSettings = Future.value(Settings.empty()).obs;
 
-  Settings get mailbox => mailboxSettings.value;
-  Future<Settings> get futureMailbox => mailboxFutureSettings.value;
+  Settings get mailbox => _mailboxSettings.value;
+  Future<Settings> get futureMailbox => _mailboxFutureSettings.value;
 
   @override
   void onInit() async {
-    mailboxFutureSettings.value = Database.getMailboxSettingsById(mailboxId);
+    _mailboxFutureSettings.value = Database.getMailboxSettingsById(mailboxId);
     super.onInit();
   }
 
@@ -26,23 +26,23 @@ class MailboxDetailController extends GetxController {
   }
 
   void setData(data) {
-    mailboxSettings.value = data;
+    _mailboxSettings.value = data;
   }
 
   void updateLimit(double value) {
-    mailboxSettings.value.limit = value.round();
-    mailboxSettings.refresh();
+    _mailboxSettings.value.limit = value.round();
+    _mailboxSettings.refresh();
   }
 
   void updateLowPowerMode(value) {
-    mailboxSettings.value.lowPower = value;
-    mailboxSettings.refresh();
+    _mailboxSettings.value.lowPower = value;
+    _mailboxSettings.refresh();
     Database.updateLowPower(mailboxId, value);
   }
 
   void updateMailboxName() {
-    mailboxSettings.value.name = titleController.text;
-    mailboxSettings.refresh();
+    _mailboxSettings.value.name = titleController.text;
+    _mailboxSettings.refresh();
     Database.updateTitle(mailboxId, titleController.text);
   }
 }
