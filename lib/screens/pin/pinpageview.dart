@@ -235,7 +235,8 @@ class PinPutViewState extends State<PinPutView> {
       developer.log(value);
       if (value == pin) {
         Timer(const Duration(milliseconds: 500), () {
-          AutoRouter.of(context).replace(BottomBarRoute());
+          Get.offAll(() => BottomBar(), binding: BottomBarBinding());
+          // AutoRouter.of(context).replace(BottomBarRoute());
         });
       } else {
         const snackBar = SnackBar(
