@@ -108,7 +108,19 @@ class Database {
     return data;
   }
 
-  static void updateLimit(String mailboxId, int limit){
+  static Future<Settings> getMailboxSettingsById(String mailboxId) async {
+    var data = Settings.empty();
+    await _messagesRef.child((Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/').once().then((DataSnapshot snapshot) {
+    // await _messagesRef
+    //     .child(('user01') + '/' + mailboxId + '/settings/')
+    //     .once()
+    //     .then((DataSnapshot snapshot) {
+      data = Settings.fromJson(Map<String, dynamic>.from(snapshot.value));
+    });
+    return data;
+  }
+
+  static void updateLimit(String mailboxId, int limit) {
     _messagesRef.child((Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/').update({
     // _messagesRef.child(('user01') + '/' + mailboxId + '/settings/').update({
       'limit': limit,
