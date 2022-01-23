@@ -60,6 +60,7 @@ class Database {
     // _messagesRef.child(('user01') + '/' + mailboxId + '/service/').update({
       'reset': true,
     });
+    _mailboxes[mailboxId]!.service.reset = true;
   }
 
   static Future<Map> getMailboxes() async{
