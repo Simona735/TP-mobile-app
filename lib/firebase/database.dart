@@ -84,6 +84,10 @@ class Database {
   static Future<String> getTitleById(String mailboxId) async{
     String data = '';
     await _messagesRef.child((Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/name').once().then((DataSnapshot snapshot) {
+    // await _messagesRef
+    //     .child(('user01') + '/' + mailboxId + '/settings/name')
+    //     .once()
+    //     .then((DataSnapshot snapshot) {
       data = snapshot.value.toString();
     });
     return data;
