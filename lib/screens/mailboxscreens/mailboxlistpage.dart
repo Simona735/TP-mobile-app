@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:tp_mobile_app/controllers/mailboxdetail_controller.dart';
 import 'package:tp_mobile_app/controllers/mailboxlist_controller.dart';
+import 'package:tp_mobile_app/firebase/authentication.dart';
 import 'package:tp_mobile_app/firebase/database.dart';
 import 'package:tp_mobile_app/models/mailbox.dart';
 import 'package:tp_mobile_app/routes/router.gr.dart';
@@ -35,77 +36,85 @@ class ListOfMailboxes extends StatelessWidget {
           )
         ],
       ),
-      body: GetX<ListOfMailboxesController>(
-        init: controller,
-        builder: (controller) {
-          return FutureBuilder(
-            future: controller.mailboxes.value,
-            initialData: 'Loading...',
-            builder: (BuildContext context, AsyncSnapshot<Object> snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Text(
-                      '${snapshot.error} occurred',
-                      style: const TextStyle(fontSize: 18),
-                    ),
-                  );
-                } else if (snapshot.hasData) {
-                  // final data = snapshot.data as Map;
-                  controller.setData(snapshot.data);
-                  return Column(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 5, vertical: 5),
-                          child: GridView.builder(
-                            padding: const EdgeInsets.all(10),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount:
-                                  (orientation == Orientation.landscape)
-                                      ? 2
-                                      : 1,
-                              childAspectRatio: 2,
-                              mainAxisSpacing:
-                                  (controller.data.isNotEmpty) ? 10 : 0,
-                              crossAxisSpacing:
-                                  (controller.data.isNotEmpty) ? 10 : 0,
+      body: StreamBuilder(
+        // stream: Database.ref.child("user01").onValue,
+        stream: Database.ref.child(Authentication.getUserId ?? "").onValue,
+        builder: (context, snapshot) {
+          if(snapshot.hasData){
+            return GetX<ListOfMailboxesController>(
+              init: controller,
+              builder: (controller) {
+                  controller.updateMailboxes();
+                  return FutureBuilder(
+                    future: controller.mailboxes.value,
+                    builder: (BuildContext context, AsyncSnapshot<Object> snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(
+                            child: Text(
+                              '${snapshot.error} occurred',
+                              style: const TextStyle(fontSize: 18),
                             ),
-                            itemCount: controller.data.length,
-                            itemBuilder: (_, index) {
-                              String key =
-                                  controller.data.keys.elementAt(index);
-                              Mailbox value =
-                                  controller.data.values.elementAt(index);
-                              return ItemMailbox(
-                                press: () => {
-                                  Get.to(() => const MailboxDetail(),
-                                      arguments: {'mailboxId': key},
-                                      transition: Transition.leftToRight),
-                                  // Navigator.of(context).push(
-                                  //     swipeRouteAnimation(MailboxDetail(
-                                  //         mailboxId: key
-                                  //     ))
-                                  // ),
-                                },
-                                mailbox: value,
-                              );
-                            },
-                          ),
-                        ),
-                      )
-                    ],
+                          );
+                        } else if (snapshot.hasData) {
+                          // final data = snapshot.data as Map;
+                          controller.setData(snapshot.data);
+                          return Column(
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 5, vertical: 5),
+                                  child: GridView.builder(
+                                    padding: const EdgeInsets.all(10),
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount:
+                                          (orientation == Orientation.landscape)
+                                              ? 2
+                                              : 1,
+                                      childAspectRatio: 2,
+                                      mainAxisSpacing:
+                                          (controller.data.isNotEmpty) ? 10 : 0,
+                                      crossAxisSpacing:
+                                          (controller.data.isNotEmpty) ? 10 : 0,
+                                    ),
+                                    itemCount: controller.data.length,
+                                    itemBuilder: (_, index) {
+                                      String key =
+                                          controller.data.keys.elementAt(index);
+                                      Mailbox value =
+                                          controller.data.values.elementAt(index);
+                                      return ItemMailbox(
+                                        press: () => {
+                                          Get.to(() => const MailboxDetail(),
+                                              arguments: {'mailboxId': key},
+                                              transition: Transition.leftToRight),
+                                          // Navigator.of(context).push(
+                                          //     swipeRouteAnimation(MailboxDetail(
+                                          //         mailboxId: key
+                                          //     ))
+                                          // ),
+                                        },
+                                        mailbox: value,
+                                      );
+                                    },
+                                  ),
+                                ),
+                              )
+                            ],
+                          );
+                        }
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
                   );
-                }
-              }
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            },
-          );
-        },
+              },
+            );
+          }else{
+            return const Center(child: CircularProgressIndicator());
+          }
+        }
       ),
     );
   }
