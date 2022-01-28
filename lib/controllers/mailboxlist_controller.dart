@@ -15,4 +15,8 @@ class ListOfMailboxesController extends GetxController{
   void setData(data){
     this.data.value = data;
   }
+
+  void updateMailboxes() {
+    mailboxes.value = Database.getMailboxes();
+  }
 }
