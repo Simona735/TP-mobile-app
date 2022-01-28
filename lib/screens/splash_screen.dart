@@ -43,13 +43,13 @@ class _SplashScreenState extends State<SplashScreen> {
         if (Authentication.isSignedIn && value.isNotEmpty) {
           Get.offAll(() => const PinPage());
         } else if (Authentication.isSignedIn && value.isEmpty) {
-          Get.offAll(() => BottomBar(), binding: BottomBarBinding());
+          Get.offAll(() => const BottomBar(), binding: BottomBarBinding());
         } else {
           Get.offAll(() => const LoginPage());
         }
       } else {
         if (Authentication.isSignedIn) {
-          Get.offAll(() => BottomBar(), binding: BottomBarBinding());
+          Get.offAll(() => const BottomBar(), binding: BottomBarBinding());
         } else {
           Get.offAll(() => const LoginPage());
         }
