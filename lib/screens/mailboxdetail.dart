@@ -7,6 +7,7 @@ import 'package:tp_mobile_app/bindings/bottom_bar_binding.dart';
 import 'package:tp_mobile_app/controllers/bottom_bar_controller.dart';
 import 'package:tp_mobile_app/controllers/mailboxdetail_controller.dart';
 import 'package:tp_mobile_app/controllers/mailboxlist_controller.dart';
+import 'package:tp_mobile_app/firebase/authentication.dart';
 
 import 'package:tp_mobile_app/firebase/database.dart';
 import 'package:tp_mobile_app/models/settings.dart';
@@ -27,198 +28,53 @@ class MailboxDetail extends StatelessWidget {
         listOfMailboxesController.onInit();
         return true;
       },
-      child: FutureBuilder<Settings>(
-        future: controller.futureMailbox,
-        initialData: Settings("", 1, false, ""),
-        builder: (BuildContext context, AsyncSnapshot<Settings> snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasError) {
-              return Center(
-                child: Text(
-                  '${snapshot.error} occurred',
-                  style: const TextStyle(fontSize: 18),
-                ),
-              );
-            } else if (snapshot.hasData) {
-              controller.setData(snapshot.data);
-              return Scaffold(
-                appBar: AppBar(
-                  title: Obx(
-                    () => Text(controller.mailbox.name),
-                  ),
-                  leading: IconButton(
-                    onPressed: () {
-                      listOfMailboxesController.onInit();
-                      Get.back();
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back_outlined,
+      child: StreamBuilder(
+        // stream: Database.ref.child("user01").onValue,
+        stream: Database.ref.child(Authentication.getUserId ?? "").onValue,
+        builder: (context, snapshot) {
+          if(snapshot.hasData){
+            controller.updateMailboxDetail();
+            return FutureBuilder<Settings>(
+              future: controller.futureMailbox,
+              initialData: Settings("", 1, false, ""),
+              builder: (BuildContext context, AsyncSnapshot<Settings> snapshot) {
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text(
+                      '${snapshot.error} occurred',
+                      style: const TextStyle(fontSize: 18),
                     ),
-                  ),
-                  actions: <Widget>[
-                    IconButton(
-                      icon: const Icon(Icons.edit),
-                      tooltip: 'Edit',
-                      onPressed: () {
-                        controller.titleController.text =
-                            controller.mailbox.name;
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) => AlertDialog(
-                                  title: const Text('Edituj názov'),
-                                  content: TextField(
-                                    controller: controller.titleController,
-                                  ),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.pop(context, 'Cancel'),
-                                      child: const Text('Cancel'),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        controller.updateMailboxName();
-                                        Navigator.pop(context, 'OK');
-                                      },
-                                      child: const Text('OK'),
-                                    ),
-                                  ],
-                                ));
-                      },
-                    ),
-                  ],
-                ),
-                body: ListView(
-                  padding: const EdgeInsets.all(10),
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.all(10),
-                          child: Obx(
-                            () => CircularStepProgressIndicator(
-                              // totalSteps: controller.data['limit'].round(),
-                              // totalSteps: controller.mailbox.limit.round(),
-                              totalSteps: controller.mailbox.limit.round(),
-                              currentStep: controller.listPercentage,
-                              circularDirection:
-                                  CircularDirection.counterclockwise,
-                              stepSize: 5,
-                              selectedColor: controller.listPercentage <=
-                                      controller.mailbox.limit.round()
-                                  ? Colors.yellow
-                                  : Colors.red,
-                              unselectedColor: Colors.grey[200],
-                              padding: 0,
-                              width: 150,
-                              height: 150,
-                              selectedStepSize: 15,
-                              roundedCap: (_, __) => true,
-                              child: Center(
-                                  child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    (controller.mailbox.limit.round() <
-                                            controller.listPercentage)
-                                        ? 'Full'
-                                        : controller.listPercentage.toString() +
-                                            "%",
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 25),
-                                  ),
-                                ],
-                              )),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Obx(
-                          () => Slider(
-                            // value: 1.0 * data['limit'],
-                            // value: controller.sliderValue.value,
-                            value: snapshot.data!.limit.toDouble(),
-                            onChanged: (value) {
-                              controller.updateLimit(value);
-                            },
-                            onChangeEnd: (value) {
-                              controller.updateLimit(value);
-                              Database.updateLimit(controller.mailboxId,
-                                  controller.mailbox.limit.toInt());
-                            },
-                            min: 1.0,
-                            max: 100.0,
-                            activeColor: Colors.yellow,
-                            inactiveColor: Colors.yellow[100],
-                            label: controller.mailbox.limit.round().toString(),
-                            divisions: 99,
-                          ),
+                  );
+                } else if (snapshot.hasData) {
+                  controller.setData(snapshot.data);
+                  return Scaffold(
+                    appBar: AppBar(
+                      title: Obx(
+                        () => Text(controller.mailbox.name),
+                      ),
+                      leading: IconButton(
+                        onPressed: () {
+                          listOfMailboxesController.onInit();
+                          Get.back();
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back_outlined,
                         ),
-                        Obx(
-                          () => Text(
-                            "Limit: " +
-                                // controller.mailbox.limit.round().toString() +
-                                controller.mailbox.limit.round().toString() +
-                                "%",
-                            style: const TextStyle(fontSize: 20),
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.only(left: 10),
-                              child: const Text(
-                                "Low power mode",
-                                style: TextStyle(fontSize: 16),
-                              ),
-                            ),
-                            Obx(
-                              () => Switch(
-                                // value: controller.data["low_power"],
-                                value: controller.mailbox.lowPower,
-                                onChanged: (value) => {
-                                  controller.updateLowPowerMode(value),
-                                },
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        ElevatedButton(
+                      ),
+                      actions: <Widget>[
+                        IconButton(
+                          icon: const Icon(Icons.edit),
+                          tooltip: 'Edit',
                           onPressed: () {
+                            controller.titleController.text =
+                                controller.mailbox.name;
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) => AlertDialog(
-                                      title: RichText(
-                                        text: const TextSpan(
-                                          children: [
-                                            WidgetSpan(
-                                              child: Icon(
-                                                Icons.warning,
-                                                size: 20,
-                                                color: Colors.red,
-                                              ),
-                                            ),
-                                            TextSpan(
-                                                text: " Reset schránky",
-                                                style: TextStyle(
-                                                  color: Colors.red,
-                                                  fontWeight: FontWeight.bold,
-                                                )),
-                                          ],
-                                        ),
+                                      title: const Text('Edituj názov'),
+                                      content: TextField(
+                                        controller: controller.titleController,
                                       ),
-                                      content: const Text(
-                                          'Nejaky popis toho co to je za reset a ci si je isty'),
                                       actions: <Widget>[
                                         TextButton(
                                           onPressed: () =>
@@ -227,35 +83,190 @@ class MailboxDetail extends StatelessWidget {
                                         ),
                                         TextButton(
                                           onPressed: () {
-                                            Database.setReset(
-                                                controller.mailboxId);
+                                            controller.updateMailboxName();
                                             Navigator.pop(context, 'OK');
                                           },
-                                          child: const Text(
-                                            'OK',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.red,
-                                            ),
-                                          ),
+                                          child: const Text('OK'),
                                         ),
                                       ],
                                     ));
                           },
-                          child: const Text("Reset"),
-                          style: ElevatedButton.styleFrom(primary: Colors.red),
                         ),
                       ],
-                    )
-                  ],
-                ),
-              );
-            }
+                    ),
+                    body: ListView(
+                      padding: const EdgeInsets.all(10),
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.all(10),
+                              child: Obx(
+                                () => CircularStepProgressIndicator(
+                                  // totalSteps: controller.data['limit'].round(),
+                                  // totalSteps: controller.mailbox.limit.round(),
+                                  totalSteps: controller.mailbox.limit.round(),
+                                  currentStep: controller.listPercentage,
+                                  circularDirection:
+                                      CircularDirection.counterclockwise,
+                                  stepSize: 5,
+                                  selectedColor: controller.listPercentage <=
+                                          controller.mailbox.limit.round()
+                                      ? Colors.yellow
+                                      : Colors.red,
+                                  unselectedColor: Colors.grey[200],
+                                  padding: 0,
+                                  width: 150,
+                                  height: 150,
+                                  selectedStepSize: 15,
+                                  roundedCap: (_, __) => true,
+                                  child: Center(
+                                      child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        (controller.mailbox.limit.round() <
+                                                controller.listPercentage)
+                                            ? 'Full'
+                                            : controller.listPercentage.toString() +
+                                                "%",
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 25),
+                                      ),
+                                    ],
+                                  )),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Obx(
+                              () => Slider(
+                                // value: 1.0 * data['limit'],
+                                // value: controller.sliderValue.value,
+                                value: snapshot.data!.limit.toDouble(),
+                                onChanged: (value) {
+                                  controller.updateLimit(value);
+                                },
+                                onChangeEnd: (value) {
+                                  controller.updateLimit(value);
+                                  Database.updateLimit(controller.mailboxId,
+                                      controller.mailbox.limit.toInt());
+                                },
+                                min: 1.0,
+                                max: 100.0,
+                                activeColor: Colors.yellow,
+                                inactiveColor: Colors.yellow[100],
+                                label: controller.mailbox.limit.round().toString(),
+                                divisions: 99,
+                              ),
+                            ),
+                            Obx(
+                              () => Text(
+                                "Limit: " +
+                                    // controller.mailbox.limit.round().toString() +
+                                    controller.mailbox.limit.round().toString() +
+                                    "%",
+                                style: const TextStyle(fontSize: 20),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(left: 10),
+                                  child: const Text(
+                                    "Low power mode",
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ),
+                                Obx(
+                                  () => Switch(
+                                    // value: controller.data["low_power"],
+                                    value: controller.mailbox.lowPower,
+                                    onChanged: (value) => {
+                                      controller.updateLowPowerMode(value),
+                                    },
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) => AlertDialog(
+                                          title: RichText(
+                                            text: const TextSpan(
+                                              children: [
+                                                WidgetSpan(
+                                                  child: Icon(
+                                                    Icons.warning,
+                                                    size: 20,
+                                                    color: Colors.red,
+                                                  ),
+                                                ),
+                                                TextSpan(
+                                                    text: " Reset schránky",
+                                                    style: TextStyle(
+                                                      color: Colors.red,
+                                                      fontWeight: FontWeight.bold,
+                                                    )),
+                                              ],
+                                            ),
+                                          ),
+                                          content: const Text(
+                                              'Nejaky popis toho co to je za reset a ci si je isty'),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context, 'Cancel'),
+                                              child: const Text('Cancel'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {
+                                                Database.setReset(
+                                                    controller.mailboxId);
+                                                Navigator.pop(context, 'OK');
+                                              },
+                                              child: const Text(
+                                                'OK',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.red,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ));
+                              },
+                              child: const Text("Reset"),
+                              style: ElevatedButton.styleFrom(primary: Colors.red),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  );
+                }
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            );
           }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
+          else{
+            return const Center(child: CircularProgressIndicator(),);
+          }
+        }
       ),
     );
   }
