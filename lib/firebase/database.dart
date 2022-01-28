@@ -14,7 +14,9 @@ class Database {
   static final Map<String, Mailbox> _mailboxes = <String, Mailbox>{};
 
   static final DatabaseReference _messagesRef =
-      FirebaseDatabase.instance.reference(); // Instance on DB
+      FirebaseDatabase.instance.reference();
+
+  static DatabaseReference get ref => _messagesRef;
 
   static void createUser() {
     _messagesRef.child(Authentication.getUserId ?? '').set({
