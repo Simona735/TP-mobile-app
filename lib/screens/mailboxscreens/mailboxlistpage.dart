@@ -25,15 +25,15 @@ class ListOfMailboxes extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Zoznam schránok"),
-        actions: [
-          IconButton(
-            onPressed: () {
-              controller.onInit();
-            },
-            icon: const Icon(
-              Icons.refresh_outlined,
-            ),
-          )
+        actions: const [
+          // IconButton(
+          //   onPressed: () {
+          //     // controller.onInit();
+          //   },
+          //   icon: const Icon(
+          //     Icons.refresh_outlined,
+          //   ),
+          // ),
         ],
       ),
       body: StreamBuilder(
