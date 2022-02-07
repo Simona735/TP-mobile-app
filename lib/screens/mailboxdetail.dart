@@ -22,13 +22,7 @@ class MailboxDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(MailboxDetailController());
-    final listOfMailboxesController = Get.find<ListOfMailboxesController>();
-    return WillPopScope(
-      onWillPop: () async {
-        listOfMailboxesController.onInit();
-        return true;
-      },
-      child: StreamBuilder(
+    return StreamBuilder(
         // stream: Database.ref.child("user01").onValue,
         stream: Database.ref.child(Authentication.getUserId ?? "").onValue,
         builder: (context, snapshot) {
@@ -267,7 +261,6 @@ class MailboxDetail extends StatelessWidget {
             return const Center(child: CircularProgressIndicator(),);
           }
         }
-      ),
-    );
+      );
   }
 }
