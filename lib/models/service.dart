@@ -15,13 +15,13 @@ class Service {
 
   int get distanceFromSensor => _distanceFromSensor;
 
-  set distanceFromSensor(String value) {
+  set distanceFromSensor(int value) {
     _distanceFromSensor = value;
   }
 
   int get counter => _counter;
 
-  set counter(String value) {
+  set counter(int value) {
     _counter = value;
   }
 
