@@ -5,6 +5,7 @@ class Service {
 
   Service(this._counter, this._distanceFromSensor, this._reset);
 
+  Service.empty() : _counter = 0, _distanceFromSensor = 0, _reset = false;
 
   bool get reset => _reset;
 
