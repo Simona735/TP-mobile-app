@@ -216,7 +216,7 @@ class Database {
 
   // To change the data for a user's mailbox service table
   static void updateDataService(
-      String mailboxId, String counter, String distance) {
+      String mailboxId, int counter, int distance) {
     //Redirect to service table and update
     _messagesRef
         .child(Authentication.getUserId ?? '')
