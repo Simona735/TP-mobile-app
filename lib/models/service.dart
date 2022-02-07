@@ -1,7 +1,7 @@
 class Service {
-  String _counter = "";
-  String _distanceFromSensor = "";
-  bool _reset = false;
+  int _counter;
+  int _distanceFromSensor;
+  bool _reset;
 
   Service(this._counter, this._distanceFromSensor, this._reset);
 
