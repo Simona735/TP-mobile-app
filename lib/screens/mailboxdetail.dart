@@ -131,9 +131,8 @@ class MailboxDetail extends StatelessWidget {
                           children: [
                             Obx(
                               () => Slider(
-                                // value: 1.0 * data['limit'],
-                                // value: controller.sliderValue.value,
-                                value: snapshot.data!.limit.toDouble(),
+                                // value: snapshot.data!.limit.toDouble(),
+                                value: controller.mailbox.limit.toDouble(),
                                 onChanged: (value) {
                                   controller.updateLimit(value);
                                 },
