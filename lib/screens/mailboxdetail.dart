@@ -46,15 +46,6 @@ class MailboxDetail extends StatelessWidget {
                       title: Obx(
                         () => Text(controller.mailbox.name),
                       ),
-                      leading: IconButton(
-                        onPressed: () {
-                          listOfMailboxesController.onInit();
-                          Get.back();
-                        },
-                        icon: const Icon(
-                          Icons.arrow_back_outlined,
-                        ),
-                      ),
                       actions: <Widget>[
                         IconButton(
                           icon: const Icon(Icons.edit),
