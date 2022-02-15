@@ -96,9 +96,7 @@ class Database {
         for (var k in data.keys) {
           Settings settings =
               Settings.fromJson(Map<String, dynamic>.from(data[k]['settings']));
-          Service service =
-              Service.fromJson(Map<String, dynamic>.from(data[k]['service']));
-          Mailbox mailbox = Mailbox(service, settings);
+          Mailbox mailbox = Mailbox(settings);
           _mailboxes.addAll({k: mailbox});
         }
       }
