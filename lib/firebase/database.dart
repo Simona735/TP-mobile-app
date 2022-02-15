@@ -165,9 +165,9 @@ class Database {
       'limit': limit,
     });
 
-    Mailbox? mailbox = _mailboxes[mailboxId];
-    mailbox!.settings.limit = limit;
-    _mailboxes.update(mailboxId, (value) => mailbox);
+    // Mailbox? mailbox = _mailboxes[mailboxId];
+    // mailbox!.settings.limit = limit;
+    // _mailboxes.update(mailboxId, (value) => mailbox);
   }
 
   static void updateLowPower(String mailboxId, bool value) {
@@ -179,9 +179,9 @@ class Database {
       'low_power': value,
     });
 
-    Mailbox? mailbox = _mailboxes[mailboxId];
-    mailbox!.settings.lowPower = value;
-    _mailboxes.update(mailboxId, (value) => mailbox);
+    // Mailbox? mailbox = _mailboxes[mailboxId];
+    // mailbox!.settings.lowPower = value;
+    // _mailboxes.update(mailboxId, (value) => mailbox);
   }
 
   static void updateTitle(String mailboxId, String title) {
@@ -193,9 +193,9 @@ class Database {
       'name': title,
     });
 
-    Mailbox? mailbox = _mailboxes[mailboxId];
-    mailbox!.settings.name = title;
-    _mailboxes.update(mailboxId, (value) => mailbox);
+    // Mailbox? mailbox = _mailboxes[mailboxId];
+    // mailbox!.settings.name = title;
+    // _mailboxes.update(mailboxId, (value) => mailbox);
   }
 
   //------------------------------------------------------------------------
@@ -223,8 +223,8 @@ class Database {
         .child(mailboxId)
         .child('service')
         .update({'counter': counter, 'distance_from_senzor': distance});
-    _mailboxes[mailboxId]!.service.counter = counter;
-    _mailboxes[mailboxId]!.service.distanceFromSensor = distance;
+    // _mailboxes[mailboxId]!.service.counter = counter;
+    // _mailboxes[mailboxId]!.service.distanceFromSensor = distance;
   }
 
   //Removing data from the service table for a user's mailbox
