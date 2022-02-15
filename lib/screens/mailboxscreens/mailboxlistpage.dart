@@ -145,47 +145,47 @@ class ItemMailbox extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Flexible(
-              flex: 4,
-              fit: FlexFit.loose,
-              child: Container(
-                alignment: Alignment.center,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10)),
-                ),
-                child: CircularStepProgressIndicator(
-                  totalSteps: mailbox.settings.limit,
-                  currentStep: 30,
-                  circularDirection: CircularDirection.counterclockwise,
-                  stepSize: 3,
-                  selectedColor: Colors.red,
-                  unselectedColor: Colors.grey[200],
-                  padding: 0,
-                  width: context.mediaQueryShortestSide * .25,
-                  height: context.mediaQueryShortestSide * .25,
-                  selectedStepSize: 10,
-                  roundedCap: (_, __) => true,
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text(
-                          "30 %",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.black),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            // Flexible(
+            //   flex: 4,
+            //   fit: FlexFit.loose,
+            //   child: Container(
+            //     alignment: Alignment.center,
+            //     padding:
+            //         const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            //     decoration: const BoxDecoration(
+            //       borderRadius: BorderRadius.only(
+            //           topLeft: Radius.circular(10),
+            //           topRight: Radius.circular(10)),
+            //     ),
+            //     child: CircularStepProgressIndicator(
+            //       totalSteps: mailbox.settings.limit,
+            //       currentStep: 30,
+            //       circularDirection: CircularDirection.counterclockwise,
+            //       stepSize: 3,
+            //       selectedColor: Colors.red,
+            //       unselectedColor: Colors.grey[200],
+            //       padding: 0,
+            //       width: context.mediaQueryShortestSide * .25,
+            //       height: context.mediaQueryShortestSide * .25,
+            //       selectedStepSize: 10,
+            //       roundedCap: (_, __) => true,
+            //       child: Center(
+            //         child: Column(
+            //           mainAxisAlignment: MainAxisAlignment.center,
+            //           children: const [
+            //             Text(
+            //               "30 %",
+            //               style: TextStyle(
+            //                   fontWeight: FontWeight.bold,
+            //                   fontSize: 20,
+            //                   color: Colors.black),
+            //             ),
+            //           ],
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
             Container(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               decoration: BoxDecoration(
