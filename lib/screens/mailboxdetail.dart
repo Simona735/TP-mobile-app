@@ -82,82 +82,82 @@ class MailboxDetail extends StatelessWidget {
                     body: ListView(
                       padding: const EdgeInsets.all(10),
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.all(10),
-                              child: Obx(
-                                () => CircularStepProgressIndicator(
-                                  // totalSteps: controller.data['limit'].round(),
-                                  // totalSteps: controller.mailbox.limit.round(),
-                                  totalSteps: controller.mailbox.limit.round(),
-                                  currentStep: controller.listPercentage,
-                                  circularDirection:
-                                      CircularDirection.counterclockwise,
-                                  stepSize: 5,
-                                  selectedColor: controller.listPercentage <=
-                                          controller.mailbox.limit.round()
-                                      ? Colors.yellow
-                                      : Colors.red,
-                                  unselectedColor: Colors.grey[200],
-                                  padding: 0,
-                                  width: 150,
-                                  height: 150,
-                                  selectedStepSize: 15,
-                                  roundedCap: (_, __) => true,
-                                  child: Center(
-                                      child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        (controller.mailbox.limit.round() <
-                                                controller.listPercentage)
-                                            ? 'Full'
-                                            : controller.listPercentage.toString() +
-                                                "%",
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 25),
-                                      ),
-                                    ],
-                                  )),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: [
+                        //     Container(
+                        //       margin: const EdgeInsets.all(10),
+                        //       child: Obx(
+                        //         () => CircularStepProgressIndicator(
+                        //           // totalSteps: controller.data['limit'].round(),
+                        //           // totalSteps: controller.mailbox.limit.round(),
+                        //           totalSteps: controller.mailbox.limit.round(),
+                        //           currentStep: controller.listPercentage,
+                        //           circularDirection:
+                        //               CircularDirection.counterclockwise,
+                        //           stepSize: 5,
+                        //           selectedColor: controller.listPercentage <=
+                        //                   controller.mailbox.limit.round()
+                        //               ? Colors.yellow
+                        //               : Colors.red,
+                        //           unselectedColor: Colors.grey[200],
+                        //           padding: 0,
+                        //           width: 150,
+                        //           height: 150,
+                        //           selectedStepSize: 15,
+                        //           roundedCap: (_, __) => true,
+                        //           child: Center(
+                        //               child: Column(
+                        //             mainAxisAlignment: MainAxisAlignment.center,
+                        //             children: [
+                        //               Text(
+                        //                 (controller.mailbox.limit.round() <
+                        //                         controller.listPercentage)
+                        //                     ? 'Full'
+                        //                     : controller.listPercentage.toString() +
+                        //                         "%",
+                        //                 style: const TextStyle(
+                        //                     fontWeight: FontWeight.bold,
+                        //                     fontSize: 25),
+                        //               ),
+                        //             ],
+                        //           )),
+                        //         ),
+                        //       ),
+                        //     )
+                        //   ],
+                        // ),
                         Column(
                           children: [
-                            Obx(
-                              () => Slider(
-                                // value: snapshot.data!.limit.toDouble(),
-                                value: controller.mailbox.limit.toDouble(),
-                                onChanged: (value) {
-                                  controller.updateLimit(value);
-                                },
-                                onChangeEnd: (value) {
-                                  controller.updateLimit(value);
-                                  Database.updateLimit(controller.mailboxId,
-                                      controller.mailbox.limit.toInt());
-                                },
-                                min: 1.0,
-                                max: 100.0,
-                                activeColor: Colors.yellow,
-                                inactiveColor: Colors.yellow[100],
-                                label: controller.mailbox.limit.round().toString(),
-                                divisions: 99,
-                              ),
-                            ),
-                            Obx(
-                              () => Text(
-                                "Limit: " +
-                                    // controller.mailbox.limit.round().toString() +
-                                    controller.mailbox.limit.round().toString() +
-                                    "%",
-                                style: const TextStyle(fontSize: 20),
-                              ),
-                            ),
+                            // Obx(
+                            //   () => Slider(
+                            //     // value: snapshot.data!.limit.toDouble(),
+                            //     value: controller.mailbox.limit.toDouble(),
+                            //     onChanged: (value) {
+                            //       controller.updateLimit(value);
+                            //     },
+                            //     onChangeEnd: (value) {
+                            //       controller.updateLimit(value);
+                            //       Database.updateLimit(controller.mailboxId,
+                            //           controller.mailbox.limit.toInt());
+                            //     },
+                            //     min: 1.0,
+                            //     max: 100.0,
+                            //     activeColor: Colors.yellow,
+                            //     inactiveColor: Colors.yellow[100],
+                            //     label: controller.mailbox.limit.round().toString(),
+                            //     divisions: 99,
+                            //   ),
+                            // ),
+                            // Obx(
+                            //   () => Text(
+                            //     "Limit: " +
+                            //         // controller.mailbox.limit.round().toString() +
+                            //         controller.mailbox.limit.round().toString() +
+                            //         "%",
+                            //     style: const TextStyle(fontSize: 20),
+                            //   ),
+                            // ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
