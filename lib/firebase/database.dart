@@ -71,24 +71,24 @@ class Database {
   }
 
   static void setReset(String mailboxId) {
-    _messagesRef
-        .child((Authentication.getUserId ?? '') + '/' + mailboxId + '/service/')
-        .update({
-      // _messagesRef.child(('user01') + '/' + mailboxId + '/service/').update({
+    // _messagesRef
+    //     .child((Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
+    //     .update({
+      _messagesRef.child(('user01') + '/' + mailboxId + '/settings/').update({
       'reset': true,
     });
     _mailboxes[mailboxId]!.service.reset = true;
   }
 
   static Future<Map<String, Mailbox>> getMailboxes() async {
-    await _messagesRef
-        .child((Authentication.getUserId ?? '') + '/')
-        .once()
-        .then((DataSnapshot snapshot) {
-      // await _messagesRef
-      //     .child(('user01') + '/')
-      //     .once()
-      //     .then((DataSnapshot snapshot) {
+    // await _messagesRef
+    //     .child((Authentication.getUserId ?? '') + '/')
+    //     .once()
+    //     .then((DataSnapshot snapshot) {
+      await _messagesRef
+          .child(('user01') + '/')
+          .once()
+          .then((DataSnapshot snapshot) {
       _mailboxes.clear();
       var data = snapshot.value ?? {};
       data.remove('mailbox_iter');
@@ -108,17 +108,17 @@ class Database {
 
   static Future<String> getTitleById(String mailboxId) async {
     String data = '';
-    await _messagesRef
-        .child((Authentication.getUserId ?? '') +
-            '/' +
-            mailboxId +
-            '/settings/name')
-        .once()
-        .then((DataSnapshot snapshot) {
-      // await _messagesRef
-      //     .child(('user01') + '/' + mailboxId + '/settings/name')
-      //     .once()
-      //     .then((DataSnapshot snapshot) {
+    // await _messagesRef
+    //     .child((Authentication.getUserId ?? '') +
+    //         '/' +
+    //         mailboxId +
+    //         '/settings/name')
+    //     .once()
+    //     .then((DataSnapshot snapshot) {
+      await _messagesRef
+          .child(('user01') + '/' + mailboxId + '/settings/name')
+          .once()
+          .then((DataSnapshot snapshot) {
       data = snapshot.value.toString();
     });
     return _mailboxes[mailboxId]!.settings.name;
@@ -126,15 +126,15 @@ class Database {
 
   static Future<Map> getMailboxDetailById(String mailboxId) async {
     var data = {};
-    await _messagesRef
-        .child(
-            (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
-        .once()
-        .then((DataSnapshot snapshot) {
-      // await _messagesRef
-      //     .child(('user01') + '/' + mailboxId + '/settings/')
-      //     .once()
-      //     .then((DataSnapshot snapshot) {
+    // await _messagesRef
+    //     .child(
+    //         (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
+    //     .once()
+    //     .then((DataSnapshot snapshot) {
+      await _messagesRef
+          .child(('user01') + '/' + mailboxId + '/settings/')
+          .once()
+          .then((DataSnapshot snapshot) {
       data = snapshot.value ?? {};
     });
     return data;
@@ -142,26 +142,26 @@ class Database {
 
   static Future<Settings> getMailboxSettingsById(String mailboxId) async {
     var data = Settings.empty();
-    await _messagesRef
-        .child(
-            (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
-        .once()
-        .then((DataSnapshot snapshot) {
-      // await _messagesRef
-      //     .child(('user01') + '/' + mailboxId + '/settings/')
-      //     .once()
-      //     .then((DataSnapshot snapshot) {
+    // await _messagesRef
+        // .child(
+        //     (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
+        // .once()
+        // .then((DataSnapshot snapshot) {
+      await _messagesRef
+          .child(('user01') + '/' + mailboxId + '/settings/')
+          .once()
+          .then((DataSnapshot snapshot) {
       data = Settings.fromJson(Map<String, dynamic>.from(snapshot.value));
     });
     return data;
   }
 
   static void updateLimit(String mailboxId, int limit) {
-    _messagesRef
-        .child(
-            (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
-        .update({
-      // _messagesRef.child(('user01') + '/' + mailboxId + '/settings/').update({
+    // _messagesRef
+    //     .child(
+    //         (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
+    //     .update({
+      _messagesRef.child(('user01') + '/' + mailboxId + '/settings/').update({
       'limit': limit,
     });
 
@@ -171,11 +171,11 @@ class Database {
   }
 
   static void updateLowPower(String mailboxId, bool value) {
-    _messagesRef
-        .child(
-            (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
-        .update({
-      // _messagesRef.child(('user01') + '/' + mailboxId + '/settings/').update({
+    // _messagesRef
+    //     .child(
+    //         (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
+    //     .update({
+      _messagesRef.child(('user01') + '/' + mailboxId + '/settings/').update({
       'low_power': value,
     });
 
@@ -185,11 +185,11 @@ class Database {
   }
 
   static void updateTitle(String mailboxId, String title) {
-    _messagesRef
-        .child(
-            (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
-        .update({
-      // _messagesRef.child(('user01') + '/' + mailboxId + '/settings/').update({
+    // _messagesRef
+    //     .child(
+    //         (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
+    //     .update({
+      _messagesRef.child(('user01') + '/' + mailboxId + '/settings/').update({
       'name': title,
     });
 
