@@ -30,7 +30,7 @@ class MailboxDetail extends StatelessWidget {
             controller.updateMailboxDetail();
             return FutureBuilder<Settings>(
               future: controller.futureMailbox,
-              initialData: Settings("", 1, false, ""),
+              initialData: Settings(false, false, ""),
               builder: (BuildContext context, AsyncSnapshot<Settings> snapshot) {
                 if (snapshot.hasError) {
                   return Center(
