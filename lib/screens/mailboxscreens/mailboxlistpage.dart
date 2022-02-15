@@ -37,8 +37,8 @@ class ListOfMailboxes extends StatelessWidget {
         ],
       ),
       body: StreamBuilder(
-        // stream: Database.ref.child("user01").onValue,
-        stream: Database.ref.child(Authentication.getUserId ?? "").onValue,
+        stream: Database.ref.child("user01").onValue,
+        // stream: Database.ref.child(Authentication.getUserId ?? "").onValue,
         builder: (context, snapshot) {
           if(snapshot.hasData){
             controller.updateMailboxes();
