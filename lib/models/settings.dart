@@ -1,12 +1,11 @@
 class Settings{
-  String _dutyCycle;
-  int _limit;
+  bool _reset;
   bool _lowPower;
   String _name;
 
-  Settings(this._dutyCycle, this._limit, this._lowPower, this._name);
+  Settings(this._reset, this._lowPower, this._name);
 
-  Settings.empty() : _dutyCycle = "", _limit = 1, _lowPower = false, _name = "";
+  Settings.empty() : _reset = false, _lowPower = false, _name = "";
 
   String get name => _name;
 
@@ -20,21 +19,14 @@ class Settings{
     _lowPower = value;
   }
 
-  int get limit => _limit;
+  bool get reset => _reset;
 
-  set limit(int value) {
-    _limit = value;
-  }
-
-  String get dutyCycle => _dutyCycle;
-
-  set dutyCycle(String value) {
-    _dutyCycle = value;
+  set reset(bool value) {
+    _reset = value;
   }
 
   Settings.fromJson(Map<String, dynamic> json)
-      : _dutyCycle = json['duty_cycle'],
-        _limit = json['limit'],
+      : _reset = json['reset'],
         _lowPower = json['low_power'],
         _name = json['name'];
 }
