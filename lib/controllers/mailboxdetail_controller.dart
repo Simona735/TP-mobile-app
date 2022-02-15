@@ -29,10 +29,10 @@ class MailboxDetailController extends GetxController {
     _mailboxSettings.value = data;
   }
 
-  void updateLimit(double value) {
-    _mailboxSettings.value.limit = value.round();
-    _mailboxSettings.refresh();
-  }
+  // void updateLimit(double value) {
+  //   _mailboxSettings.value.limit = value.round();
+  //   _mailboxSettings.refresh();
+  // }
 
   void updateLowPowerMode(value) {
     _mailboxSettings.value.lowPower = value;
