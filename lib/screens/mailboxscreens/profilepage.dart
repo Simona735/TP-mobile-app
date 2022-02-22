@@ -62,7 +62,7 @@ class ProfilePage extends StatelessWidget {
                         Authentication.signOut();
                         settingsController.deletePin();
                         // settingsController.saveSwitchState("switchState", false);
-                        Get.offAll(() => const LoginPage());
+                        Get.offAll(() => LoginPage());
                       },
                       child: const Text("Odhlásiť sa"),
                       style: ElevatedButton.styleFrom(primary: Colors.red),
