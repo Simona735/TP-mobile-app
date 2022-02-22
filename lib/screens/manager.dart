@@ -28,7 +28,7 @@ class MainPage extends StatelessWidget {
       getPages: [
         GetPage(name: "/", page: () => const SplashScreen()),
         GetPage(name: "/pin", page: () => const PinPage()),
-        GetPage(name: "/login", page: () => const LoginPage()),
+        GetPage(name: "/login", page: () => LoginPage()),
         GetPage(name: "/bottomBar", page: () => BottomBar(), binding: BottomBarBinding()),
         GetPage(name: "/settings", page: () => const SettingsPage()),
         GetPage(name: "/registration", page: () => RegistrationPage()),
