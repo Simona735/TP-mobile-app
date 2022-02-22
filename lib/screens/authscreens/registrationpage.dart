@@ -88,12 +88,24 @@ class RegistrationPage extends StatelessWidget {
           ),
           Container(
             margin: const EdgeInsets.all(10),
-            child: TextField(
-              controller: password2Controller,
-              obscureText: true,
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(), labelText: 'Opakovanie hesla'),
-            ),
+            child: Obx(() => TextField(
+                  controller: password2Controller,
+                  obscureText: controller.showRepeatPassword.value,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: 'Opakovanie hesla',
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        controller.showRepeatPassword.value =
+                            !controller.showRepeatPassword.value;
+                      },
+                      icon: Icon(controller.showRepeatPassword.value
+                          ? Icons.visibility
+                          : Icons.visibility_off),
+                    ),
+                  ),
+                ),
+              ),
           ),
           Container(
             margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
