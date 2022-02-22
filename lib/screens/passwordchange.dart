@@ -46,11 +46,24 @@ class PasswordChangePage extends StatelessWidget {
           ),
           Container(
             margin: const EdgeInsets.all(10),
-            child: TextField(
-              controller: controller.newPassword1Controller,
-              obscureText: true,
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(), labelText: 'Nové heslo'),
+            child: Obx(
+              () => TextField(
+                controller: controller.newPassword1Controller,
+                obscureText: controller.showPassword1Password.value,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  labelText: 'Nové heslo',
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      controller.showPassword1Password.value =
+                          !controller.showPassword1Password.value;
+                    },
+                    icon: Icon(controller.showPassword1Password.value
+                        ? Icons.visibility
+                        : Icons.visibility_off),
+                  ),
+                ),
+              ),
             ),
           ),
           Container(
