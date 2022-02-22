@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tp_mobile_app/bindings/bottom_bar_binding.dart';
+import 'package:tp_mobile_app/controllers/login_controller.dart';
 import 'package:tp_mobile_app/routes/router.gr.dart';
 import 'package:tp_mobile_app/firebase/authentication.dart';
 import 'package:tp_mobile_app/screens/authscreens/passwordreset.dart';
@@ -19,6 +20,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(LoginController());
     return Scaffold(
       appBar: AppBar(
         title: const Text("Login"),
