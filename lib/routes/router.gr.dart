@@ -32,7 +32,7 @@ class AppRouter extends _i7.RootStackRouter {
     },
     LoginPageRoute.name: (routeData) {
       return _i7.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i2.LoginPage());
+          routeData: routeData, child: _i2.LoginPage());
     },
     RegistrationPageRoute.name: (routeData) {
       final args = routeData.argsAs<RegistrationPageRouteArgs>(
