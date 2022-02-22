@@ -2,6 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tp_mobile_app/bindings/bottom_bar_binding.dart';
+import 'package:tp_mobile_app/controllers/login_controller.dart';
+import 'package:tp_mobile_app/controllers/registration_controller.dart';
 import 'package:tp_mobile_app/firebase/authentication.dart';
 import 'package:tp_mobile_app/firebase/database.dart';
 import 'package:tp_mobile_app/routes/router.gr.dart';
@@ -18,6 +20,7 @@ class RegistrationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(RegistrationController());
     return Scaffold(
       appBar: AppBar(
         title: const Text("Registrácia"),
