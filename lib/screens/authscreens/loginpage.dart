@@ -11,15 +11,9 @@ import 'package:tp_mobile_app/screens/passwordchange.dart';
 import 'package:tp_mobile_app/widgets/animations.dart';
 import 'package:tp_mobile_app/widgets/bottombar.dart';
 
-class LoginPage extends StatefulWidget{
-  const LoginPage({Key? key}) : super(key: key);
+class LoginPage extends StatelessWidget {
+  LoginPage({Key? key}) : super(key: key);
 
-  @override
-  _LoginPage createState() => _LoginPage();
-}
-
-
-class _LoginPage extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
