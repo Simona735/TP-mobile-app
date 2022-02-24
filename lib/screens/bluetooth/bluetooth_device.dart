@@ -135,7 +135,7 @@ class DeviceScreen extends StatelessWidget {
                                   actions: <Widget>[
                                     TextButton(
                                       onPressed: () async {
-                                        device.discoverServices();
+                                        await device.discoverServices();
                                         //TODO loading indicator (optional)
                                         String mailboxId = await Database.createMailbox();
                                         var characteristic = snapshot.data![2].characteristics[0];
