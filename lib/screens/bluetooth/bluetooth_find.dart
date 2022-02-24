@@ -27,8 +27,9 @@ class FindDevicesScreen extends StatelessWidget {
                         style: const TextStyle(fontSize: 20),
                       ),
                       onTap: () {
-                          result.device.connect(autoConnect: false);
+                          result.device.connect(autoConnect: true);
                           result.device.discoverServices();
+                          result.device.requestMtu(92);
                           Get.to(() => DeviceScreen(device: result.device), transition: Transition.leftToRight);
                         //   Navigator.of(context).push(
                         //   MaterialPageRoute(
@@ -42,7 +43,6 @@ class FindDevicesScreen extends StatelessWidget {
                     );
                   }
                   else {
-                    print("None: " + result.device.id.toString());
                     return const SizedBox.shrink();
                   }
                 }).toList(),
