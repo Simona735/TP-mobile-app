@@ -133,8 +133,7 @@ class DeviceScreen extends StatelessWidget {
                                     TextButton(
                                       onPressed: () async {
                                         //TODO loading indicator (optional)
-                                        String mailboxId = "sss";
-                                        // String mailboxId = await Database.createMailbox();
+                                        String mailboxId = await Database.createMailbox();
                                         var characteristic = snapshot.data![2].characteristics[0];
                                         await characteristic.write(utf8.encode(
                                             "WS;" + wifiNameController.text.trim())
