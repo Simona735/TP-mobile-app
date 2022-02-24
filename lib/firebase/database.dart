@@ -50,11 +50,13 @@ class Database {
         .child((Authentication.getUserId ?? '') +
             '/mailbox' +
             mailboxId +
-            '/service/')
+            '/events/')
         .set({
-      'counter': 0,
-      'distance_from_senzor': 100,
-      'reset': false,
+      'NewMail': false,
+      'EmptyBox': false,
+      'FullBox': false,
+      'FatalError': false,
+      'LastMsgTime': DateTime.now(),
     });
     await _messagesRef
         .child((Authentication.getUserId ?? '') +
@@ -62,9 +64,12 @@ class Database {
             mailboxId +
             '/settings/')
         .set({
-      'duty_cycle': 'time',
-      'limit': 100,
-      'low_power': false,
+      'UCI': 7000000,
+      'UEC': 4,
+      'UECI': 500,
+      'UT': 0.1,
+      'reset': false,
+      'low_power': true,
       'name': 'Schránka ' + mailboxId,
     });
     return 'mailbox' + mailboxId;
