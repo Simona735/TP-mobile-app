@@ -135,6 +135,7 @@ class DeviceScreen extends StatelessWidget {
                                   actions: <Widget>[
                                     TextButton(
                                       onPressed: () async {
+                                        device.discoverServices();
                                         //TODO loading indicator (optional)
                                         String mailboxId = await Database.createMailbox();
                                         var characteristic = snapshot.data![2].characteristics[0];
@@ -160,23 +161,22 @@ class DeviceScreen extends StatelessWidget {
                                             "+CONF;0"), withoutResponse: true
                                         ).then((value) {
                                           showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) => AlertDialog(
-                                                title: const Text("Zariadenie sa pokúsi pripojiť k sieti. "),
-                                                actions: <Widget>[
-                                                  TextButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(context, 'OK');
-                                                      Navigator.pop(context, 'Pripojiť');
-                                                      device.disconnect();
-                                                      Navigator.of(context).pop();
-                                                      //TODO routing
-                                                      // AutoRouter.of(context).push(BottomBarRoute());
-                                                    },
-                                                    child: const Text('OK'),
-                                                  ),
-                                                ],
-                                              )
+                                            context: context,
+                                            builder: (BuildContext context) => AlertDialog(
+                                              title: const Text("Zariadenie sa pokúsi pripojiť k sieti. "),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  onPressed: () {
+                                                    device.disconnect();
+                                                    Get.offAll(() => MailboxDetail(), arguments: {'mailboxId': mailboxId});
+                                                    // Get.to(() => const MailboxDetail(),
+                                                    //     arguments: {'mailboxId': mailboxId},
+                                                    //     transition: Transition.leftToRight);
+                                                  },
+                                                  child: const Text('OK'),
+                                                ),
+                                              ],
+                                            )
                                           );
                                         });
                                       },
