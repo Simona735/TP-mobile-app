@@ -56,7 +56,7 @@ class Database {
       'EmptyBox': false,
       'FullBox': false,
       'FatalError': false,
-      'LastMsgTime': DateTime.now(),
+      'LastMsgTime': ServerValue.timestamp,
     });
     await _messagesRef
         .child((Authentication.getUserId ?? '') +
