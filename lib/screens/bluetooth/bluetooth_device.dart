@@ -4,6 +4,9 @@ import 'package:tp_mobile_app/firebase/authentication.dart';
 import 'dart:convert';
 import 'dart:developer' as developer;
 import 'package:tp_mobile_app/firebase/database.dart';
+import 'package:get/get.dart';
+
+import '../mailboxdetail.dart';
 
 class DeviceScreen extends StatelessWidget {
   DeviceScreen({Key? key, required this.device}) : super(key: key);
