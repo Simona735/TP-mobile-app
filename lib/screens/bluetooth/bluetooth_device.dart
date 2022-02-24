@@ -3,14 +3,14 @@ import 'package:flutter_blue/flutter_blue.dart';
 import 'package:tp_mobile_app/firebase/authentication.dart';
 import 'dart:convert';
 import 'dart:developer' as developer;
-
 import 'package:tp_mobile_app/firebase/database.dart';
 
 class DeviceScreen extends StatelessWidget {
   DeviceScreen({Key? key, required this.device}) : super(key: key);
 
-  final nameController = TextEditingController();
-  final passwordController = TextEditingController();
+  final wifiNameController = TextEditingController();
+  final wifiPasswordController = TextEditingController();
+  final userPasswordController = TextEditingController();
   final BluetoothDevice device;
 
 
@@ -100,7 +100,7 @@ class DeviceScreen extends StatelessWidget {
                           Container(
                               margin: const EdgeInsets.all(10),
                               child: TextField(
-                                controller: nameController,
+                                controller: wifiNameController,
                                 decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     labelText: 'Názov siete'),
@@ -109,7 +109,7 @@ class DeviceScreen extends StatelessWidget {
                           Container(
                             margin: const EdgeInsets.all(10),
                             child: TextField(
-                              controller: passwordController,
+                              controller: wifiPasswordController,
                               obscureText: true,
                               decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
@@ -118,29 +118,73 @@ class DeviceScreen extends StatelessWidget {
                           ),
                           ElevatedButton(
                             onPressed: () async {
-                              String mailboxId = await Database.createMailbox();
-                              await snapshot.data![2].characteristics[0].write(utf8.encode(
-                                  nameController.text.trim() + ';' +
-                                  passwordController.text + ';' +
-                                  (Authentication.getUserId ?? '-') + ';' +
-                                  mailboxId)
-                              );
+                              // await snapshot.data![2].characteristics[0].write(utf8.encode(
+                              //     "+FRST;0")
+                              // );
                               showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) => AlertDialog(
-                                    title: const Text("Zariadenie sa pokúsi pripojiť k sieti."),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        onPressed: () => Navigator.pop(context, 'OK'),
-                                        child: const Text('OK'),
-                                      ),
-                                    ],
-                                  )
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                  title: const Text('Pre overenie vyplň svoje heslo.'),
+                                  content: TextField(
+                                    controller: userPasswordController,
+                                    obscureText: true,
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () async {
+                                        //TODO loading indicator (optional)
+                                        String mailboxId = "sss";
+                                        // String mailboxId = await Database.createMailbox();
+                                        var characteristic = snapshot.data![2].characteristics[0];
+                                        await characteristic.write(utf8.encode(
+                                            "WS;" + wifiNameController.text.trim())
+                                        );
+                                        await characteristic.write(utf8.encode(
+                                            "WP;" + wifiPasswordController.text)
+                                        );
+                                        await characteristic.write(utf8.encode(
+                                            "FBP;" + userPasswordController.text)
+                                        );
+                                        await characteristic.write(utf8.encode(
+                                            "FBM;" + (Authentication.getUserEmail ?? '-'))
+                                        );
+                                        await characteristic.write(utf8.encode(
+                                            "FBU;" + (Authentication.getUserId ?? '-'))
+                                        );
+                                        await characteristic.write(utf8.encode(
+                                            "FBI;" + mailboxId)
+                                        );
+                                        characteristic.write(utf8.encode(
+                                            "+CONF;0"), withoutResponse: true
+                                        ).then((value) {
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) => AlertDialog(
+                                                title: const Text("Zariadenie sa pokúsi pripojiť k sieti. "),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context, 'OK');
+                                                      Navigator.pop(context, 'Pripojiť');
+                                                      device.disconnect();
+                                                      Navigator.of(context).pop();
+                                                      //TODO routing
+                                                      // AutoRouter.of(context).push(BottomBarRoute());
+                                                    },
+                                                    child: const Text('OK'),
+                                                  ),
+                                                ],
+                                              )
+                                          );
+                                        });
+                                      },
+                                      child: const Text('Pripojiť'),
+                                    ),
+                                  ],
+                                )
                               );
-                              device.disconnect();
-                              //TODO after data send
                             },
-                            child: const Text("Pripojiť"),
+                            child: const Text("Potvrdiť"),
                           ),
                         ],
                       )
