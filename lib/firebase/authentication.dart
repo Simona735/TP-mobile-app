@@ -5,6 +5,7 @@ class Authentication{
   static bool get isSignedIn => firebaseAuth.currentUser != null;
   static String? get getDisplayName => firebaseAuth.currentUser?.displayName;
   static String? get getUserId => firebaseAuth.currentUser?.uid;
+  static String? get getUserEmail => firebaseAuth.currentUser?.email;
 
   static Future<void> init() async {
     firebaseAuth.userChanges().listen((User? user) {
