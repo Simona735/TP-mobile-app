@@ -32,7 +32,7 @@ class DeviceScreen extends StatelessWidget {
               switch (snapshot.data) {
                 case BluetoothDeviceState.connected:
                   onPressed = () => device.disconnect();
-                  text = 'DISCONNECT';
+                  text = 'Odpojiť';
                   break;
                 case BluetoothDeviceState.disconnected:
                   onPressed = () async {
@@ -43,7 +43,7 @@ class DeviceScreen extends StatelessWidget {
                       developer.log(e.toString());
                     }
                   };
-                  text = 'CONNECT';
+                  text = 'Pripojiť';
                   break;
                 default:
                   onPressed = null;
