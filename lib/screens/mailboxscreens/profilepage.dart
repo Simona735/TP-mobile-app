@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tp_mobile_app/controllers/settings_controller.dart';
@@ -58,7 +59,9 @@ class ProfilePage extends StatelessWidget {
                     margin: const EdgeInsets.only(top: 5, left: 20, right: 20),
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        await FirebaseMessaging.instance.unsubscribeFromTopic(
+                            Authentication.getUserId ?? '');
                         Authentication.signOut();
                         settingsController.deletePin();
                         // settingsController.saveSwitchState("switchState", false);

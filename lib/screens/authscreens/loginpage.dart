@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -96,6 +97,8 @@ class LoginPage extends StatelessWidget {
                       await Authentication.signInWithEmailAndPassword(
                           emailController.text.trim(), passwordController.text);
                   if (Authentication.isSignedIn) {
+                    await FirebaseMessaging.instance
+                        .subscribeToTopic(Authentication.getUserId ?? '');
                     Get.offAll(() => BottomBar(), binding: BottomBarBinding());
                     // Navigator.pop(context);
                     // AutoRouter.of(context).push(BottomBarRoute());
