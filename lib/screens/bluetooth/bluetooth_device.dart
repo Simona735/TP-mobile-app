@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:tp_mobile_app/controllers/login_controller.dart';
 import 'package:tp_mobile_app/firebase/authentication.dart';
 import 'dart:convert';
 import 'dart:developer' as developer;
@@ -19,6 +20,8 @@ class DeviceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controllerWifi = Get.put(LoginController());
+    final controllerFirebase = Get.put(LoginController());
     return Scaffold(
       appBar: AppBar(
         title: Text(device.name),
@@ -32,7 +35,7 @@ class DeviceScreen extends StatelessWidget {
               switch (snapshot.data) {
                 case BluetoothDeviceState.connected:
                   onPressed = () => device.disconnect();
-                  text = 'DISCONNECT';
+                  text = 'Odpojiť';
                   break;
                 case BluetoothDeviceState.disconnected:
                   onPressed = () async {
@@ -43,7 +46,7 @@ class DeviceScreen extends StatelessWidget {
                       developer.log(e.toString());
                     }
                   };
-                  text = 'CONNECT';
+                  text = 'Pripojiť';
                   break;
                 default:
                   onPressed = null;
@@ -113,10 +116,20 @@ class DeviceScreen extends StatelessWidget {
                             margin: const EdgeInsets.all(10),
                             child: TextField(
                               controller: wifiPasswordController,
-                              obscureText: true,
-                              decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: 'Heslo'),
+                              obscureText: controllerWifi.showPassword.value,
+                              decoration: InputDecoration(
+                                border: const OutlineInputBorder(),
+                                labelText: 'Heslo',
+                                suffixIcon: IconButton(
+                                  onPressed: () {
+                                    controllerWifi.showPassword.value =
+                                    !controllerWifi.showPassword.value;
+                                  },
+                                  icon: Icon(controllerWifi.showPassword.value
+                                      ? Icons.visibility
+                                      : Icons.visibility_off),
+                                ),
+                              ),
                             ),
                           ),
                           ElevatedButton(
@@ -130,7 +143,20 @@ class DeviceScreen extends StatelessWidget {
                                   title: const Text('Pre overenie vyplň svoje heslo.'),
                                   content: TextField(
                                     controller: userPasswordController,
-                                    obscureText: true,
+                                    obscureText: controllerFirebase.showPassword.value,
+                                    decoration: InputDecoration(
+                                      border: const OutlineInputBorder(),
+                                      labelText: 'Heslo',
+                                      suffixIcon: IconButton(
+                                        onPressed: () {
+                                          controllerFirebase.showPassword.value =
+                                          !controllerFirebase.showPassword.value;
+                                        },
+                                        icon: Icon(controllerFirebase.showPassword.value
+                                            ? Icons.visibility
+                                            : Icons.visibility_off),
+                                      ),
+                                    ),
                                   ),
                                   actions: <Widget>[
                                     TextButton(
