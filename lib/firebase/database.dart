@@ -202,45 +202,60 @@ class Database {
     listenToFullBoxNotifications(mailboxId, mailboxName);
   }
 
-  static void listenToNewMailNotification(String mailboxId, String mailboxName) {
-    _messagesRef.child(
+  static Future<void> listenToNewMailNotification(String mailboxId, String mailboxName) async {
+    _messagesRef
+        .child(
         (Authentication.getUserId ?? '') + '/' + mailboxId + '/events/NewMail')
-        .onValue.listen((event) {
-      developer.log("notif:   /events/NewMail: " + event.snapshot.value.toString());
-      if(event.snapshot.value){
-        Notifications.basicNotification(
-            "Nová pošta",
-            "Nový list v schránke: " + mailboxName,
-            Random().nextInt(2147483647));
-      }
+        .onValue.listen((event) async {
+      await FirebaseDatabase.instance.reference()
+          .child((Authentication.getUserId ?? '') +
+          '/' + mailboxId + '/settings/notif_new')
+          .once().then((DataSnapshot snapshotSetting) {
+        if(event.snapshot.value && snapshotSetting.value){
+          Notifications.basicNotification(
+              "Nová pošta",
+              "Nový list v schránke: " + mailboxName,
+              Random().nextInt(2147483647));
+        }
+      });
     });
   }
 
   static void listenToEmptyBoxNotifications(String mailboxId, String mailboxName) {
-    _messagesRef.child(
+    _messagesRef
+        .child(
         (Authentication.getUserId ?? '') + '/' + mailboxId + '/events/EmptyBox')
-        .onValue.listen((event) {
-      developer.log("notif:   /events/EmptyBox: " + event.snapshot.value.toString());
-      if(event.snapshot.value){
-        Notifications.basicNotification(
-            "Prázdna schránka",
-            "Schránka '" + mailboxName + "' je prázdna.",
-            Random().nextInt(2147483647));
-      }
+        .onValue.listen((event) async {
+      await FirebaseDatabase.instance.reference()
+          .child((Authentication.getUserId ?? '') +
+          '/' + mailboxId + '/settings/notif_empty')
+          .once().then((DataSnapshot snapshotSetting) {
+        if(event.snapshot.value && snapshotSetting.value){
+          Notifications.basicNotification(
+              "Prázdna schránka",
+              "Schránka '" + mailboxName + "' je prázdna.",
+              Random().nextInt(2147483647));
+        }
+      });
     });
   }
 
   static void listenToFullBoxNotifications(String mailboxId, String mailboxName) {
-    _messagesRef.child(
+    _messagesRef
+        .child(
         (Authentication.getUserId ?? '') + '/' + mailboxId + '/events/FullBox')
-        .onValue.listen((event) {
-      developer.log("notif:   /events/FullBox: " + event.snapshot.value.toString());
-      if(event.snapshot.value){
-        Notifications.basicNotification(
-            "Plná schránka",
-            "Schránka '" + mailboxName + "' je plná.",
-            Random().nextInt(2147483647));
-      }
+        .onValue.listen((event) async {
+      await FirebaseDatabase.instance.reference()
+          .child((Authentication.getUserId ?? '') +
+          '/' + mailboxId + '/settings/notif_full')
+          .once().then((DataSnapshot snapshotSetting) {
+        if(event.snapshot.value && snapshotSetting.value){
+          Notifications.basicNotification(
+              "Plná schránka",
+              "Schránka '" + mailboxName + "' je plná.",
+              Random().nextInt(2147483647));
+        }
+      });
     });
   }
 
