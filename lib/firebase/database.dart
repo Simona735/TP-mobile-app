@@ -1,4 +1,5 @@
 import 'dart:ffi';
+import 'dart:math';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,8 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:tp_mobile_app/models/mailbox.dart';
 import 'package:tp_mobile_app/models/service.dart';
 import 'package:tp_mobile_app/models/settings.dart';
+import 'package:tp_mobile_app/widgets/notifications.dart';
+import 'dart:developer' as developer;
 
 import 'authentication.dart';
 
@@ -75,6 +78,7 @@ class Database {
       'notif_new': true,
       'name': 'Schránka ' + mailboxId,
     });
+    listenToAllNotifications('mailbox' + mailboxId, 'Schránka ' + mailboxId);
     return 'mailbox' + mailboxId;
   }
 
@@ -192,9 +196,39 @@ class Database {
 
   //---------------------- NOTIFICATIONS ------------------------
 
-  static void listenToAllNotifications() {
-    _messagesRef.child(Authentication.getUserId ?? '').set({
-      'mailbox_iter': 0,
+  static void listenToAllNotifications(String mailboxId, String mailboxName) {
+    _messagesRef.child(
+        (Authentication.getUserId ?? '') + '/' + mailboxId + '/events/NewMail')
+        .onValue.listen((event) {
+          developer.log("notif:   /events/NewMail: " + event.snapshot.value.toString());
+          if(event.snapshot.value){
+            Notifications.basicNotification(
+                "Nová pošta",
+                "Nový list v schránke: " + mailboxName,
+                Random().nextInt(2147483647));
+          }
+    });
+    _messagesRef.child(
+        (Authentication.getUserId ?? '') + '/' + mailboxId + '/events/EmptyBox')
+        .onValue.listen((event) {
+      developer.log("notif:   /events/EmptyBox: " + event.snapshot.value.toString());
+      if(event.snapshot.value){
+        Notifications.basicNotification(
+            "Prázdna schránka",
+            "Schránka '" + mailboxName + "' je prázdna.",
+            Random().nextInt(2147483647));
+      }
+    });
+    _messagesRef.child(
+        (Authentication.getUserId ?? '') + '/' + mailboxId + '/events/FullBox')
+        .onValue.listen((event) {
+      developer.log("notif:   /events/FullBox: " + event.snapshot.value.toString());
+      if(event.snapshot.value){
+        Notifications.basicNotification(
+            "Plná schránka",
+            "Schránka '" + mailboxName + "' je plná.",
+            Random().nextInt(2147483647));
+      }
     });
   }
 
