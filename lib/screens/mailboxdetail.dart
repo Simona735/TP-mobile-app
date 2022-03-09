@@ -132,7 +132,7 @@ class MailboxDetail extends StatelessWidget {
                             // ),
                             ListTile(
                               title: const Text('Interval medzi kontrolami'),
-                              subtitle: const Text('Here is a second line'),
+                              subtitle: const Text('variable prview'),
                               trailing: const Icon(Icons.keyboard_arrow_right),
                               onTap: (){
                                 showDialog(
@@ -141,12 +141,6 @@ class MailboxDetail extends StatelessWidget {
                                     title: const Text('Interval medzi kontrolami'),
                                     content: const Text('sem'),
                                     actions: <Widget>[
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context, 'Cancel');
-                                        },
-                                        child: const Text('Cancel'),
-                                      ),
                                       TextButton(
                                         onPressed: () {
                                           Navigator.pop(context, 'OK');
@@ -161,7 +155,7 @@ class MailboxDetail extends StatelessWidget {
                             const Divider(height: 1),
                             ListTile(
                               title: const Text('Kontroly navyse'),
-                              subtitle: const Text('Here is a second line'),
+                              subtitle: const Text('variable prview'),
                               trailing: const Icon(Icons.keyboard_arrow_right),
                               onTap: (){
                                 showDialog(
@@ -170,12 +164,6 @@ class MailboxDetail extends StatelessWidget {
                                     title: const Text('Kontroly navyse'),
                                     content: const Text('sem'),
                                     actions: <Widget>[
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context, 'Cancel');
-                                        },
-                                        child: const Text('Cancel'),
-                                      ),
                                       TextButton(
                                         onPressed: () {
                                           Navigator.pop(context, 'OK');
@@ -190,7 +178,7 @@ class MailboxDetail extends StatelessWidget {
                             const Divider(height: 1),
                             ListTile(
                               title: const Text('Interval medzi kontrolami navyse'),
-                              subtitle: const Text('Here is a second line'),
+                              subtitle: const Text('variable prview'),
                               trailing: const Icon(Icons.keyboard_arrow_right),
                               onTap: (){
                                 showDialog(
@@ -199,12 +187,6 @@ class MailboxDetail extends StatelessWidget {
                                     title: const Text('Interval medzi kontrolami navyse'),
                                     content: const Text('sem'),
                                     actions: <Widget>[
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context, 'Cancel');
-                                        },
-                                        child: const Text('Cancel'),
-                                      ),
                                       TextButton(
                                         onPressed: () {
                                           Navigator.pop(context, 'OK');
@@ -219,7 +201,7 @@ class MailboxDetail extends StatelessWidget {
                             const Divider(height: 1),
                             ListTile(
                               title: const Text('Tolerancia'),
-                              subtitle: const Text('Here is a second line'),
+                              subtitle: const Text('variable prview'),
                               trailing: const Icon(Icons.keyboard_arrow_right),
                               onTap: (){
                                 showDialog(
@@ -228,12 +210,6 @@ class MailboxDetail extends StatelessWidget {
                                     title: const Text('Tolerancia'),
                                     content: const Text('sem'),
                                     actions: <Widget>[
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context, 'Cancel');
-                                        },
-                                        child: const Text('Cancel'),
-                                      ),
                                       TextButton(
                                         onPressed: () {
                                           Navigator.pop(context, 'OK');
