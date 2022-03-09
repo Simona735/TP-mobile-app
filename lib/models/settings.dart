@@ -2,6 +2,9 @@ class Settings{
   bool _reset;
   bool _lowPower;
   String _name;
+  bool _notif_new;
+  bool _notif_full;
+  bool _notif_empty;
 
   Settings(this._reset, this._lowPower, this._name);
 
