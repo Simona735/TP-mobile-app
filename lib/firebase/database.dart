@@ -197,17 +197,26 @@ class Database {
   //---------------------- NOTIFICATIONS ------------------------
 
   static void listenToAllNotifications(String mailboxId, String mailboxName) {
+    listenToNewMailNotification(mailboxId, mailboxName);
+    listenToEmptyBoxNotifications(mailboxId, mailboxName);
+    listenToFullBoxNotifications(mailboxId, mailboxName);
+  }
+
+  static void listenToNewMailNotification(String mailboxId, String mailboxName) {
     _messagesRef.child(
         (Authentication.getUserId ?? '') + '/' + mailboxId + '/events/NewMail')
         .onValue.listen((event) {
-          developer.log("notif:   /events/NewMail: " + event.snapshot.value.toString());
-          if(event.snapshot.value){
-            Notifications.basicNotification(
-                "Nová pošta",
-                "Nový list v schránke: " + mailboxName,
-                Random().nextInt(2147483647));
-          }
+      developer.log("notif:   /events/NewMail: " + event.snapshot.value.toString());
+      if(event.snapshot.value){
+        Notifications.basicNotification(
+            "Nová pošta",
+            "Nový list v schránke: " + mailboxName,
+            Random().nextInt(2147483647));
+      }
     });
+  }
+
+  static void listenToEmptyBoxNotifications(String mailboxId, String mailboxName) {
     _messagesRef.child(
         (Authentication.getUserId ?? '') + '/' + mailboxId + '/events/EmptyBox')
         .onValue.listen((event) {
@@ -219,6 +228,9 @@ class Database {
             Random().nextInt(2147483647));
       }
     });
+  }
+
+  static void listenToFullBoxNotifications(String mailboxId, String mailboxName) {
     _messagesRef.child(
         (Authentication.getUserId ?? '') + '/' + mailboxId + '/events/FullBox')
         .onValue.listen((event) {
