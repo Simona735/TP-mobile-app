@@ -85,8 +85,8 @@ class MailboxDetail extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
+                            const Padding(
+                              padding: EdgeInsets.only(
                                 top: 15.0,
                                 left: 15.0,
                                 right: 15.0,
@@ -95,7 +95,7 @@ class MailboxDetail extends StatelessWidget {
                               child: Text(
                                 "Nastavenia schránky",
                                 style: TextStyle(
-                                  color: Theme.of(context).accentColor,
+                                  color: Colors.blue,
                                   fontWeight: FontWeight.bold,
                                 ),
                                 overflow: TextOverflow.ellipsis,
@@ -251,8 +251,8 @@ class MailboxDetail extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
+                            const Padding(
+                              padding: EdgeInsets.only(
                                 top: 15.0,
                                 left: 15.0,
                                 right: 15.0,
@@ -261,7 +261,7 @@ class MailboxDetail extends StatelessWidget {
                               child: Text(
                                 "Notifikácie",
                                 style: TextStyle(
-                                  color: Theme.of(context).accentColor,
+                                  color: Colors.blue,
                                   fontWeight: FontWeight.bold,
                                 ),
                                 overflow: TextOverflow.ellipsis,
