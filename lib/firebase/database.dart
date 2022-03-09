@@ -259,6 +259,33 @@ class Database {
     });
   }
 
+  static void updateNotificationsNewMail(String mailboxId, bool value) {
+    _messagesRef
+        .child(
+        (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
+        .update({
+      'notif_new': value,
+    });
+  }
+
+  static void updateNotificationsEmpty(String mailboxId, bool value) {
+    _messagesRef
+        .child(
+        (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
+        .update({
+      'notif_empty': value,
+    });
+  }
+
+  static void updateNotificationsFull(String mailboxId, bool value) {
+    _messagesRef
+        .child(
+        (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
+        .update({
+      'notif_full': value,
+    });
+  }
+
   //------------------------------------------------------------------------
   //Writing data and returning a string with data from the service table
   static String getDataService(String mailboxId) {
