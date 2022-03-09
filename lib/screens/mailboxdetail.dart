@@ -246,25 +246,25 @@ class MailboxDetail extends StatelessWidget {
 
                             SwitchListTile(
                               title: const Text('Nová pošta'),
-                              value: controller.mailbox.lowPower,
+                              value: controller.mailbox.notif_new,
                               onChanged: (value) => {
-                                controller.updateLowPowerMode(value),
+                                controller.updateNotifyNew(value),
                               },
                             ),
                             const Divider(height: 1),
                             SwitchListTile(
                               title: const Text('Plná schránka'),
-                              value: controller.mailbox.lowPower,
+                              value: controller.mailbox.notif_full,
                               onChanged: (value) => {
-                                controller.updateLowPowerMode(value),
+                                controller.updateNotifyFull(value),
                               },
                             ),
                             const Divider(height: 1),
                             SwitchListTile(
                               title: const Text('Prázdna schránka'),
-                              value: controller.mailbox.lowPower,
+                              value: controller.mailbox.notif_empty,
                               onChanged: (value) => {
-                                controller.updateLowPowerMode(value),
+                                controller.updateNotifyEmpty(value),
                               },
                             ),
                             const Divider(height: 1),
