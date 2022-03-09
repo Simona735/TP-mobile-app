@@ -107,42 +107,142 @@ class MailboxDetail extends StatelessWidget {
                               onChanged: (value) => {
                                 controller.updateLowPowerMode(value),
                               },
-                              secondary: const Icon(Icons.battery_charging_full),
+                              // secondary: const Icon(Icons.battery_charging_full),
                             ),
                             const Divider(height: 1),
+                            // Obx(
+                            //   () => Slider(
+                            //     // value: snapshot.data!.limit.toDouble(),
+                            //     value: controller.mailbox.limit.toDouble(),
+                            //     onChanged: (value) {
+                            //       controller.updateLimit(value);
+                            //     },
+                            //     onChangeEnd: (value) {
+                            //       controller.updateLimit(value);
+                            //       Database.updateLimit(controller.mailboxId,
+                            //           controller.mailbox.limit.toInt());
+                            //     },
+                            //     min: 1.0,
+                            //     max: 100.0,
+                            //     activeColor: Colors.yellow,
+                            //     inactiveColor: Colors.yellow[100],
+                            //     label: controller.mailbox.limit.round().toString(),
+                            //     divisions: 99,
+                            //   ),
+                            // ),
                             ListTile(
-                              title: const Text('UCI Interval medzi kontrolami'),
+                              title: const Text('Interval medzi kontrolami'),
                               subtitle: const Text('Here is a second line'),
                               trailing: const Icon(Icons.keyboard_arrow_right),
                               onTap: (){
-                                print('Star');
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) => AlertDialog(
+                                    title: const Text('Interval medzi kontrolami'),
+                                    content: const Text('sem'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context, 'Cancel');
+                                        },
+                                        child: const Text('Cancel'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context, 'OK');
+                                        },
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  )
+                                );
                               },
                             ),
                             const Divider(height: 1),
                             ListTile(
-                              title: const Text('UEC Kontroly navyse'),
+                              title: const Text('Kontroly navyse'),
                               subtitle: const Text('Here is a second line'),
                               trailing: const Icon(Icons.keyboard_arrow_right),
                               onTap: (){
-                                print('Star');
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) => AlertDialog(
+                                    title: const Text('Kontroly navyse'),
+                                    content: const Text('sem'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context, 'Cancel');
+                                        },
+                                        child: const Text('Cancel'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context, 'OK');
+                                        },
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  )
+                                );
                               },
                             ),
                             const Divider(height: 1),
                             ListTile(
-                              title: const Text('UECI Interval medzi kontrolami navyse'),
+                              title: const Text('Interval medzi kontrolami navyse'),
                               subtitle: const Text('Here is a second line'),
                               trailing: const Icon(Icons.keyboard_arrow_right),
                               onTap: (){
-                                print('Star');
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) => AlertDialog(
+                                    title: const Text('Interval medzi kontrolami navyse'),
+                                    content: const Text('sem'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context, 'Cancel');
+                                        },
+                                        child: const Text('Cancel'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context, 'OK');
+                                        },
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  )
+                                );
                               },
                             ),
                             const Divider(height: 1),
                             ListTile(
-                              title: const Text('UT Tolerancia'),
+                              title: const Text('Tolerancia'),
                               subtitle: const Text('Here is a second line'),
                               trailing: const Icon(Icons.keyboard_arrow_right),
                               onTap: (){
-                                print('Star');
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) => AlertDialog(
+                                    title: const Text('Tolerancia'),
+                                    content: const Text('sem'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context, 'Cancel');
+                                        },
+                                        child: const Text('Cancel'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context, 'OK');
+                                        },
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  )
+                                );
                               },
                             ),
                             const Divider(height: 1),
