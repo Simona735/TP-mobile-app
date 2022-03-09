@@ -35,6 +35,25 @@ class Settings{
     _reset = value;
   }
 
+
+  bool get notif_new => _notif_new;
+
+  set notif_new(bool value) {
+    _notif_new = value;
+  }
+
+  bool get notif_full => _notif_full;
+
+  set notif_full(bool value) {
+    _notif_full = value;
+  }
+
+  bool get notif_empty => _notif_empty;
+
+  set notif_empty(bool value) {
+    _notif_empty = value;
+  }
+
   Settings.fromJson(Map<String, dynamic> json)
       : _reset = json['reset'],
         _lowPower = json['low_power'],
