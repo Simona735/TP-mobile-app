@@ -191,7 +191,7 @@ class Database {
                 .child((Authentication.getUserId ?? '') +
                 '/' + mailboxId + '/settings/notif_new').once();
 
-            bool cond = result.snapshot.value as bool;
+            bool cond = result.value as bool;
             bool eventValue = event.snapshot.value as bool;
             if(cond & eventValue){
               Notifications.basicNotification(
@@ -211,7 +211,7 @@ class Database {
           .child((Authentication.getUserId ?? '') +
           '/' + mailboxId + '/settings/notif_empty').once();
 
-      bool cond = result.snapshot.value as bool;
+      bool cond = result.value as bool;
       bool eventValue = event.snapshot.value as bool;
       if(cond & eventValue){
         Notifications.basicNotification(
@@ -231,7 +231,7 @@ class Database {
           .child((Authentication.getUserId ?? '') +
           '/' + mailboxId + '/settings/notif_full').once();
 
-      bool cond = result.snapshot.value as bool;
+      bool cond = result.value as bool;
       bool eventValue = event.snapshot.value as bool;
       if(cond & eventValue){
         Notifications.basicNotification(
