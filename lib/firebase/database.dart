@@ -70,6 +70,9 @@ class Database {
       'UT': 0.1,
       'reset': false,
       'low_power': true,
+      'notif_empty': true,
+      'notif_full': true,
+      'notif_new': true,
       'name': 'Schránka ' + mailboxId,
     });
     return 'mailbox' + mailboxId;
@@ -185,6 +188,14 @@ class Database {
     // Mailbox? mailbox = _mailboxes[mailboxId];
     // mailbox!.settings.name = title;
     // _mailboxes.update(mailboxId, (value) => mailbox);
+  }
+
+  //---------------------- NOTIFICATIONS ------------------------
+
+  static void listenToAllNotifications() {
+    _messagesRef.child(Authentication.getUserId ?? '').set({
+      'mailbox_iter': 0,
+    });
   }
 
   //------------------------------------------------------------------------
