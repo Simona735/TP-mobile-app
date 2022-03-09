@@ -6,9 +6,16 @@ class Settings{
   bool _notif_full;
   bool _notif_empty;
 
-  Settings(this._reset, this._lowPower, this._name);
+  Settings(this._reset, this._lowPower, this._name, this._notif_empty,
+      this._notif_full, this._notif_new);
 
-  Settings.empty() : _reset = false, _lowPower = false, _name = "";
+  Settings.empty()
+      : _reset = false,
+        _lowPower = false,
+        _name = "",
+        _notif_full = true,
+        _notif_new = true,
+        _notif_empty = true;
 
   String get name => _name;
 
@@ -31,7 +38,11 @@ class Settings{
   Settings.fromJson(Map<String, dynamic> json)
       : _reset = json['reset'],
         _lowPower = json['low_power'],
-        _name = json['name'];
+        _name = json['name'],
+        _notif_empty = json['notif_empty'],
+        _notif_new = json['notif_new'],
+        _notif_full = json['notif_full'];
+
 }
 
 
