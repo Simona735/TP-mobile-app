@@ -94,7 +94,7 @@ class Database {
           .child((Authentication.getUserId ?? '') + '/').get();
     if (snapshot.exists) {
       _mailboxes.clear();
-      var data = snapshot.value as Map<String, dynamic>;
+      var data = Map<String, dynamic>.from(snapshot.value);
       data.remove('mailbox_iter');
       if (data.isNotEmpty) {
         for (var k in data.keys) {
@@ -142,7 +142,8 @@ class Database {
           (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/').get();
 
     if (snapshot.exists) {
-      data = Settings.fromJson(Map<String, dynamic>.from(snapshot.value as Map<String, dynamic>));
+      var detail = Map<String, dynamic>.from(snapshot.value);
+      data = Settings.fromJson(detail);
     }
     return data;
   }
