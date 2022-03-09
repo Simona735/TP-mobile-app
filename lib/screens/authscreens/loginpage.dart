@@ -97,8 +97,6 @@ class LoginPage extends StatelessWidget {
                       await Authentication.signInWithEmailAndPassword(
                           emailController.text.trim(), passwordController.text);
                   if (Authentication.isSignedIn) {
-                    await FirebaseMessaging.instance
-                        .subscribeToTopic(Authentication.getUserId ?? '');
                     Get.offAll(() => BottomBar(), binding: BottomBarBinding());
                     // Navigator.pop(context);
                     // AutoRouter.of(context).push(BottomBarRoute());

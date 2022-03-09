@@ -1,4 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart'; // new
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart'; // new
 
 class Authentication{
   static FirebaseAuth firebaseAuth = FirebaseAuth.instance;
@@ -34,6 +35,8 @@ class Authentication{
         email: email,
         password: password
       );
+      await FirebaseMessaging.instance
+          .subscribeToTopic(userCredential.user!.uid);
       print(userCredential.user!.uid);
       return Future.value(userCredential.user!.uid);
     } on FirebaseAuthException catch (e) {
@@ -64,6 +67,9 @@ class Authentication{
           password: password
       );
       userCredential.user!.updateDisplayName(name + " " + surname);
+      await FirebaseMessaging.instance
+          .subscribeToTopic(userCredential.user!.uid);
+      print(userCredential.user!.uid);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return Future.value('Slabé heslo');
@@ -120,6 +126,8 @@ class Authentication{
   }
 
   static Future<void> signOut() async {
+    await FirebaseMessaging.instance.unsubscribeFromTopic(
+        Authentication.getUserId ?? '');
     await firebaseAuth.signOut();
   }
 

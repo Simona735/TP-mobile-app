@@ -60,8 +60,6 @@ class ProfilePage extends StatelessWidget {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () async {
-                        await FirebaseMessaging.instance.unsubscribeFromTopic(
-                            Authentication.getUserId ?? '');
                         Authentication.signOut();
                         settingsController.deletePin();
                         // settingsController.saveSwitchState("switchState", false);
