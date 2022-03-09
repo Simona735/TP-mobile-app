@@ -17,7 +17,7 @@ class Database {
   static final Map<String, Mailbox> _mailboxes = <String, Mailbox>{};
 
   static final DatabaseReference _messagesRef =
-      FirebaseDatabase.instance.ref();
+      FirebaseDatabase.instance.reference();
 
   static DatabaseReference get ref => _messagesRef;
 
@@ -186,7 +186,7 @@ class Database {
         .child(
         (Authentication.getUserId ?? '') + '/' + mailboxId + '/events/NewMail')
         .onValue.listen((event) async {
-            final result = await FirebaseDatabase.instance.ref()
+            final result = await FirebaseDatabase.instance.reference()
                 .child((Authentication.getUserId ?? '') +
                 '/' + mailboxId + '/settings/notif_new').once();
 
@@ -206,7 +206,7 @@ class Database {
         .child(
         (Authentication.getUserId ?? '') + '/' + mailboxId + '/events/EmptyBox')
         .onValue.listen((event) async {
-      final result = await FirebaseDatabase.instance.ref()
+      final result = await FirebaseDatabase.instance.reference()
           .child((Authentication.getUserId ?? '') +
           '/' + mailboxId + '/settings/notif_empty').once();
 
@@ -226,7 +226,7 @@ class Database {
         .child(
         (Authentication.getUserId ?? '') + '/' + mailboxId + '/events/FullBox')
         .onValue.listen((event) async {
-      final result = await FirebaseDatabase.instance.ref()
+      final result = await FirebaseDatabase.instance.reference()
           .child((Authentication.getUserId ?? '') +
           '/' + mailboxId + '/settings/notif_full').once();
 
