@@ -40,6 +40,24 @@ class MailboxDetailController extends GetxController {
     Database.updateLowPower(mailboxId, value);
   }
 
+  void updateNotifyNew(value) {
+    _mailboxSettings.value.notif_new = value;
+    _mailboxSettings.refresh();
+    Database.updateNotificationsNewMail(mailboxId, value);
+  }
+
+  void updateNotifyEmpty(value) {
+    _mailboxSettings.value.notif_empty = value;
+    _mailboxSettings.refresh();
+    Database.updateNotificationsEmpty(mailboxId, value);
+  }
+
+  void updateNotifyFull(value) {
+    _mailboxSettings.value.notif_full = value;
+    _mailboxSettings.refresh();
+    Database.updateNotificationsFull(mailboxId, value);
+  }
+
   void updateMailboxName() {
     _mailboxSettings.value.name = titleController.text;
     _mailboxSettings.refresh();
