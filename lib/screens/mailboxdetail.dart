@@ -52,191 +52,203 @@ class MailboxDetail extends StatelessWidget {
                           tooltip: 'Edit',
                           onPressed: () {
                             controller.titleController.text =
-                                controller.mailbox.name;
+                              controller.mailbox.name;
                             showDialog(
-                                context: context,
-                                builder: (BuildContext context) => AlertDialog(
-                                      title: const Text('Edituj názov'),
-                                      content: TextField(
-                                        controller: controller.titleController,
-                                      ),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(context, 'Cancel'),
-                                          child: const Text('Cancel'),
-                                        ),
-                                        TextButton(
-                                          onPressed: () {
-                                            controller.updateMailboxName();
-                                            Navigator.pop(context, 'OK');
-                                          },
-                                          child: const Text('OK'),
-                                        ),
-                                      ],
-                                    ));
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                title: const Text('Edituj názov'),
+                                content: TextField(
+                                  controller: controller.titleController,
+                                ),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(context, 'Cancel'),
+                                    child: const Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      controller.updateMailboxName();
+                                      Navigator.pop(context, 'OK');
+                                    },
+                                    child: const Text('OK'),
+                                  ),
+                                ],
+                              ));
                           },
                         ),
                       ],
                     ),
                     body: ListView(
-                      padding: const EdgeInsets.all(10),
+                      //padding: const EdgeInsets.all(10),
                       children: [
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.center,
-                        //   children: [
-                        //     Container(
-                        //       margin: const EdgeInsets.all(10),
-                        //       child: Obx(
-                        //         () => CircularStepProgressIndicator(
-                        //           // totalSteps: controller.data['limit'].round(),
-                        //           // totalSteps: controller.mailbox.limit.round(),
-                        //           totalSteps: controller.mailbox.limit.round(),
-                        //           currentStep: controller.listPercentage,
-                        //           circularDirection:
-                        //               CircularDirection.counterclockwise,
-                        //           stepSize: 5,
-                        //           selectedColor: controller.listPercentage <=
-                        //                   controller.mailbox.limit.round()
-                        //               ? Colors.yellow
-                        //               : Colors.red,
-                        //           unselectedColor: Colors.grey[200],
-                        //           padding: 0,
-                        //           width: 150,
-                        //           height: 150,
-                        //           selectedStepSize: 15,
-                        //           roundedCap: (_, __) => true,
-                        //           child: Center(
-                        //               child: Column(
-                        //             mainAxisAlignment: MainAxisAlignment.center,
-                        //             children: [
-                        //               Text(
-                        //                 (controller.mailbox.limit.round() <
-                        //                         controller.listPercentage)
-                        //                     ? 'Full'
-                        //                     : controller.listPercentage.toString() +
-                        //                         "%",
-                        //                 style: const TextStyle(
-                        //                     fontWeight: FontWeight.bold,
-                        //                     fontSize: 25),
-                        //               ),
-                        //             ],
-                        //           )),
-                        //         ),
-                        //       ),
-                        //     )
-                        //   ],
-                        // ),
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Obx(
-                            //   () => Slider(
-                            //     // value: snapshot.data!.limit.toDouble(),
-                            //     value: controller.mailbox.limit.toDouble(),
-                            //     onChanged: (value) {
-                            //       controller.updateLimit(value);
-                            //     },
-                            //     onChangeEnd: (value) {
-                            //       controller.updateLimit(value);
-                            //       Database.updateLimit(controller.mailboxId,
-                            //           controller.mailbox.limit.toInt());
-                            //     },
-                            //     min: 1.0,
-                            //     max: 100.0,
-                            //     activeColor: Colors.yellow,
-                            //     inactiveColor: Colors.yellow[100],
-                            //     label: controller.mailbox.limit.round().toString(),
-                            //     divisions: 99,
-                            //   ),
-                            // ),
-                            // Obx(
-                            //   () => Text(
-                            //     "Limit: " +
-                            //         // controller.mailbox.limit.round().toString() +
-                            //         controller.mailbox.limit.round().toString() +
-                            //         "%",
-                            //     style: const TextStyle(fontSize: 20),
-                            //   ),
-                            // ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.only(left: 10),
-                                  child: const Text(
-                                    "Low power mode",
-                                    style: TextStyle(fontSize: 16),
-                                  ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                top: 15.0,
+                                left: 15.0,
+                                right: 15.0,
+                                bottom: 6.0,
+                              ),
+                              child: Text(
+                                "Nastavenia schránky",
+                                style: TextStyle(
+                                  color: Theme.of(context).accentColor,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                Obx(
-                                  () => Switch(
-                                    // value: controller.data["low_power"],
-                                    value: controller.mailbox.lowPower,
-                                    onChanged: (value) => {
-                                      controller.updateLowPowerMode(value),
-                                    },
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            SwitchListTile(
+                              title: const Text('Režim nízkej spotreby'),
+                              value: controller.mailbox.lowPower,
+                              onChanged: (value) => {
+                                controller.updateLowPowerMode(value),
+                              },
+                              secondary: const Icon(Icons.battery_charging_full),
+                            ),
+                            const Divider(height: 1),
+                            ListTile(
+                              title: const Text('UCI Interval medzi kontrolami'),
+                              subtitle: const Text('Here is a second line'),
+                              trailing: const Icon(Icons.keyboard_arrow_right),
+                              onTap: (){
+                                print('Star');
+                              },
+                            ),
+                            const Divider(height: 1),
+                            ListTile(
+                              title: const Text('UEC Kontroly navyse'),
+                              subtitle: const Text('Here is a second line'),
+                              trailing: const Icon(Icons.keyboard_arrow_right),
+                              onTap: (){
+                                print('Star');
+                              },
+                            ),
+                            const Divider(height: 1),
+                            ListTile(
+                              title: const Text('UECI Interval medzi kontrolami navyse'),
+                              subtitle: const Text('Here is a second line'),
+                              trailing: const Icon(Icons.keyboard_arrow_right),
+                              onTap: (){
+                                print('Star');
+                              },
+                            ),
+                            const Divider(height: 1),
+                            ListTile(
+                              title: const Text('UT Tolerancia'),
+                              subtitle: const Text('Here is a second line'),
+                              trailing: const Icon(Icons.keyboard_arrow_right),
+                              onTap: (){
+                                print('Star');
+                              },
+                            ),
+                            const Divider(height: 1),
+                          ]
                         ),
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) => AlertDialog(
-                                          title: RichText(
-                                            text: const TextSpan(
-                                              children: [
-                                                WidgetSpan(
-                                                  child: Icon(
-                                                    Icons.warning,
-                                                    size: 20,
-                                                    color: Colors.red,
-                                                  ),
-                                                ),
-                                                TextSpan(
-                                                    text: " Reset schránky",
-                                                    style: TextStyle(
-                                                      color: Colors.red,
-                                                      fontWeight: FontWeight.bold,
-                                                    )),
-                                              ],
-                                            ),
-                                          ),
-                                          content: const Text(
-                                              'Nejaky popis toho co to je za reset a ci si je isty'),
-                                          actions: <Widget>[
-                                            TextButton(
-                                              onPressed: () =>
-                                                  Navigator.pop(context, 'Cancel'),
-                                              child: const Text('Cancel'),
-                                            ),
-                                            TextButton(
-                                              onPressed: () {
-                                                Database.setReset(
-                                                    controller.mailboxId);
-                                                Navigator.pop(context, 'OK');
-                                              },
-                                              child: const Text(
-                                                'OK',
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                top: 15.0,
+                                left: 15.0,
+                                right: 15.0,
+                                bottom: 6.0,
+                              ),
+                              child: Text(
+                                "Notifikácie",
+                                style: TextStyle(
+                                  color: Theme.of(context).accentColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+
+                            SwitchListTile(
+                              title: const Text('Nová pošta'),
+                              value: controller.mailbox.lowPower,
+                              onChanged: (value) => {
+                                controller.updateLowPowerMode(value),
+                              },
+                            ),
+                            const Divider(height: 1),
+                            SwitchListTile(
+                              title: const Text('Plná schránka'),
+                              value: controller.mailbox.lowPower,
+                              onChanged: (value) => {
+                                controller.updateLowPowerMode(value),
+                              },
+                            ),
+                            const Divider(height: 1),
+                            SwitchListTile(
+                              title: const Text('Prázdna schránka'),
+                              value: controller.mailbox.lowPower,
+                              onChanged: (value) => {
+                                controller.updateLowPowerMode(value),
+                              },
+                            ),
+                            const Divider(height: 1),
+                            ListTile(
+                              title: const Text(''),
+                              leading: ElevatedButton(
+                                style: ElevatedButton.styleFrom(primary: Colors.red),
+                                child: const Text('Reset'),
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) => AlertDialog(
+                                        title: RichText(
+                                          text: const TextSpan(
+                                            children: [
+                                              WidgetSpan(
+                                                child: Icon(
+                                                  Icons.warning,
+                                                  size: 20,
                                                   color: Colors.red,
                                                 ),
                                               ),
+                                              TextSpan(
+                                                  text: " Reset schránky",
+                                                  style: TextStyle(
+                                                    color: Colors.red,
+                                                    fontWeight: FontWeight.bold,
+                                                  )),
+                                            ],
+                                          ),
+                                        ),
+                                        content: const Text(
+                                            'Nejaky popis toho co to je za reset a ci si je isty'),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.pop(context, 'Cancel'),
+                                            child: const Text('Cancel'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              Database.setReset(
+                                                  controller.mailboxId);
+                                              Navigator.pop(context, 'OK');
+                                            },
+                                            child: const Text(
+                                              'OK',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.red,
+                                              ),
                                             ),
-                                          ],
-                                        ));
-                              },
-                              child: const Text("Reset"),
-                              style: ElevatedButton.styleFrom(primary: Colors.red),
+                                          ),
+                                        ],
+                                      ));
+                                },
+                              ),
                             ),
-                          ],
-                        )
+                          ]
+                        ),
                       ],
                     ),
                   );
