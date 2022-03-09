@@ -17,7 +17,7 @@ class Database {
   static final Map<String, Mailbox> _mailboxes = <String, Mailbox>{};
 
   static final DatabaseReference _messagesRef =
-      FirebaseDatabase.instance.reference();
+      FirebaseDatabase.instance.ref();
 
   static DatabaseReference get ref => _messagesRef;
 
@@ -28,14 +28,12 @@ class Database {
   }
 
   static Future<String> getMailboxIter() async {
-    String data = '';
-    await _messagesRef
-        .child((Authentication.getUserId ?? '') + '/mailbox_iter')
-        .once()
-        .then((DataSnapshot snapshot) {
-      data = snapshot.value.toString();
-    });
-    return data;
+    final snapshot = await _messagesRef
+        .child((Authentication.getUserId ?? '') + '/mailbox_iter').get();
+    if (snapshot.exists) {
+      return snapshot.value.toString();
+    }
+    return '';
   }
 
   static Future<String> updateMailboxIter(String current) async {
@@ -86,84 +84,75 @@ class Database {
     _messagesRef
         .child((Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
         .update({
-    //   _messagesRef.child(('user01') + '/' + mailboxId + '/settings/').update({
       'reset': true,
     });
     _mailboxes[mailboxId]!.settings.reset = true;
   }
 
   static Future<Map<String, Mailbox>> getMailboxes() async {
-      await _messagesRef
-          // .child(('user01') + '/')
-          .child((Authentication.getUserId ?? '') + '/')
-          .once()
-          .then((DataSnapshot snapshot) {
+    final snapshot = await _messagesRef
+          .child((Authentication.getUserId ?? '') + '/').get();
+    if (snapshot.exists) {
       _mailboxes.clear();
-      var data = snapshot.value ?? {};
+      var data = snapshot.value as Map<String, dynamic>;
       data.remove('mailbox_iter');
-      if (data.length > 0) {
+      if (data.isNotEmpty) {
         for (var k in data.keys) {
           Settings settings =
-              Settings.fromJson(Map<String, dynamic>.from(data[k]['settings']));
+          Settings.fromJson(Map<String, dynamic>.from(data[k]['settings']));
           Mailbox mailbox = Mailbox(settings);
           _mailboxes.addAll({k: mailbox});
         }
       }
-    });
+    }
     return _mailboxes;
   }
 
   static Future<String> getTitleById(String mailboxId) async {
     String data = '';
-      await _messagesRef
-          // .child(('user01') + '/' + mailboxId + '/settings/name')
-          .child((Authentication.getUserId ?? '') +
-              '/' +
-              mailboxId +
-              '/settings/name')
-          .once()
-          .then((DataSnapshot snapshot) {
+    final snapshot = await _messagesRef.child(
+        (Authentication.getUserId ?? '') +
+        '/' +
+        mailboxId +
+        '/settings/name').get();
+
+    if (snapshot.exists) {
       data = snapshot.value.toString();
-    });
+    }
+
     return _mailboxes[mailboxId]!.settings.name;
   }
 
   static Future<Map> getMailboxDetailById(String mailboxId) async {
     var data = {};
-      await _messagesRef
-          // .child(('user01') + '/' + mailboxId + '/settings/')
-          .child((Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
-          .once()
-          .then((DataSnapshot snapshot) {
-      data = snapshot.value ?? {};
-    });
+    final snapshot = await _messagesRef.child(
+        (Authentication.getUserId ?? '') + '/'
+            + mailboxId
+            + '/settings/').get();
+
+    if (snapshot.exists) {
+      data = snapshot.value as Map<dynamic, dynamic>;
+    }
     return data;
   }
 
   static Future<Settings> getMailboxSettingsById(String mailboxId) async {
     var data = Settings.empty();
-      await _messagesRef
-          // .child(('user01') + '/' + mailboxId + '/settings/')
-          .child((Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
-          .once()
-          .then((DataSnapshot snapshot) {
-      data = Settings.fromJson(Map<String, dynamic>.from(snapshot.value));
-    });
+    final snapshot = await _messagesRef.child(
+          (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/').get();
+
+    if (snapshot.exists) {
+      data = Settings.fromJson(Map<String, dynamic>.from(snapshot.value as Map<String, dynamic>));
+    }
     return data;
   }
 
   static void updateLimit(String mailboxId, int limit) {
-    // _messagesRef
-    //     .child(
-    //         (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
-    //     .update({
-      _messagesRef.child(('user01') + '/' + mailboxId + '/settings/').update({
+      _messagesRef.child(
+          (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
+          .update({
       'limit': limit,
     });
-
-    // Mailbox? mailbox = _mailboxes[mailboxId];
-    // mailbox!.settings.limit = limit;
-    // _mailboxes.update(mailboxId, (value) => mailbox);
   }
 
   static void updateLowPower(String mailboxId, bool value) {
@@ -171,13 +160,8 @@ class Database {
         .child(
             (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
         .update({
-      // _messagesRef.child(('user01') + '/' + mailboxId + '/settings/').update({
       'low_power': value,
     });
-
-    // Mailbox? mailbox = _mailboxes[mailboxId];
-    // mailbox!.settings.lowPower = value;
-    // _mailboxes.update(mailboxId, (value) => mailbox);
   }
 
   static void updateTitle(String mailboxId, String title) {
@@ -185,13 +169,8 @@ class Database {
         .child(
             (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
         .update({
-      // _messagesRef.child(('user01') + '/' + mailboxId + '/settings/').update({
       'name': title,
     });
-
-    // Mailbox? mailbox = _mailboxes[mailboxId];
-    // mailbox!.settings.name = title;
-    // _mailboxes.update(mailboxId, (value) => mailbox);
   }
 
   //---------------------- NOTIFICATIONS ------------------------
@@ -207,18 +186,19 @@ class Database {
         .child(
         (Authentication.getUserId ?? '') + '/' + mailboxId + '/events/NewMail')
         .onValue.listen((event) async {
-      await FirebaseDatabase.instance.reference()
-          .child((Authentication.getUserId ?? '') +
-          '/' + mailboxId + '/settings/notif_new')
-          .once().then((DataSnapshot snapshotSetting) {
-        if(event.snapshot.value && snapshotSetting.value){
-          Notifications.basicNotification(
-              "Nová pošta",
-              "Nový list v schránke: " + mailboxName,
-              Random().nextInt(2147483647));
-        }
+            final result = await FirebaseDatabase.instance.ref()
+                .child((Authentication.getUserId ?? '') +
+                '/' + mailboxId + '/settings/notif_new').once();
+
+            bool cond = result.snapshot.value as bool;
+            bool eventValue = event.snapshot.value as bool;
+            if(cond & eventValue){
+              Notifications.basicNotification(
+                  "Nová pošta",
+                  "Nový list v schránke: " + mailboxName,
+                  Random().nextInt(2147483647));
+            }
       });
-    });
   }
 
   static void listenToEmptyBoxNotifications(String mailboxId, String mailboxName) {
@@ -226,17 +206,18 @@ class Database {
         .child(
         (Authentication.getUserId ?? '') + '/' + mailboxId + '/events/EmptyBox')
         .onValue.listen((event) async {
-      await FirebaseDatabase.instance.reference()
+      final result = await FirebaseDatabase.instance.ref()
           .child((Authentication.getUserId ?? '') +
-          '/' + mailboxId + '/settings/notif_empty')
-          .once().then((DataSnapshot snapshotSetting) {
-        if(event.snapshot.value && snapshotSetting.value){
-          Notifications.basicNotification(
-              "Prázdna schránka",
-              "Schránka '" + mailboxName + "' je prázdna.",
-              Random().nextInt(2147483647));
-        }
-      });
+          '/' + mailboxId + '/settings/notif_empty').once();
+
+      bool cond = result.snapshot.value as bool;
+      bool eventValue = event.snapshot.value as bool;
+      if(cond & eventValue){
+        Notifications.basicNotification(
+            "Prázdna schránka",
+            "Schránka '" + mailboxName + "' je prázdna.",
+            Random().nextInt(2147483647));
+      }
     });
   }
 
@@ -245,17 +226,18 @@ class Database {
         .child(
         (Authentication.getUserId ?? '') + '/' + mailboxId + '/events/FullBox')
         .onValue.listen((event) async {
-      await FirebaseDatabase.instance.reference()
+      final result = await FirebaseDatabase.instance.ref()
           .child((Authentication.getUserId ?? '') +
-          '/' + mailboxId + '/settings/notif_full')
-          .once().then((DataSnapshot snapshotSetting) {
-        if(event.snapshot.value && snapshotSetting.value){
-          Notifications.basicNotification(
-              "Plná schránka",
-              "Schránka '" + mailboxName + "' je plná.",
-              Random().nextInt(2147483647));
-        }
-      });
+          '/' + mailboxId + '/settings/notif_full').once();
+
+      bool cond = result.snapshot.value as bool;
+      bool eventValue = event.snapshot.value as bool;
+      if(cond & eventValue){
+        Notifications.basicNotification(
+            "Plná schránka",
+            "Schránka '" + mailboxName + "' je plná.",
+            Random().nextInt(2147483647));
+      }
     });
   }
 
@@ -284,44 +266,5 @@ class Database {
         .update({
       'notif_full': value,
     });
-  }
-
-  //------------------------------------------------------------------------
-  //Writing data and returning a string with data from the service table
-  static String getDataService(String mailboxId) {
-    String data = '';
-    //Redirect to service table
-    _messagesRef
-        .child((Authentication.getUserId ?? '') + '/' + mailboxId + '/service/')
-        .once()
-        .then((DataSnapshot snapshot) {
-      // Print all data from the service table
-      print('Data SERVICE: ${snapshot.value} ');
-      data = snapshot.value.toString();
-    });
-    return data;
-  }
-
-  // To change the data for a user's mailbox service table
-  static void updateDataService(
-      String mailboxId, int counter, int distance) {
-    //Redirect to service table and update
-    _messagesRef
-        .child(Authentication.getUserId ?? '')
-        .child(mailboxId)
-        .child('service')
-        .update({'counter': counter, 'distance_from_senzor': distance});
-    // _mailboxes[mailboxId]!.service.counter = counter;
-    // _mailboxes[mailboxId]!.service.distanceFromSensor = distance;
-  }
-
-  //Removing data from the service table for a user's mailbox
-  static void deleteDataService(String mailboxId) {
-    //Redirect to service table an remove
-    _messagesRef
-        .child(Authentication.getUserId ?? '')
-        .child(mailboxId)
-        .child('service')
-        .remove();
   }
 }
