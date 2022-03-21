@@ -21,10 +21,10 @@ class Settings{
         _notif_full = true,
         _notif_new = true,
         _notif_empty = true,
-        _UCI = 0,
-        _UEC = 0,
-        _UECI = 0,
-        _UT = 0.0;
+        _UCI = 7,
+        _UEC = 4,
+        _UECI = 500,
+        _UT = 0.1;
 
   String get name => _name;
 
