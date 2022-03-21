@@ -242,6 +242,7 @@ class Database {
     });
   }
 
+  //---------------------- ESP SETTINGS ------------------------
   static void updateNotificationsNewMail(String mailboxId, bool value) {
     _messagesRef
         .child(
