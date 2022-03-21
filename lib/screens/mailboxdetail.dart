@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -116,14 +118,24 @@ class MailboxDetail extends StatelessWidget {
                               trailing: const Icon(Icons.keyboard_arrow_right),
                               onTap: (){
                                 Get.defaultDialog(
+                                  onWillPop: () async {
+                                    Timer(const Duration(milliseconds: 500), () {
+                                      controller.updateUCI(controller.mailbox.UCI);
+                                    });
+                                    return true;
+                                  },
                                   title: "Interval medzi kontrolami",
+                                  onConfirm: () {
+                                    Get.back();
+                                    Timer(const Duration(milliseconds: 500), () {
+                                      controller.updateUCI(controller.mailbox.UCI);
+                                    });
+                                  },
                                   content: Obx(() => Slider(
                                     value: controller.mailbox.UCI.toDouble(),
                                     onChanged: (value) {
-                                      controller.updateUCI(value);
-                                    },
-                                    onChangeEnd: (value) {
-                                      controller.updateUCI(value);
+                                      controller.mailbox.UCI = value.round();
+                                      controller.updateMailbox();
                                     },
                                     min: 5000000,
                                     max: 300000000,
