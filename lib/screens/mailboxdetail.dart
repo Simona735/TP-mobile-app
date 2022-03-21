@@ -22,7 +22,6 @@ class MailboxDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(MailboxDetailController());
-    developer.log(controller.mailbox.UCI.toString());
     return StreamBuilder(
         // stream: Database.ref.child("user01").onValue,
         stream: Database.ref.child(Authentication.getUserId ?? "").onValue,
@@ -121,7 +120,7 @@ class MailboxDetail extends StatelessWidget {
                                   builder: (BuildContext context) => AlertDialog(
                                     title: const Text('Interval medzi kontrolami'),
                                     content:
-                                    Slider(
+                                    Obx(() => Slider(
                                       value: controller.mailbox.UCI.toDouble(),
                                       onChanged: (value) {
                                         controller.updateUCI(value);
@@ -135,6 +134,7 @@ class MailboxDetail extends StatelessWidget {
                                       inactiveColor: Colors.yellow[100],
                                       label: (controller.mailbox.UCI / 1000000).round().toString(),
                                       divisions: 295,
+                                    ),
                                     ),
                                     actions: <Widget>[
                                       TextButton(
@@ -155,36 +155,21 @@ class MailboxDetail extends StatelessWidget {
                               subtitle: Text(controller.mailbox.UEC.round().toString()),
                               trailing: const Icon(Icons.keyboard_arrow_right),
                               onTap: (){
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) => AlertDialog(
-                                    title: const Text('Kontroly navyse'),
-                                    content:
-                                      Obx(() => Slider(
-                                        value: controller.mailbox.UEC.toDouble(),
-                                        onChanged: (value) {
-                                          controller.updateUEC(value);
-                                        },
-                                        onChangeEnd: (value) {
-                                          controller.updateUEC(value);
-                                        },
-                                        min: 1,
-                                        max: 30,
-                                        activeColor: Colors.yellow,
-                                        inactiveColor: Colors.yellow[100],
-                                        label: controller.mailbox.UEC.round().toString(),
-                                        divisions: 30,
-                                        ),
-                                      ),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context, 'OK');
-                                        },
-                                        child: const Text('OK'),
-                                      ),
-                                    ],
-                                  )
+                                Obx(() => Slider(
+                                  value: controller.mailbox.UEC.toDouble(),
+                                  onChanged: (value) {
+                                    controller.updateUEC(value);
+                                  },
+                                  onChangeEnd: (value) {
+                                    controller.updateUEC(value);
+                                  },
+                                  min: 1,
+                                  max: 30,
+                                  activeColor: Colors.yellow,
+                                  inactiveColor: Colors.yellow[100],
+                                  label: controller.mailbox.UEC.round().toString(),
+                                  divisions: 30,
+                                ),
                                 );
                               },
                             ),
