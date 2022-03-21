@@ -115,35 +115,23 @@ class MailboxDetail extends StatelessWidget {
                               subtitle: Text((controller.mailbox.UCI / 1000000).round().toString()),
                               trailing: const Icon(Icons.keyboard_arrow_right),
                               onTap: (){
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) => AlertDialog(
-                                    title: const Text('Interval medzi kontrolami'),
-                                    content:
-                                    Obx(() => Slider(
-                                      value: controller.mailbox.UCI.toDouble(),
-                                      onChanged: (value) {
-                                        controller.updateUCI(value);
-                                      },
-                                      onChangeEnd: (value) {
-                                        controller.updateUCI(value);
-                                      },
-                                      min: 5000000,
-                                      max: 300000000,
-                                      activeColor: Colors.yellow,
-                                      inactiveColor: Colors.yellow[100],
-                                      label: (controller.mailbox.UCI / 1000000).round().toString(),
-                                      divisions: 295,
-                                    ),
-                                    ),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context, 'OK');
-                                        },
-                                        child:const Text('OK'),
-                                      ),
-                                    ],
+                                Get.defaultDialog(
+                                  title: "Interval medzi kontrolami",
+                                  content: Obx(() => Slider(
+                                    value: controller.mailbox.UCI.toDouble(),
+                                    onChanged: (value) {
+                                      controller.updateUCI(value);
+                                    },
+                                    onChangeEnd: (value) {
+                                      controller.updateUCI(value);
+                                    },
+                                    min: 5000000,
+                                    max: 300000000,
+                                    activeColor: Colors.yellow,
+                                    inactiveColor: Colors.yellow[100],
+                                    label: (controller.mailbox.UCI / 1000000).round().toString(),
+                                    divisions: 295,
+                                  ),
                                   )
                                 );
                               },
