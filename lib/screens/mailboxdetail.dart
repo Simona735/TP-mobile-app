@@ -8,7 +8,7 @@ import 'package:tp_mobile_app/controllers/bottom_bar_controller.dart';
 import 'package:tp_mobile_app/controllers/mailboxdetail_controller.dart';
 import 'package:tp_mobile_app/controllers/mailboxlist_controller.dart';
 import 'package:tp_mobile_app/firebase/authentication.dart';
-
+import 'dart:developer' as developer;
 import 'package:tp_mobile_app/firebase/database.dart';
 import 'package:tp_mobile_app/models/settings.dart';
 import 'package:tp_mobile_app/screens/mailboxscreens/mailboxlistpage.dart';
@@ -22,6 +22,7 @@ class MailboxDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(MailboxDetailController());
+    developer.log(controller.mailbox.UCI.toString());
     return StreamBuilder(
         // stream: Database.ref.child("user01").onValue,
         stream: Database.ref.child(Authentication.getUserId ?? "").onValue,
@@ -30,7 +31,7 @@ class MailboxDetail extends StatelessWidget {
             controller.updateMailboxDetail();
             return FutureBuilder<Settings>(
               future: controller.futureMailbox,
-              initialData: Settings(false, false, "", true, true, true),
+              initialData: Settings(false, false, "", true, true, true, 7, 4, 500, 0.1),
               builder: (BuildContext context, AsyncSnapshot<Settings> snapshot) {
                 if (snapshot.hasError) {
                   return Center(
@@ -110,42 +111,37 @@ class MailboxDetail extends StatelessWidget {
                               // secondary: const Icon(Icons.battery_charging_full),
                             ),
                             const Divider(height: 1),
-                            // Obx(
-                            //   () => Slider(
-                            //     // value: snapshot.data!.limit.toDouble(),
-                            //     value: controller.mailbox.limit.toDouble(),
-                            //     onChanged: (value) {
-                            //       controller.updateLimit(value);
-                            //     },
-                            //     onChangeEnd: (value) {
-                            //       controller.updateLimit(value);
-                            //       Database.updateLimit(controller.mailboxId,
-                            //           controller.mailbox.limit.toInt());
-                            //     },
-                            //     min: 1.0,
-                            //     max: 100.0,
-                            //     activeColor: Colors.yellow,
-                            //     inactiveColor: Colors.yellow[100],
-                            //     label: controller.mailbox.limit.round().toString(),
-                            //     divisions: 99,
-                            //   ),
-                            // ),
                             ListTile(
                               title: const Text('Interval medzi kontrolami'),
-                              subtitle: const Text('variable prview'),
+                              subtitle: Text((controller.mailbox.UCI / 1000000).round().toString()),
                               trailing: const Icon(Icons.keyboard_arrow_right),
                               onTap: (){
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) => AlertDialog(
                                     title: const Text('Interval medzi kontrolami'),
-                                    content: const Text('sem'),
+                                    content:
+                                    Slider(
+                                      value: controller.mailbox.UCI.toDouble(),
+                                      onChanged: (value) {
+                                        controller.updateUCI(value);
+                                      },
+                                      onChangeEnd: (value) {
+                                        controller.updateUCI(value);
+                                      },
+                                      min: 5000000,
+                                      max: 300000000,
+                                      activeColor: Colors.yellow,
+                                      inactiveColor: Colors.yellow[100],
+                                      label: (controller.mailbox.UCI / 1000000).round().toString(),
+                                      divisions: 295,
+                                    ),
                                     actions: <Widget>[
                                       TextButton(
                                         onPressed: () {
                                           Navigator.pop(context, 'OK');
                                         },
-                                        child: const Text('OK'),
+                                        child:const Text('OK'),
                                       ),
                                     ],
                                   )
@@ -155,14 +151,31 @@ class MailboxDetail extends StatelessWidget {
                             const Divider(height: 1),
                             ListTile(
                               title: const Text('Kontroly navyse'),
-                              subtitle: const Text('variable prview'),
+                              // subtitle: const Text('variable prview'),
+                              subtitle: Text(controller.mailbox.UEC.round().toString()),
                               trailing: const Icon(Icons.keyboard_arrow_right),
                               onTap: (){
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) => AlertDialog(
                                     title: const Text('Kontroly navyse'),
-                                    content: const Text('sem'),
+                                    content:
+                                      Obx(() => Slider(
+                                        value: controller.mailbox.UEC.toDouble(),
+                                        onChanged: (value) {
+                                          controller.updateUEC(value);
+                                        },
+                                        onChangeEnd: (value) {
+                                          controller.updateUEC(value);
+                                        },
+                                        min: 1,
+                                        max: 30,
+                                        activeColor: Colors.yellow,
+                                        inactiveColor: Colors.yellow[100],
+                                        label: controller.mailbox.UEC.round().toString(),
+                                        divisions: 30,
+                                        ),
+                                      ),
                                     actions: <Widget>[
                                       TextButton(
                                         onPressed: () {
@@ -178,14 +191,30 @@ class MailboxDetail extends StatelessWidget {
                             const Divider(height: 1),
                             ListTile(
                               title: const Text('Interval medzi kontrolami navyse'),
-                              subtitle: const Text('variable prview'),
+                              subtitle: Text(controller.mailbox.UECI.round().toString()),
                               trailing: const Icon(Icons.keyboard_arrow_right),
                               onTap: (){
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) => AlertDialog(
                                     title: const Text('Interval medzi kontrolami navyse'),
-                                    content: const Text('sem'),
+                                    content:
+                                    Obx(() => Slider(
+                                      value: controller.mailbox.UECI.toDouble(),
+                                      onChanged: (value) {
+                                        controller.updateUECI(value);
+                                      },
+                                      onChangeEnd: (value) {
+                                        controller.updateUECI(value);
+                                      },
+                                      min: 200,
+                                      max: 5000,
+                                      activeColor: Colors.yellow,
+                                      inactiveColor: Colors.yellow[100],
+                                      label: controller.mailbox.UECI.round().toString(),
+                                      divisions: 480,
+                                    ),
+                                    ),
                                     actions: <Widget>[
                                       TextButton(
                                         onPressed: () {
@@ -201,14 +230,30 @@ class MailboxDetail extends StatelessWidget {
                             const Divider(height: 1),
                             ListTile(
                               title: const Text('Tolerancia'),
-                              subtitle: const Text('variable prview'),
+                              subtitle: Text(controller.mailbox.UT.round().toString()),
                               trailing: const Icon(Icons.keyboard_arrow_right),
                               onTap: (){
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) => AlertDialog(
                                     title: const Text('Tolerancia'),
-                                    content: const Text('sem'),
+                                    content:
+                                    Obx(() => Slider(
+                                      value: controller.mailbox.UT,
+                                      onChanged: (value) {
+                                        controller.updateUT(value);
+                                      },
+                                      onChangeEnd: (value) {
+                                        controller.updateUT(value);
+                                      },
+                                      min: -3,
+                                      max: 3,
+                                      activeColor: Colors.yellow,
+                                      inactiveColor: Colors.yellow[100],
+                                      label: controller.mailbox.UT.toStringAsFixed(1),
+                                      divisions: 60,
+                                    ),
+                                    ),
                                     actions: <Widget>[
                                       TextButton(
                                         onPressed: () {
