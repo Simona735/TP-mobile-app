@@ -275,7 +275,7 @@ class Database {
         .child(
         (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
         .update({
-      'UCI': value * 1000000,
+      'UCI': value,
     });
   }
 
@@ -297,7 +297,7 @@ class Database {
     });
   }
 
-  static void updateTolerance(String mailboxId, int value) {
+  static void updateTolerance(String mailboxId, double value) {
     _messagesRef
         .child(
         (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
