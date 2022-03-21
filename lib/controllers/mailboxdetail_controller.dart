@@ -91,4 +91,8 @@ class MailboxDetailController extends GetxController {
   void updateMailboxDetail(){
     _mailboxFutureSettings.value = Database.getMailboxSettingsById(mailboxId);
   }
+
+  void updateMailbox(){
+    _mailboxSettings.refresh();
+  }
 }
