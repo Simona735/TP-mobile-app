@@ -38,7 +38,7 @@ dependencies:
     flutter_blue: ^0.8.0
 
     local_auth: ^1.1.8
-    pinput: ^2.1.4
+    pinput: 1.2.2
     encrypted_shared_preferences: ^3.0.0
     shared_preferences: ^2.0.8
     modal_bottom_sheet: ^2.0.0
