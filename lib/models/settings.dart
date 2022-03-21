@@ -98,7 +98,7 @@ class Settings{
         _UCI = json['UCI'],
         _UEC = json['UEC'],
         _UECI = json['UECI'],
-        _UT = json['UT'];
+        _UT = json['UT']/1000000;
 
 
 }
