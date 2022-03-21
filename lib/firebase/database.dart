@@ -17,7 +17,7 @@ class Database {
   static final Map<String, Mailbox> _mailboxes = <String, Mailbox>{};
 
   static final DatabaseReference _messagesRef =
-      FirebaseDatabase.instance.reference();
+      FirebaseDatabase.instance.ref();
 
   static DatabaseReference get ref => _messagesRef;
 
@@ -94,7 +94,7 @@ class Database {
           .child((Authentication.getUserId ?? '') + '/').get();
     if (snapshot.exists) {
       _mailboxes.clear();
-      var data = Map<String, dynamic>.from(snapshot.value);
+      var data = Map<String, dynamic>.from(snapshot.value as Map<String, dynamic>);
       data.remove('mailbox_iter');
       if (data.isNotEmpty) {
         for (var k in data.keys) {
@@ -142,7 +142,7 @@ class Database {
           (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/').get();
 
     if (snapshot.exists) {
-      var detail = Map<String, dynamic>.from(snapshot.value);
+      var detail = Map<String, dynamic>.from(snapshot.value as Map<String, dynamic>);
       data = Settings.fromJson(detail);
     }
     return data;
@@ -187,11 +187,11 @@ class Database {
         .child(
         (Authentication.getUserId ?? '') + '/' + mailboxId + '/events/NewMail')
         .onValue.listen((event) async {
-            final result = await FirebaseDatabase.instance.reference()
+            final result = await FirebaseDatabase.instance.ref()
                 .child((Authentication.getUserId ?? '') +
                 '/' + mailboxId + '/settings/notif_new').once();
 
-            bool cond = result.value as bool;
+            bool cond = result.snapshot.value as bool;
             bool eventValue = event.snapshot.value as bool;
             if(cond & eventValue){
               Notifications.basicNotification(
@@ -207,11 +207,11 @@ class Database {
         .child(
         (Authentication.getUserId ?? '') + '/' + mailboxId + '/events/EmptyBox')
         .onValue.listen((event) async {
-      final result = await FirebaseDatabase.instance.reference()
+      final result = await FirebaseDatabase.instance.ref()
           .child((Authentication.getUserId ?? '') +
           '/' + mailboxId + '/settings/notif_empty').once();
 
-      bool cond = result.value as bool;
+      bool cond = result.snapshot.value as bool;
       bool eventValue = event.snapshot.value as bool;
       if(cond & eventValue){
         Notifications.basicNotification(
@@ -227,11 +227,11 @@ class Database {
         .child(
         (Authentication.getUserId ?? '') + '/' + mailboxId + '/events/FullBox')
         .onValue.listen((event) async {
-      final result = await FirebaseDatabase.instance.reference()
+      final result = await FirebaseDatabase.instance.ref()
           .child((Authentication.getUserId ?? '') +
           '/' + mailboxId + '/settings/notif_full').once();
 
-      bool cond = result.value as bool;
+      bool cond = result.snapshot.value as bool;
       bool eventValue = event.snapshot.value as bool;
       if(cond & eventValue){
         Notifications.basicNotification(
