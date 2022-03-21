@@ -58,6 +58,30 @@ class MailboxDetailController extends GetxController {
     Database.updateNotificationsFull(mailboxId, value);
   }
 
+  void updateUCI(value) {
+    _mailboxSettings.value.UCI = value.round();
+    _mailboxSettings.refresh();
+    Database.updateControlsInterval(mailboxId, value.round());
+  }
+
+  void updateUEC(value) {
+    _mailboxSettings.value.UEC = value.round();
+    _mailboxSettings.refresh();
+    Database.updateExtraControls(mailboxId, value.round());
+  }
+
+  void updateUECI(value) {
+    _mailboxSettings.value.UECI = value.round();
+    _mailboxSettings.refresh();
+    Database.updateExtraControlsInterval(mailboxId, value.round());
+  }
+
+  void updateUT(value) {
+    _mailboxSettings.value.UT = value;
+    _mailboxSettings.refresh();
+    Database.updateTolerance(mailboxId, value);
+  }
+
   void updateMailboxName() {
     _mailboxSettings.value.name = titleController.text;
     _mailboxSettings.refresh();
