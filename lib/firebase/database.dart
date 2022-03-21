@@ -268,4 +268,40 @@ class Database {
       'notif_full': value,
     });
   }
+
+  static void updateControlsInterval(String mailboxId, int value) {
+    _messagesRef
+        .child(
+        (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
+        .update({
+      'UCI': value * 1000000,
+    });
+  }
+
+  static void updateExtraControls(String mailboxId, int value) {
+    _messagesRef
+        .child(
+        (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
+        .update({
+      'UEC': value,
+    });
+  }
+
+  static void updateExtraControlsInterval(String mailboxId, int value) {
+    _messagesRef
+        .child(
+        (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
+        .update({
+      'UECI': value,
+    });
+  }
+
+  static void updateTolerance(String mailboxId, int value) {
+    _messagesRef
+        .child(
+        (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
+        .update({
+      'UT': value,
+    });
+  }
 }
