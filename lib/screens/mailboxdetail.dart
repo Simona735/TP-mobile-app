@@ -249,7 +249,7 @@ class MailboxDetail extends StatelessWidget {
                             const Divider(height: 1),
                             ListTile(
                               title: const Text('Tolerancia'),
-                              subtitle: Text(controller.mailbox.UT.round().toString()),
+                              subtitle: Text(controller.mailbox.UT.toDouble().toStringAsFixed(2)),
                               trailing: const Icon(Icons.keyboard_arrow_right),
                               onTap: (){
                                 Get.defaultDialog(
