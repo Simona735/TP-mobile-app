@@ -193,18 +193,26 @@ class MailboxDetail extends StatelessWidget {
                               subtitle: Text(controller.mailbox.UECI.round().toString()),
                               trailing: const Icon(Icons.keyboard_arrow_right),
                               onTap: (){
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) => AlertDialog(
-                                    title: const Text('Interval medzi kontrolami navyse'),
-                                    content:
+                                Get.defaultDialog(
+                                  title: "Interval medzi kontrolami navyse",
+                                  onWillPop: () async {
+                                    Timer(const Duration(milliseconds: 500), () {
+                                      controller.updateUECI(controller.mailbox.UECI);
+                                    });
+                                    return true;
+                                  },
+                                  onConfirm: () {
+                                    Get.back();
+                                    Timer(const Duration(milliseconds: 500), () {
+                                      controller.updateUECI(controller.mailbox.UECI);
+                                    });
+                                  },
+                                  content:
                                     Obx(() => Slider(
                                       value: controller.mailbox.UECI.toDouble(),
                                       onChanged: (value) {
-                                        controller.updateUECI(value);
-                                      },
-                                      onChangeEnd: (value) {
-                                        controller.updateUECI(value);
+                                        controller.mailbox.UECI = value.round();
+                                        controller.updateMailbox();
                                       },
                                       min: 200,
                                       max: 5000,
@@ -213,16 +221,7 @@ class MailboxDetail extends StatelessWidget {
                                       label: controller.mailbox.UECI.round().toString(),
                                       divisions: 480,
                                     ),
-                                    ),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context, 'OK');
-                                        },
-                                        child: const Text('OK'),
-                                      ),
-                                    ],
-                                  )
+                                  ),
                                 );
                               },
                             ),
