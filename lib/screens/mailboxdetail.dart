@@ -231,18 +231,26 @@ class MailboxDetail extends StatelessWidget {
                               subtitle: Text(controller.mailbox.UT.round().toString()),
                               trailing: const Icon(Icons.keyboard_arrow_right),
                               onTap: (){
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) => AlertDialog(
-                                    title: const Text('Tolerancia'),
-                                    content:
+                                Get.defaultDialog(
+                                  onWillPop: () async {
+                                    Timer(const Duration(milliseconds: 500), () {
+                                      controller.updateUT(controller.mailbox.UT);
+                                    });
+                                    return true;
+                                  },
+                                  onConfirm: () {
+                                    Get.back();
+                                    Timer(const Duration(milliseconds: 500), () {
+                                      controller.updateUT(controller.mailbox.UT);
+                                    });
+                                  },
+                                  title: "Tolerancia",
+                                  content:
                                     Obx(() => Slider(
                                       value: controller.mailbox.UT,
                                       onChanged: (value) {
-                                        controller.updateUT(value);
-                                      },
-                                      onChangeEnd: (value) {
-                                        controller.updateUT(value);
+                                        controller.mailbox.UT = value;
+                                        controller.updateMailbox();
                                       },
                                       min: -3,
                                       max: 3,
@@ -251,16 +259,7 @@ class MailboxDetail extends StatelessWidget {
                                       label: controller.mailbox.UT.toStringAsFixed(1),
                                       divisions: 60,
                                     ),
-                                    ),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context, 'OK');
-                                        },
-                                        child: const Text('OK'),
-                                      ),
-                                    ],
-                                  )
+                                  ),
                                 );
                               },
                             ),
