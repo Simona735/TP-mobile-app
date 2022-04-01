@@ -267,20 +267,27 @@ class MailboxDetail extends StatelessWidget {
                                   },
                                   title: "Tolerancia",
                                   content:
-                                    Obx(() => Slider(
-                                      value: controller.mailbox.UT,
-                                      onChanged: (value) {
-                                        controller.mailbox.UT = value;
-                                        controller.updateMailbox();
-                                      },
-                                      min: -3,
-                                      max: 3,
-                                      activeColor: Colors.yellow,
-                                      inactiveColor: Colors.yellow[100],
-                                      label: controller.mailbox.UT.toStringAsFixed(1),
-                                      divisions: 60,
+                                    Column(
+                                      children: [
+                                        Obx(() => Slider(
+                                          value: controller.mailbox.UT,
+                                          onChanged: (value) {
+                                            controller.mailbox.UT = value;
+                                            controller.updateMailbox();
+                                          },
+                                          min: -3,
+                                          max: 3,
+                                          activeColor: Colors.yellow,
+                                          inactiveColor: Colors.yellow[100],
+                                          label: controller.mailbox.UT.toStringAsFixed(1),
+                                          divisions: 60,
+                                        ),
+                                        ),
+                                        Obx(() =>
+                                          Text(controller.mailbox.UT.toStringAsFixed(2))
+                                        ),
+                                      ],
                                     ),
-                                  ),
                                 );
                               },
                             ),
