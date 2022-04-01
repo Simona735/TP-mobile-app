@@ -177,20 +177,27 @@ class MailboxDetail extends StatelessWidget {
                                     });
                                   },
                                   content:
-                                    Obx(() => Slider(
-                                      value: controller.mailbox.UEC.toDouble(),
-                                      onChanged: (value) {
-                                        controller.mailbox.UEC = value.round();
-                                        controller.updateMailbox();
-                                      },
-                                      min: 1,
-                                      max: 30,
-                                      activeColor: Colors.yellow,
-                                      inactiveColor: Colors.yellow[100],
-                                      label: controller.mailbox.UEC.round().toString(),
-                                      divisions: 30,
-                                    ),
-                                  )
+                                    Column(
+                                      children: [
+                                        Obx(() => Slider(
+                                          value: controller.mailbox.UEC.toDouble(),
+                                          onChanged: (value) {
+                                            controller.mailbox.UEC = value.round();
+                                            controller.updateMailbox();
+                                          },
+                                          min: 1,
+                                          max: 30,
+                                          activeColor: Colors.yellow,
+                                          inactiveColor: Colors.yellow[100],
+                                          label: controller.mailbox.UEC.round().toString(),
+                                          divisions: 30,
+                                        ),
+                                        ),
+                                        Obx(() =>
+                                          Text(controller.mailbox.UEC.round().toString()),
+                                        ),
+                                      ],
+                                    )
                                 );
                               },
                             ),
