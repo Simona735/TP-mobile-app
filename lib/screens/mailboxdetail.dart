@@ -222,20 +222,27 @@ class MailboxDetail extends StatelessWidget {
                                     });
                                   },
                                   content:
-                                    Obx(() => Slider(
-                                      value: controller.mailbox.UECI.toDouble(),
-                                      onChanged: (value) {
-                                        controller.mailbox.UECI = value.round();
-                                        controller.updateMailbox();
-                                      },
-                                      min: 200,
-                                      max: 5000,
-                                      activeColor: Colors.yellow,
-                                      inactiveColor: Colors.yellow[100],
-                                      label: controller.mailbox.UECI.round().toString(),
-                                      divisions: 480,
+                                    Column(
+                                      children: [
+                                        Obx(() => Slider(
+                                          value: controller.mailbox.UECI.toDouble(),
+                                          onChanged: (value) {
+                                            controller.mailbox.UECI = value.round();
+                                            controller.updateMailbox();
+                                          },
+                                          min: 200,
+                                          max: 5000,
+                                          activeColor: Colors.yellow,
+                                          inactiveColor: Colors.yellow[100],
+                                          label: controller.mailbox.UECI.round().toString(),
+                                          divisions: 480,
+                                        ),
+                                        ),
+                                        Obx(() =>
+                                          Text(controller.mailbox.UECI.round().toString())
+                                        ),
+                                      ],
                                     ),
-                                  ),
                                 );
                               },
                             ),
