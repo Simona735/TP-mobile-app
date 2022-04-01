@@ -155,21 +155,35 @@ class MailboxDetail extends StatelessWidget {
                               subtitle: Text(controller.mailbox.UEC.round().toString()),
                               trailing: const Icon(Icons.keyboard_arrow_right),
                               onTap: (){
-                                Obx(() => Slider(
-                                  value: controller.mailbox.UEC.toDouble(),
-                                  onChanged: (value) {
-                                    controller.updateUEC(value);
+                                Get.defaultDialog(
+                                  title: 'Kontroly navyse',
+                                  onWillPop: () async {
+                                    Timer(const Duration(milliseconds: 500), () {
+                                      controller.updateUEC(controller.mailbox.UEC);
+                                    });
+                                    return true;
                                   },
-                                  onChangeEnd: (value) {
-                                    controller.updateUEC(value);
+                                  onConfirm: () {
+                                    Get.back();
+                                    Timer(const Duration(milliseconds: 500), () {
+                                      controller.updateUEC(controller.mailbox.UEC);
+                                    });
                                   },
-                                  min: 1,
-                                  max: 30,
-                                  activeColor: Colors.yellow,
-                                  inactiveColor: Colors.yellow[100],
-                                  label: controller.mailbox.UEC.round().toString(),
-                                  divisions: 30,
-                                ),
+                                  content:
+                                    Obx(() => Slider(
+                                      value: controller.mailbox.UEC.toDouble(),
+                                      onChanged: (value) {
+                                        controller.mailbox.UEC = value.round();
+                                        controller.updateMailbox();
+                                      },
+                                      min: 1,
+                                      max: 30,
+                                      activeColor: Colors.yellow,
+                                      inactiveColor: Colors.yellow[100],
+                                      label: controller.mailbox.UEC.round().toString(),
+                                      divisions: 30,
+                                    ),
+                                  )
                                 );
                               },
                             ),
