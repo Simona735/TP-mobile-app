@@ -131,19 +131,26 @@ class MailboxDetail extends StatelessWidget {
                                       controller.updateUCI(controller.mailbox.UCI);
                                     });
                                   },
-                                  content: Obx(() => Slider(
-                                    value: controller.mailbox.UCI.toDouble(),
-                                    onChanged: (value) {
-                                      controller.mailbox.UCI = value.round();
-                                      controller.updateMailbox();
-                                    },
-                                    min: 5000000,
-                                    max: 300000000,
-                                    activeColor: Colors.yellow,
-                                    inactiveColor: Colors.yellow[100],
-                                    label: (controller.mailbox.UCI / 1000000).round().toString(),
-                                    divisions: 295,
-                                  ),
+                                  content: Column(
+                                    children: [
+                                      Obx(() => Slider(
+                                        value: controller.mailbox.UCI.toDouble(),
+                                        onChanged: (value) {
+                                          controller.mailbox.UCI = value.round();
+                                          controller.updateMailbox();
+                                        },
+                                        min: 5000000,
+                                        max: 300000000,
+                                        activeColor: Colors.yellow,
+                                        inactiveColor: Colors.yellow[100],
+                                        label: (controller.mailbox.UCI / 1000000).round().toString(),
+                                        divisions: 295,
+                                      ),
+                                      ),
+                                      Obx(() =>
+                                        Text((controller.mailbox.UCI / 1000000).round().toString()),
+                                      ),
+                                    ],
                                   )
                                 );
                               },
