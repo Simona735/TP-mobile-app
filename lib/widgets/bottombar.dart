@@ -14,6 +14,7 @@ class BottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Orientation orientation = MediaQuery.of(context).orientation;
     // final controller = Get.find<BottomBarController>();
     final controller = Get.put(BottomBarController());
     return Scaffold(
@@ -45,9 +46,9 @@ class BottomBar extends StatelessWidget {
         bottomNavigationBar: Obx(
           () => SalomonBottomBar(
             selectedItemColor: Theme.of(context).bottomAppBarColor,
-            margin: const EdgeInsets.symmetric(
+            margin: EdgeInsets.symmetric(
               horizontal: 20,
-              vertical: 10,
+              vertical: (orientation == Orientation.landscape) ?  5 : 10,
             ),
             currentIndex: controller.index.value,
             onTap: (index) {
