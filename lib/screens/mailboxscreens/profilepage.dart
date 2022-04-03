@@ -36,9 +36,14 @@ class ProfilePage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    (Authentication.getDisplayName) ?? "Meno Priezvisko",
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
+                  Flexible(
+                    child: RichText(
+                      overflow: TextOverflow.clip,
+                      text: TextSpan(
+                          text: (Authentication.getDisplayName) ?? "",
+                          style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold)
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -91,7 +96,7 @@ class ProfilePage extends StatelessWidget {
               Row(
                 children: [
                   Container(
-                    constraints: BoxConstraints(minWidth: 100, maxWidth: 300),
+                    constraints: const BoxConstraints(minWidth: 100, maxWidth: 300),
                     child: RichText(
                       overflow: TextOverflow.fade,
                       text: TextSpan(
