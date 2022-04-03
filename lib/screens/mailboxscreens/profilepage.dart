@@ -88,12 +88,19 @@ class ProfilePage extends StatelessWidget {
                   size: 120,
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(left: 10, right: 20),
-                child: Text(
-                  (Authentication.getDisplayName) ?? "Meno Priezvisko",
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
-                ),
+              Row(
+                children: [
+                  Container(
+                    constraints: BoxConstraints(minWidth: 100, maxWidth: 300),
+                    child: RichText(
+                      overflow: TextOverflow.fade,
+                      text: TextSpan(
+                          text: (Authentication.getDisplayName) ?? "",
+                          style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold)
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
