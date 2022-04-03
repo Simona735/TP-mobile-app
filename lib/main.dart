@@ -24,7 +24,7 @@ void main() async {
 
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     Notifications.basicNotification(message.notification!.title ?? "Error",
-        message.notification!.body ?? "Error", 0);
+        message.notification!.body ?? "Error",  Random().nextInt(2147483647));
   });
 
   AwesomeNotifications().initialize(
