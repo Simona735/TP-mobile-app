@@ -14,12 +14,13 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Orientation orientation = MediaQuery.of(context).orientation;
     final settingsController = Get.find<SettingsController>();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Profil"),
       ),
-      body: ListView(
+      body: (orientation == Orientation.portrait) ? Column(
         children: [
           Column(
             children: [
@@ -74,7 +75,62 @@ class ProfilePage extends StatelessWidget {
             ],
           ),
         ],
-      ),
+      ) : Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(left: 10, right: 20),
+                child: const Icon(
+                  Icons.account_circle,
+                  size: 120,
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 10, right: 20),
+                child: Text(
+                  (Authentication.getDisplayName) ?? "Meno Priezvisko",
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
+                ),
+              ),
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
+                width: 300,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Get.to(() => const PasswordChangePage(), transition: Transition.leftToRight);
+                    // Navigator.of(context).push(swipeRouteAnimation(PasswordChangePage()));
+                    // AutoRouter.of(context).push(PasswordChangePageRoute());
+                  },
+                  child: const Text("Zmeniť heslo"),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
+                width: 300,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    Authentication.signOut();
+                    settingsController.deletePin();
+                    // settingsController.saveSwitchState("switchState", false);
+                    Get.offAll(() => LoginPage());
+                  },
+                  child: const Text("Odhlásiť sa"),
+                  style: ElevatedButton.styleFrom(primary: Colors.red),
+                ),
+              ),
+            ],
+          ),
+        ],
+      )
     );
   }
 }
