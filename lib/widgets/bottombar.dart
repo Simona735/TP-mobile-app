@@ -59,28 +59,28 @@ class BottomBar extends StatelessWidget {
               SalomonBottomBarItem(
                 icon: Icon(
                   Icons.mail,
-                  size: (orientation == Orientation.landscape) ? 20 : 30,
+                  size: (orientation == Orientation.landscape) ? 20 : 25,
                 ),
                 title: const Text('Schránky'),
               ),
               SalomonBottomBarItem(
                 icon: Icon(
                   Icons.settings_outlined,
-                  size: (orientation == Orientation.landscape) ? 20 : 30,
+                  size: (orientation == Orientation.landscape) ? 20 : 25,
                 ),
                 title: const Text('Nastavenia'),
               ),
               SalomonBottomBarItem(
                 icon: Icon(
                   Icons.person,
-                  size: (orientation == Orientation.landscape) ? 20 : 30,
+                  size: (orientation == Orientation.landscape) ? 20 : 25,
                 ),
                 title: const Text('Profil'),
               ),
               SalomonBottomBarItem(
                 icon: Icon(
                   Icons.add,
-                  size: (orientation == Orientation.landscape) ? 20 : 30,
+                  size: (orientation == Orientation.landscape) ? 20 : 25,
                 ),
                 title: const Text('Pridať'),
               ),
