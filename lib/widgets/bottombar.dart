@@ -46,9 +46,9 @@ class BottomBar extends StatelessWidget {
         bottomNavigationBar: Obx(
           () => SalomonBottomBar(
             selectedItemColor: Theme.of(context).bottomAppBarColor,
-            margin: EdgeInsets.symmetric(
+            margin: const EdgeInsets.symmetric(
               horizontal: 20,
-              vertical: (orientation == Orientation.landscape) ?  5 : 10,
+              vertical: 5,
             ),
             currentIndex: controller.index.value,
             onTap: (index) {
