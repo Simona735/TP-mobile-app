@@ -8,15 +8,16 @@ class BluetoothOffScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Orientation orientation = MediaQuery.of(context).orientation;
     return Scaffold(
       backgroundColor: Colors.lightBlue,
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            const Icon(
+            Icon(
               Icons.bluetooth_disabled,
-              size: 200.0,
+              size: (orientation == Orientation.landscape) ? 150.0 : 200.0,
               color: Colors.white54,
             ),
             Text(
