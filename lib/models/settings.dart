@@ -9,10 +9,12 @@ class Settings{
   int _UEC;
   int _UECI;
   double _UT;
+  String _last_event;
+  DateTime _last_event_timestamp;
 
   Settings(this._reset, this._lowPower, this._name, this._notif_empty,
       this._notif_full, this._notif_new, this._UCI, this._UEC,
-      this._UECI, this._UT);
+      this._UECI, this._UT, this._last_event, this._last_event_timestamp);
 
   Settings.empty()
       : _reset = false,
@@ -24,7 +26,9 @@ class Settings{
         _UCI = 7,
         _UEC = 4,
         _UECI = 500,
-        _UT = 0.1;
+        _UT = 0.1,
+        _last_event = "Prázdna schránka",
+        _last_event_timestamp = DateTime.now();
 
   String get name => _name;
 
@@ -81,11 +85,22 @@ class Settings{
     _UECI = value;
   }
 
-
   double get UT => _UT;
 
   set UT(double value) {
     _UT = value;
+  }
+
+  String get last_event => _last_event;
+
+  set last_event(String value) {
+    _last_event = value;
+  }
+
+  DateTime get last_event_timestamp => _last_event_timestamp;
+
+  set last_event_timestamp(DateTime value) {
+    _last_event_timestamp = value;
   }
 
   Settings.fromJson(Map<String, dynamic> json)
@@ -98,7 +113,9 @@ class Settings{
         _UCI = json['UCI'],
         _UEC = json['UEC'],
         _UECI = json['UECI'],
-        _UT = json['UT'];
+        _UT = json['UT'],
+        _last_event = json['last_event'],
+        _last_event_timestamp = json['last_event_timestamp'];
 
 
 }
