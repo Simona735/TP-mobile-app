@@ -227,6 +227,7 @@ class MailboxDetail extends StatelessWidget {
                                     Timer(const Duration(milliseconds: 500), () {
                                       controller.isDialogOpen = false;
                                       controller.updateUECI(controller.mailbox.UECI);
+                                      controller.updateMailboxDetail();
                                     });
                                     return true;
                                   },
@@ -235,6 +236,7 @@ class MailboxDetail extends StatelessWidget {
                                     Timer(const Duration(milliseconds: 500), () {
                                       controller.isDialogOpen = false;
                                       controller.updateUECI(controller.mailbox.UECI);
+                                      controller.updateMailboxDetail();
                                     });
                                   },
                                   content:
