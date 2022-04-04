@@ -480,7 +480,7 @@ class MailboxDetail extends StatelessWidget {
                                             ),
                                           ),
                                           content: const Text(
-                                              'Nejaky popis toho co to je za reset a ci si je isty'),
+                                              'Schránka sa resetuje do výrobných nastavení a odstráni sa z tohto konta. Ozaj chcete pokračovať?'),
                                           actions: <Widget>[
                                             TextButton(
                                               onPressed: () =>
