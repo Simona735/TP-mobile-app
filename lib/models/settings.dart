@@ -10,7 +10,7 @@ class Settings{
   int _UECI;
   double _UT;
   String _last_event;
-  DateTime _last_event_timestamp;
+  int _last_event_timestamp;
 
   Settings(this._reset, this._lowPower, this._name, this._notif_empty,
       this._notif_full, this._notif_new, this._UCI, this._UEC,
@@ -28,7 +28,7 @@ class Settings{
         _UECI = 500,
         _UT = 0.1,
         _last_event = "Prázdna schránka",
-        _last_event_timestamp = DateTime.now();
+        _last_event_timestamp = DateTime.now().millisecondsSinceEpoch;
 
   String get name => _name;
 
@@ -97,20 +97,21 @@ class Settings{
     _last_event = value;
   }
 
-  DateTime get last_event_timestamp => _last_event_timestamp;
+  int get last_event_timestamp => _last_event_timestamp;
 
-  set last_event_timestamp(DateTime value) {
+  set last_event_timestamp(int value) {
     _last_event_timestamp = value;
   }
 
   String get last_event_timestamp_formated {
     String date = '';
-    date = date + _last_event_timestamp.day.toString() + '.';
-    date = date + _last_event_timestamp.month.toString() + '.';
-    date = date + _last_event_timestamp.year.toString() + ' ';
-    date = date + _last_event_timestamp.hour.toString() + ':';
-    date = date + _last_event_timestamp.minute.toString();
-    return '';
+    DateTime dateTmp = DateTime.fromMillisecondsSinceEpoch(last_event_timestamp);
+    date = date + dateTmp.day.toString() + '.';
+    date = date + dateTmp.month.toString() + '.';
+    date = date + dateTmp.year.toString() + ' ';
+    date = date + dateTmp.hour.toString() + ':';
+    date = date + dateTmp.minute.toString();
+    return date;
   }
 
   Settings.fromJson(Map<String, dynamic> json)
