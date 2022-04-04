@@ -276,6 +276,7 @@ class MailboxDetail extends StatelessWidget {
                                     Timer(const Duration(milliseconds: 500), () {
                                       controller.isDialogOpen = false;
                                       controller.updateUT(controller.mailbox.UT);
+                                      controller.updateMailboxDetail();
                                     });
                                     return true;
                                   },
@@ -284,6 +285,7 @@ class MailboxDetail extends StatelessWidget {
                                     Timer(const Duration(milliseconds: 500), () {
                                       controller.isDialogOpen = false;
                                       controller.updateUT(controller.mailbox.UT);
+                                      controller.updateMailboxDetail();
                                     });
                                   },
                                   title: "Tolerancia",
