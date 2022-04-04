@@ -150,45 +150,56 @@ class MailboxDetail extends StatelessWidget {
                               onTap: (){
                                 controller.isDialogOpen = true;
                                 Get.defaultDialog(
-                                  radius: 5,
-                                  onWillPop: () async {
-                                    Timer(const Duration(milliseconds: 500), () {
-                                      controller.isDialogOpen = false;
-                                      controller.updateUCI(controller.mailbox.UCI);
-                                      controller.updateMailboxDetail();
-                                    });
-                                    return true;
-                                  },
-                                  title: "Interval medzi kontrolami",
-                                  onConfirm: () {
-                                    Get.back();
-                                    Timer(const Duration(milliseconds: 500), () {
-                                      controller.isDialogOpen = false;
-                                      controller.updateUCI(controller.mailbox.UCI);
-                                      controller.updateMailboxDetail();
-                                    });
-                                  },
-                                  content: Column(
-                                    children: [
-                                      Obx(() => Slider(
-                                        value: controller.mailbox.UCI.toDouble(),
-                                        onChanged: (value) {
-                                          controller.mailbox.UCI = value.round();
-                                          controller.updateMailbox();
-                                        },
-                                        min: 5000000,
-                                        max: 300000000,
-                                        activeColor: Colors.yellow,
-                                        inactiveColor: Colors.yellow[100],
-                                        label: (controller.mailbox.UCI / 1000000).round().toString(),
-                                        divisions: 295,
-                                      ),
-                                      ),
-                                      Obx(() =>
-                                        Text((controller.mailbox.UCI / 1000000).round().toString()),
-                                      ),
-                                    ],
-                                  )
+                                    radius: 5,
+                                    title: "Interval medzi kontrolami",
+                                    onWillPop: () async {
+                                      Timer(const Duration(milliseconds: 500), () {
+                                        controller.isDialogOpen = false;
+                                        controller.updateUCI(controller.mailbox.UCI);
+                                        controller.updateMailboxDetail();
+                                      });
+                                      return true;
+                                    },
+                                    onConfirm: () {
+                                      Get.back();
+                                      Timer(const Duration(milliseconds: 500), () {
+                                        controller.isDialogOpen = false;
+                                        controller.updateUCI(controller.mailbox.UCI);
+                                        controller.updateMailboxDetail();
+                                      });
+                                    },
+                                    content: Column(
+                                      children: [
+                                        const Padding(
+                                          padding: EdgeInsets.only(
+                                            top: 15.0,
+                                            left: 15.0,
+                                            right: 15.0,
+                                            bottom: 6.0,
+                                          ),
+                                          child: Text(
+                                            "Časvoý interval medzi kontralmi schránky. Od 5 sekúnd až po 300 sekúnd (5 minút)",
+                                          ),
+                                        ),
+                                        Obx(() => Slider(
+                                          value: controller.mailbox.UCI.toDouble(),
+                                          onChanged: (value) {
+                                            controller.mailbox.UCI = value.round();
+                                            controller.updateMailbox();
+                                          },
+                                          min: 5000000,
+                                          max: 300000000,
+                                          activeColor: Colors.yellow,
+                                          inactiveColor: Colors.yellow[100],
+                                          label: (controller.mailbox.UCI / 1000000).round().toString(),
+                                          divisions: 295,
+                                        ),
+                                        ),
+                                        Obx(() =>
+                                          Text((controller.mailbox.UCI / 1000000).round().toString()),
+                                        ),
+                                      ],
+                                    )
                                 );
                               },
                             ),
@@ -222,6 +233,17 @@ class MailboxDetail extends StatelessWidget {
                                   content:
                                     Column(
                                       children: [
+                                        const Padding(
+                                          padding: EdgeInsets.only(
+                                            top: 15.0,
+                                            left: 15.0,
+                                            right: 15.0,
+                                            bottom: 6.0,
+                                          ),
+                                          child: Text(
+                                            "Počet kontrol navyše v jednom cykle za účelom zabránenia falošným poplachom.",
+                                          ),
+                                        ),
                                         Obx(() => Slider(
                                           value: controller.mailbox.UEC.toDouble(),
                                           onChanged: (value) {
@@ -323,6 +345,17 @@ class MailboxDetail extends StatelessWidget {
                                   content:
                                     Column(
                                       children: [
+                                        const Padding(
+                                          padding: EdgeInsets.only(
+                                            top: 15.0,
+                                            left: 15.0,
+                                            right: 15.0,
+                                            bottom: 6.0,
+                                          ),
+                                          child: Text(
+                                            "Tolerancia merania. (väčšia = menej falošných poplachov, ale tenke listy môžu ostať nezdetegované)",
+                                          ),
+                                        ),
                                         Obx(() => Slider(
                                           value: controller.mailbox.UT,
                                           onChanged: (value) {
