@@ -106,12 +106,14 @@ class MailboxDetail extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            SwitchListTile(
-                              title: const Text('Režim nízkej spotreby'),
-                              value: controller.mailbox.lowPower,
-                              onChanged: (value) => {
-                                controller.updateLowPowerMode(value),
-                              },
+                            Obx(() =>
+                              SwitchListTile(
+                                title: const Text('Režim nízkej spotreby'),
+                                value: controller.mailbox.lowPower,
+                                onChanged: (value) => {
+                                  controller.updateLowPowerMode(value),
+                                },
+                            )
                               // secondary: const Icon(Icons.battery_charging_full),
                             ),
                             const Divider(height: 1),
@@ -336,29 +338,34 @@ class MailboxDetail extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
-
-                            SwitchListTile(
-                              title: const Text('Nová pošta'),
-                              value: controller.mailbox.notif_new,
-                              onChanged: (value) => {
-                                controller.updateNotifyNew(value),
-                              },
+                            Obx(() =>
+                              SwitchListTile(
+                                title: const Text('Nová pošta'),
+                                value: controller.mailbox.notif_new,
+                                onChanged: (value) => {
+                                  controller.updateNotifyNew(value),
+                                },
+                              ),
                             ),
                             const Divider(height: 1),
-                            SwitchListTile(
-                              title: const Text('Plná schránka'),
-                              value: controller.mailbox.notif_full,
-                              onChanged: (value) => {
-                                controller.updateNotifyFull(value),
-                              },
+                            Obx(() =>
+                              SwitchListTile(
+                                title: const Text('Plná schránka'),
+                                value: controller.mailbox.notif_full,
+                                onChanged: (value) => {
+                                  controller.updateNotifyFull(value),
+                                },
+                              ),
                             ),
                             const Divider(height: 1),
-                            SwitchListTile(
-                              title: const Text('Prázdna schránka'),
-                              value: controller.mailbox.notif_empty,
-                              onChanged: (value) => {
-                                controller.updateNotifyEmpty(value),
-                              },
+                            Obx(() =>
+                              SwitchListTile(
+                                title: const Text('Prázdna schránka'),
+                                value: controller.mailbox.notif_empty,
+                                onChanged: (value) => {
+                                  controller.updateNotifyEmpty(value),
+                                },
+                              ),
                             ),
                             const Divider(height: 1),
                             ListTile(
