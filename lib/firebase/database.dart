@@ -58,7 +58,6 @@ class Database {
       'FullBox': false,
       'FatalError': false,
       'LastMsgTime': ServerValue.timestamp,
-      'LastEvent': "Prázdna schránka",
     });
     await _messagesRef
         .child((Authentication.getUserId ?? '') +
@@ -76,6 +75,8 @@ class Database {
       'notif_full': true,
       'notif_new': true,
       'name': 'Schránka ' + mailboxId,
+      'last_event': "Prázdna schránka",
+      'last_event_timestamp': ServerValue.timestamp,
     });
     listenToAllNotifications('mailbox' + mailboxId, 'Schránka ' + mailboxId);
     return 'mailbox' + mailboxId;
