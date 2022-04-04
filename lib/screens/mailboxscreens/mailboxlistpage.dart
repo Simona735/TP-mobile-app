@@ -69,7 +69,7 @@ class ListOfMailboxes extends StatelessWidget {
                                       (orientation == Orientation.landscape)
                                           ? 2
                                           : 1,
-                                  childAspectRatio: 2,
+                                  childAspectRatio: 2.5,
                                   mainAxisSpacing:
                                       (controller.data.isNotEmpty) ? 10 : 0,
                                   crossAxisSpacing:
@@ -141,51 +141,32 @@ class ItemMailbox extends StatelessWidget {
             ),
           ],
         ),
-        alignment: Alignment.bottomCenter,
+        alignment: Alignment.topLeft,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // Flexible(
-            //   flex: 4,
-            //   fit: FlexFit.loose,
-            //   child: Container(
-            //     alignment: Alignment.center,
-            //     padding:
-            //         const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            //     decoration: const BoxDecoration(
-            //       borderRadius: BorderRadius.only(
-            //           topLeft: Radius.circular(10),
-            //           topRight: Radius.circular(10)),
-            //     ),
-            //     child: CircularStepProgressIndicator(
-            //       totalSteps: mailbox.settings.limit,
-            //       currentStep: 30,
-            //       circularDirection: CircularDirection.counterclockwise,
-            //       stepSize: 3,
-            //       selectedColor: Colors.red,
-            //       unselectedColor: Colors.grey[200],
-            //       padding: 0,
-            //       width: context.mediaQueryShortestSide * .25,
-            //       height: context.mediaQueryShortestSide * .25,
-            //       selectedStepSize: 10,
-            //       roundedCap: (_, __) => true,
-            //       child: Center(
-            //         child: Column(
-            //           mainAxisAlignment: MainAxisAlignment.center,
-            //           children: const [
-            //             Text(
-            //               "30 %",
-            //               style: TextStyle(
-            //                   fontWeight: FontWeight.bold,
-            //                   fontSize: 20,
-            //                   color: Colors.black),
-            //             ),
-            //           ],
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
+            Container(),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.only(right: 5.0),
+                    child: Icon(
+                      Icons.info_outline_rounded,
+                      size: 25,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  Text(
+                    "Nová pošta",
+                    style: TextStyle(color: Colors.black54, fontSize: 16),
+                  ),
+                ],
+              ),
+            ),
             Container(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               decoration: BoxDecoration(
