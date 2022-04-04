@@ -29,7 +29,7 @@ class MailboxDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder(
         // stream: Database.ref.child("user01").onValue,
-        stream: updateEvent(),
+        stream: controller.updateEvent(),
         builder: (context, snapshot) {
           if(snapshot.hasData){
             controller.updateMailboxDetail();
