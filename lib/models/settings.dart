@@ -103,6 +103,16 @@ class Settings{
     _last_event_timestamp = value;
   }
 
+  String get last_event_timestamp_formated {
+    String date = '';
+    date = date + _last_event_timestamp.day.toString() + '.';
+    date = date + _last_event_timestamp.month.toString() + '.';
+    date = date + _last_event_timestamp.year.toString() + ' ';
+    date = date + _last_event_timestamp.hour.toString() + ':';
+    date = date + _last_event_timestamp.minute.toString();
+    return '';
+  }
+
   Settings.fromJson(Map<String, dynamic> json)
       : _reset = json['reset'],
         _lowPower = json['low_power'],
