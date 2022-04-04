@@ -124,7 +124,7 @@ class Settings{
         _UCI = json['UCI'],
         _UEC = json['UEC'],
         _UECI = json['UECI'],
-        _UT = json['UT'],
+        _UT = json['UT'] * 1.0,
         _last_event = json['last_event'],
         _last_event_timestamp = json['last_event_timestamp'];
 
