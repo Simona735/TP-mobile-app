@@ -125,9 +125,11 @@ class MailboxDetail extends StatelessWidget {
                               subtitle: Text((controller.mailbox.UCI / 1000000).round().toString()),
                               trailing: const Icon(Icons.keyboard_arrow_right),
                               onTap: (){
+                                controller.isDialogOpen = true;
                                 Get.defaultDialog(
                                   onWillPop: () async {
                                     Timer(const Duration(milliseconds: 500), () {
+                                      controller.isDialogOpen = false;
                                       controller.updateUCI(controller.mailbox.UCI);
                                     });
                                     return true;
@@ -136,6 +138,7 @@ class MailboxDetail extends StatelessWidget {
                                   onConfirm: () {
                                     Get.back();
                                     Timer(const Duration(milliseconds: 500), () {
+                                      controller.isDialogOpen = false;
                                       controller.updateUCI(controller.mailbox.UCI);
                                     });
                                   },
@@ -170,10 +173,12 @@ class MailboxDetail extends StatelessWidget {
                               subtitle: Text(controller.mailbox.UEC.round().toString()),
                               trailing: const Icon(Icons.keyboard_arrow_right),
                               onTap: (){
+                                controller.isDialogOpen = true;
                                 Get.defaultDialog(
                                   title: 'Kontroly navyse',
                                   onWillPop: () async {
                                     Timer(const Duration(milliseconds: 500), () {
+                                      controller.isDialogOpen = false;
                                       controller.updateUEC(controller.mailbox.UEC);
                                     });
                                     return true;
@@ -181,6 +186,7 @@ class MailboxDetail extends StatelessWidget {
                                   onConfirm: () {
                                     Get.back();
                                     Timer(const Duration(milliseconds: 500), () {
+                                      controller.isDialogOpen = false;
                                       controller.updateUEC(controller.mailbox.UEC);
                                     });
                                   },
@@ -215,10 +221,12 @@ class MailboxDetail extends StatelessWidget {
                               subtitle: Text(controller.mailbox.UECI.round().toString()),
                               trailing: const Icon(Icons.keyboard_arrow_right),
                               onTap: (){
+                                controller.isDialogOpen = true;
                                 Get.defaultDialog(
                                   title: "Interval medzi kontrolami navyse",
                                   onWillPop: () async {
                                     Timer(const Duration(milliseconds: 500), () {
+                                      controller.isDialogOpen = false;
                                       controller.updateUECI(controller.mailbox.UECI);
                                     });
                                     return true;
@@ -226,6 +234,7 @@ class MailboxDetail extends StatelessWidget {
                                   onConfirm: () {
                                     Get.back();
                                     Timer(const Duration(milliseconds: 500), () {
+                                      controller.isDialogOpen = false;
                                       controller.updateUECI(controller.mailbox.UECI);
                                     });
                                   },
@@ -260,9 +269,11 @@ class MailboxDetail extends StatelessWidget {
                               subtitle: Text(controller.mailbox.UT.toDouble().toStringAsFixed(2)),
                               trailing: const Icon(Icons.keyboard_arrow_right),
                               onTap: (){
+                                controller.isDialogOpen = true;
                                 Get.defaultDialog(
                                   onWillPop: () async {
                                     Timer(const Duration(milliseconds: 500), () {
+                                      controller.isDialogOpen = false;
                                       controller.updateUT(controller.mailbox.UT);
                                     });
                                     return true;
@@ -270,6 +281,7 @@ class MailboxDetail extends StatelessWidget {
                                   onConfirm: () {
                                     Get.back();
                                     Timer(const Duration(milliseconds: 500), () {
+                                      controller.isDialogOpen = false;
                                       controller.updateUT(controller.mailbox.UT);
                                     });
                                   },
