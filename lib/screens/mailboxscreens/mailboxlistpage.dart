@@ -151,8 +151,8 @@ class ItemMailbox extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [
-                  Padding(
+                children: [
+                  const Padding(
                     padding: EdgeInsets.only(right: 5.0),
                     child: Icon(
                       Icons.info_outline_rounded,
@@ -161,8 +161,8 @@ class ItemMailbox extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "Nová pošta",
-                    style: TextStyle(color: Colors.black54, fontSize: 16),
+                    mailbox.settings.last_event,
+                    style: const TextStyle(color: Colors.black54, fontSize: 16),
                   ),
                 ],
               ),
