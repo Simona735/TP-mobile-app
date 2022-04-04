@@ -150,6 +150,7 @@ class MailboxDetail extends StatelessWidget {
                               onTap: (){
                                 controller.isDialogOpen = true;
                                 Get.defaultDialog(
+                                  radius: 5,
                                   onWillPop: () async {
                                     Timer(const Duration(milliseconds: 500), () {
                                       controller.isDialogOpen = false;
@@ -200,6 +201,7 @@ class MailboxDetail extends StatelessWidget {
                               onTap: (){
                                 controller.isDialogOpen = true;
                                 Get.defaultDialog(
+                                    radius: 5,
                                   title: 'Kontroly navyse',
                                   onWillPop: () async {
                                     Timer(const Duration(milliseconds: 500), () {
@@ -300,6 +302,7 @@ class MailboxDetail extends StatelessWidget {
                               onTap: (){
                                 controller.isDialogOpen = true;
                                 Get.defaultDialog(
+                                  radius: 5,
                                   onWillPop: () async {
                                     Timer(const Duration(milliseconds: 500), () {
                                       controller.isDialogOpen = false;
