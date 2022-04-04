@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:auto_route/annotations.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
@@ -21,12 +22,19 @@ class MailboxDetail extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+  final controller = Get.put(MailboxDetailController());
+
+  Stream<Event> updateEvent() async*{
+    if(!controller.isDialogOpen){
+      yield* Database.ref.child(Authentication.getUserId ?? "").child(controller.mailboxId).child('settings').onValue;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(MailboxDetailController());
     return StreamBuilder(
         // stream: Database.ref.child("user01").onValue,
-        stream: Database.ref.child(Authentication.getUserId ?? "").onValue,
+        stream: updateEvent(),
         builder: (context, snapshot) {
           if(snapshot.hasData){
             controller.updateMailboxDetail();
