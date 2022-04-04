@@ -88,6 +88,31 @@ class MailboxDetail extends StatelessWidget {
                       //padding: const EdgeInsets.all(10),
                       children: [
                         Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  top: 15.0,
+                                  left: 15.0,
+                                  right: 15.0,
+                                  bottom: 6.0,
+                                ),
+                                child: Text(
+                                  "Stav schránky",
+                                  style: TextStyle(
+                                    color: Colors.blue,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              ListTile(
+                                leading: Icon(Icons.info_outline_rounded),
+                                title: Text('Nová pošta'),
+                              ),
+                            ]
+                        ),
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Padding(
@@ -368,62 +393,83 @@ class MailboxDetail extends StatelessWidget {
                               ),
                             ),
                             const Divider(height: 1),
-                            ListTile(
-                              title: const Text(''),
-                              leading: ElevatedButton(
-                                style: ElevatedButton.styleFrom(primary: Colors.red),
-                                child: const Text('Reset'),
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) => AlertDialog(
-                                        title: RichText(
-                                          text: const TextSpan(
-                                            children: [
-                                              WidgetSpan(
-                                                child: Icon(
-                                                  Icons.warning,
-                                                  size: 20,
+                          ]
+                        ),
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(
+                                  top: 15.0,
+                                  left: 15.0,
+                                  right: 15.0,
+                                  bottom: 6.0,
+                                ),
+                                child: Text(
+                                  "Resetovanie",
+                                  style: TextStyle(
+                                    color: Colors.blue,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              ListTile(
+                                title: const Text(''),
+                                leading: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(primary: Colors.red),
+                                  child: const Text('Reset'),
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) => AlertDialog(
+                                          title: RichText(
+                                            text: const TextSpan(
+                                              children: [
+                                                WidgetSpan(
+                                                  child: Icon(
+                                                    Icons.warning,
+                                                    size: 20,
+                                                    color: Colors.red,
+                                                  ),
+                                                ),
+                                                TextSpan(
+                                                    text: " Reset schránky",
+                                                    style: TextStyle(
+                                                      color: Colors.red,
+                                                      fontWeight: FontWeight.bold,
+                                                    )),
+                                              ],
+                                            ),
+                                          ),
+                                          content: const Text(
+                                              'Nejaky popis toho co to je za reset a ci si je isty'),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context, 'Cancel'),
+                                              child: const Text('Cancel'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {
+                                                Database.setReset(
+                                                    controller.mailboxId);
+                                                Navigator.pop(context, 'OK');
+                                              },
+                                              child: const Text(
+                                                'OK',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
                                                   color: Colors.red,
                                                 ),
                                               ),
-                                              TextSpan(
-                                                  text: " Reset schránky",
-                                                  style: TextStyle(
-                                                    color: Colors.red,
-                                                    fontWeight: FontWeight.bold,
-                                                  )),
-                                            ],
-                                          ),
-                                        ),
-                                        content: const Text(
-                                            'Nejaky popis toho co to je za reset a ci si je isty'),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            onPressed: () =>
-                                                Navigator.pop(context, 'Cancel'),
-                                            child: const Text('Cancel'),
-                                          ),
-                                          TextButton(
-                                            onPressed: () {
-                                              Database.setReset(
-                                                  controller.mailboxId);
-                                              Navigator.pop(context, 'OK');
-                                            },
-                                            child: const Text(
-                                              'OK',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.red,
-                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ));
-                                },
+                                          ],
+                                        ));
+                                  },
+                                ),
                               ),
-                            ),
-                          ]
+                            ]
                         ),
                       ],
                     ),
