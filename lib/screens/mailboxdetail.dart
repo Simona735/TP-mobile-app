@@ -24,11 +24,6 @@ class MailboxDetail extends StatelessWidget {
 
   final controller = Get.put(MailboxDetailController());
 
-  Stream<Event> updateEvent() async*{
-    if(!controller.isDialogOpen){
-      yield* Database.ref.child(Authentication.getUserId ?? "").child(controller.mailboxId).child('settings').onValue;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

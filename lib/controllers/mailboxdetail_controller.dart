@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tp_mobile_app/firebase/authentication.dart';
 import 'package:tp_mobile_app/firebase/database.dart';
 import 'package:tp_mobile_app/models/settings.dart';
 
@@ -27,7 +28,21 @@ class MailboxDetailController extends GetxController {
   }
 
   void setData(data) {
-    _mailboxSettings.value = data;
+    if(!isDialogOpen){
+      _mailboxSettings.value = data;
+    }
+  }
+  void setFutureData(data) async {
+    _mailboxSettings.value = await data;
+    _mailboxSettings.refresh();
+    updateEvent();
+  }
+
+  Stream<dynamic> updateEvent() async*{
+    if(!isDialogOpen){
+      yield* Database.ref.child(Authentication.getUserId ?? "").child(mailboxId).child('settings').onValue;
+      // yield* Database.ref.child(Authentication.getUserId ?? "").child(controller.mailboxId).child('settings').onValue;
+    }
   }
 
   // void updateLimit(double value) {
@@ -100,6 +115,8 @@ class MailboxDetailController extends GetxController {
   void updateMailboxDetail(){
     if(!isDialogOpen){
       _mailboxFutureSettings.value = Database.getMailboxSettingsById(mailboxId);
+      setFutureData(_mailboxFutureSettings.value);
+      updateMailbox();
     }
   }
 
