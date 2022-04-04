@@ -33,7 +33,6 @@ class MailboxDetail extends StatelessWidget {
         builder: (context, snapshot) {
           if(snapshot.hasData){
             controller.updateMailboxDetail();
-            developer.log(controller.mailbox.last_event_timestamp_formated);
             return FutureBuilder<Settings>(
               future: controller.futureMailbox,
               initialData: Settings(false, false, "", true, true, true, 7, 4, 500, 0.1, "Prázdna schránka", DateTime.now().millisecondsSinceEpoch),
@@ -108,7 +107,8 @@ class MailboxDetail extends StatelessWidget {
                                 ),
                               ),
                               ListTile(
-                                trailing: const Icon(Icons.info_outline_rounded),
+                                leading: const Icon(Icons.info_outline_rounded),
+                                minLeadingWidth : 10,
                                 title: Text(controller.mailbox.last_event_timestamp_formated + ' - ' + controller.mailbox.last_event),
                               ),
                             ]
