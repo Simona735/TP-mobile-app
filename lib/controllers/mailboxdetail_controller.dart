@@ -5,6 +5,7 @@ import 'package:tp_mobile_app/models/settings.dart';
 
 class MailboxDetailController extends GetxController {
   int listPercentage = 30;
+  bool isDialogOpen = false;
   final titleController = TextEditingController();
   final mailboxId = Get.arguments['mailboxId'];
   final _mailboxSettings = Settings.empty().obs;
@@ -59,27 +60,35 @@ class MailboxDetailController extends GetxController {
   }
 
   void updateUCI(value) {
-    _mailboxSettings.value.UCI = value.round();
-    _mailboxSettings.refresh();
-    Database.updateControlsInterval(mailboxId, value.round());
+    if(!isDialogOpen){
+      _mailboxSettings.value.UCI = value.round();
+      _mailboxSettings.refresh();
+      Database.updateControlsInterval(mailboxId, value.round());
+    }
   }
 
   void updateUEC(value) {
-    _mailboxSettings.value.UEC = value.round();
-    _mailboxSettings.refresh();
-    Database.updateExtraControls(mailboxId, value.round());
+    if(!isDialogOpen){
+      _mailboxSettings.value.UEC = value.round();
+      _mailboxSettings.refresh();
+      Database.updateExtraControls(mailboxId, value.round());
+    }
   }
 
   void updateUECI(value) {
-    _mailboxSettings.value.UECI = value.round();
-    _mailboxSettings.refresh();
-    Database.updateExtraControlsInterval(mailboxId, value.round());
+    if(!isDialogOpen){
+      _mailboxSettings.value.UECI = value.round();
+      _mailboxSettings.refresh();
+      Database.updateExtraControlsInterval(mailboxId, value.round());
+    }
   }
 
   void updateUT(value) {
-    _mailboxSettings.value.UT = value;
-    _mailboxSettings.refresh();
-    Database.updateTolerance(mailboxId, value);
+    if(!isDialogOpen){
+      _mailboxSettings.value.UT = value;
+      _mailboxSettings.refresh();
+      Database.updateTolerance(mailboxId, value);
+    }
   }
 
   void updateMailboxName() {
@@ -89,7 +98,9 @@ class MailboxDetailController extends GetxController {
   }
 
   void updateMailboxDetail(){
-    _mailboxFutureSettings.value = Database.getMailboxSettingsById(mailboxId);
+    if(!isDialogOpen){
+      _mailboxFutureSettings.value = Database.getMailboxSettingsById(mailboxId);
+    }
   }
 
   void updateMailbox(){
