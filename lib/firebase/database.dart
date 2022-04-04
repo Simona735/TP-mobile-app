@@ -58,6 +58,7 @@ class Database {
       'FullBox': false,
       'FatalError': false,
       'LastMsgTime': ServerValue.timestamp,
+      'LastEvent': "Prázdna schránka",
     });
     await _messagesRef
         .child((Authentication.getUserId ?? '') +
