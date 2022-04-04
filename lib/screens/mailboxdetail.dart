@@ -89,8 +89,8 @@ class MailboxDetail extends StatelessWidget {
                       children: [
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Padding(
+                            children: [
+                              const Padding(
                                 padding: EdgeInsets.only(
                                   top: 15.0,
                                   left: 15.0,
@@ -107,8 +107,9 @@ class MailboxDetail extends StatelessWidget {
                                 ),
                               ),
                               ListTile(
-                                leading: Icon(Icons.info_outline_rounded),
-                                title: Text('Nová pošta'),
+                                leading: const Icon(Icons.info_outline_rounded),
+                                title: Text(controller.mailbox.last_event_timestamp_formated + ' ' +
+                                    controller.mailbox.last_event),
                               ),
                             ]
                         ),
