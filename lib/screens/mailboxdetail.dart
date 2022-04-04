@@ -109,7 +109,9 @@ class MailboxDetail extends StatelessWidget {
                               ListTile(
                                 leading: const Icon(Icons.info_outline_rounded),
                                 minLeadingWidth : 10,
-                                title: Text(controller.mailbox.last_event_timestamp_formated + ' - ' + controller.mailbox.last_event),
+                                title: Obx(() =>
+                                Text(controller.mailbox.last_event_timestamp_formated + ' - ' + controller.mailbox.last_event),
+                                )
                               ),
                             ]
                         ),
