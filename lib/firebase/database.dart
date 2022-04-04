@@ -298,6 +298,9 @@ class Database {
   }
 
   static void updateTolerance(String mailboxId, double value) {
+    if (value == -1.0){
+      value = -0.99;
+    }
     _messagesRef
         .child(
         (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
