@@ -17,7 +17,7 @@ import 'package:tp_mobile_app/screens/mailboxscreens/mailboxlistpage.dart';
 import 'package:tp_mobile_app/widgets/bottombar.dart';
 
 class MailboxDetail extends StatelessWidget {
-  const MailboxDetail({
+  MailboxDetail({
     Key? key,
   }) : super(key: key);
 
