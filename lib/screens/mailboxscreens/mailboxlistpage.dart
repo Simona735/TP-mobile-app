@@ -83,7 +83,7 @@ class ListOfMailboxes extends StatelessWidget {
                                       controller.data.values.elementAt(index);
                                   return ItemMailbox(
                                     press: () => {
-                                      Get.to(() => const MailboxDetail(),
+                                      Get.to(() => MailboxDetail(),
                                           arguments: {'mailboxId': key},
                                           transition: Transition.leftToRight),
                                       // Navigator.of(context).push(
