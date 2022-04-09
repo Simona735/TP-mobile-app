@@ -445,7 +445,7 @@ class MailboxDetail extends StatelessWidget {
                                   bottom: 6.0,
                                 ),
                                 child: Text(
-                                  "Resetovanie",
+                                  "Resetovanie a obnova",
                                   style: TextStyle(
                                     color: Colors.blue,
                                     fontWeight: FontWeight.bold,
@@ -456,8 +456,76 @@ class MailboxDetail extends StatelessWidget {
                               ListTile(
                                 title: const Text(''),
                                 leading: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(primary: Colors.red),
-                                  child: const Text('Reset'),
+                                  style: ElevatedButton.styleFrom(
+                                    onPrimary: Colors.red,
+                                    primary: const Color(0xfffafafa),
+                                    minimumSize: const Size(150, 36),
+                                    side: const BorderSide( color: Colors.red, width: 1),
+                                  ),
+                                  child: const Text('Reset nastavení'),
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) => AlertDialog(
+                                          title: RichText(
+                                            text: const TextSpan(
+                                              children: [
+                                                WidgetSpan(
+                                                  child: Icon(
+                                                    Icons.warning,
+                                                    size: 20,
+                                                    color: Colors.red,
+                                                  ),
+                                                ),
+                                                TextSpan(
+                                                    text: " Reset nastavení",
+                                                    style: TextStyle(
+                                                      color: Colors.red,
+                                                      fontWeight: FontWeight.bold,
+                                                    )
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          content: const Text(
+                                              'Schránka sa resetuje do výrobných nastavení. Ozaj chcete pokračovať?'),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context, 'Cancel'),
+                                              child: const Text('Cancel'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {
+                                                Database.defaultSettings(controller.mailboxId);
+                                                // Database.setReset(
+                                                //     controller.mailboxId);
+                                                Navigator.pop(context, 'OK');
+                                              },
+                                              child: const Text(
+                                                'OK',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.red,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ));
+                                  },
+                                ),
+                              ),
+                              const Divider(height: 1),
+                              ListTile(
+                                title: const Text(''),
+                                leading: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    onPrimary: Colors.red,
+                                    primary: const Color(0xfffafafa),
+                                    minimumSize: const Size(150, 36),
+                                    side: const BorderSide( color: Colors.red, width: 1),
+                                  ),
+                                  child: const Text('Reset schránky'),
                                   onPressed: () {
                                     showDialog(
                                         context: context,
@@ -493,6 +561,72 @@ class MailboxDetail extends StatelessWidget {
                                               onPressed: () {
                                                 Database.setReset(
                                                     controller.mailboxId);
+                                                Navigator.pop(context, 'OK');
+                                              },
+                                              child: const Text(
+                                                'OK',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.red,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ));
+                                  },
+                                ),
+                              ),
+                              const Divider(height: 1),
+                              ListTile(
+                                title: const Text(''),
+                                leading: ElevatedButton(
+                                  // style: ElevatedButton.styleFrom(
+                                  //     primary: Colors.red,
+                                  //     minimumSize: const Size(150, 36)),
+                                  style: ElevatedButton.styleFrom(
+                                    onPrimary: Colors.red,
+                                    primary: const Color(0xfffafafa),
+                                    minimumSize: const Size(150, 36),
+                                    side: const BorderSide( color: Colors.red, width: 1),
+                                  ),
+                                  child: const Text('Zmazať schránku'),
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) => AlertDialog(
+                                          title: RichText(
+                                            text: const TextSpan(
+                                              children: [
+                                                WidgetSpan(
+                                                  child: Icon(
+                                                    Icons.warning,
+                                                    size: 20,
+                                                    color: Colors.red,
+                                                  ),
+                                                ),
+                                                TextSpan(
+                                                    text: " Zmazať schránku",
+                                                    style: TextStyle(
+                                                      color: Colors.red,
+                                                      fontWeight: FontWeight.bold,
+                                                    )),
+                                              ],
+                                            ),
+                                          ),
+                                          content: const Text(
+                                              'Schránka sa odstráni sa z tohto účtu. Ozaj chcete pokračovať?'),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context, 'Cancel'),
+                                              child: const Text('Cancel'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {
+                                                Database.deleteMailbox(
+                                                    controller.mailboxId);
+                                                // Database.setReset(
+                                                //     controller.mailboxId);
                                                 Navigator.pop(context, 'OK');
                                               },
                                               child: const Text(
