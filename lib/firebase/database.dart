@@ -310,4 +310,34 @@ class Database {
       'UT': value,
     });
   }
+
+  static void defaultSettings(String mailboxId) {
+    _messagesRef
+        .child(
+        (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
+        .update({
+      'UCI': 7000000,
+      'UEC': 4,
+      'UT': 0.1,
+      'low_power': true,
+      'notif_empty': true,
+      'notif_full': true,
+      'notif_new': true,
+    });
+  }
+
+  static Future<void> deleteMailbox(String mailboxId) async {
+    await _messagesRef
+        .child(
+        (Authentication.getUserId ?? '') + '/' + mailboxId).remove();
+
+    final snapshot = await _messagesRef
+        .child((Authentication.getUserId ?? '') + '/mailbox_iter').get();
+
+    if (snapshot.exists) {
+      await _messagesRef.child(Authentication.getUserId ?? '').update({
+        'mailbox_iter': snapshot.value - 1,
+      });
+    }
+  }
 }
