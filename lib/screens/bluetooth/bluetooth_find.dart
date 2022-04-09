@@ -24,12 +24,13 @@ class FindDevicesScreen extends StatelessWidget {
                         Icons.markunread_mailbox_outlined,
                         size: 30.0,
                       ),
+                      trailing: const Icon(Icons.keyboard_arrow_right),
                       title: Text(result.device.name,
                         style: const TextStyle(fontSize: 20),
                       ),
                       onTap: () async {
                           await result.device.connect(autoConnect: true);
-                          result.device.requestMtu(92);
+                          result.device.requestMtu(512);
                           Get.to(() => DeviceScreen(device: result.device), transition: Transition.leftToRight);
                         //   Navigator.of(context).push(
                         //   MaterialPageRoute(
@@ -66,7 +67,7 @@ class FindDevicesScreen extends StatelessWidget {
                 child: const Icon(Icons.search),
                 backgroundColor: Colors.blue,
                 onPressed: () => FlutterBlue.instance
-                    .startScan(timeout: const Duration(seconds: 4)));
+                    .startScan(timeout: const Duration(seconds: 6)));
           }
         },
       ),

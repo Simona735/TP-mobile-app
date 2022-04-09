@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:tp_mobile_app/controllers/ble_wifi_password_controller.dart';
 import 'package:tp_mobile_app/controllers/login_controller.dart';
 import 'package:tp_mobile_app/firebase/authentication.dart';
 import 'dart:convert';
@@ -20,8 +21,9 @@ class DeviceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controllerWifi = Get.put(LoginController());
+    final controllerWifi = Get.put(WifiPasswordController());
     final controllerFirebase = Get.put(LoginController());
+    BluetoothDeviceState actualState = BluetoothDeviceState.disconnected;
     return Scaffold(
       appBar: AppBar(
         title: Text(device.name),
@@ -32,6 +34,7 @@ class DeviceScreen extends StatelessWidget {
             builder: (c, snapshot) {
               VoidCallback? onPressed;
               String text;
+              actualState = snapshot.data!;
               switch (snapshot.data) {
                 case BluetoothDeviceState.connected:
                   onPressed = () => device.disconnect();
@@ -77,7 +80,7 @@ class DeviceScreen extends StatelessWidget {
                 leading: (snapshot.data == BluetoothDeviceState.connected)
                     ? const Icon(Icons.bluetooth_connected,
                                   color: Colors.blue,)
-                    : const Icon(Icons.bluetooth_disabled),
+                    : const Icon(Icons.bluetooth_disabled, color: Colors.redAccent,),
                 title: Text(
                     'Zariadenie je ' + (snapshot.data.toString().split('.')[1] == 'connected' ? 'pripojené' : 'odpojené')
                 ),
@@ -89,9 +92,7 @@ class DeviceScreen extends StatelessWidget {
               builder: (c, snapshot) {
                 return Column(
                   children: [
-                    const Divider(
-                      thickness: 1,
-                    ),
+                    const Divider(thickness: 1),
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
@@ -114,57 +115,73 @@ class DeviceScreen extends StatelessWidget {
                           ),
                           Container(
                             margin: const EdgeInsets.all(10),
-                            child: TextField(
-                              controller: wifiPasswordController,
-                              obscureText: controllerWifi.showPassword.value,
-                              decoration: InputDecoration(
-                                border: const OutlineInputBorder(),
-                                labelText: 'Heslo',
-                                suffixIcon: IconButton(
-                                  onPressed: () {
-                                    controllerWifi.showPassword.value =
-                                    !controllerWifi.showPassword.value;
-                                  },
-                                  icon: Icon(controllerWifi.showPassword.value
-                                      ? Icons.visibility
-                                      : Icons.visibility_off),
+                            child: Obx(
+                            () =>  TextField(
+                                controller: wifiPasswordController,
+                                obscureText: controllerWifi.showPassword.value,
+                                decoration: InputDecoration(
+                                  border: const OutlineInputBorder(),
+                                  labelText: 'Heslo',
+                                  suffixIcon: IconButton(
+                                    onPressed: () {
+                                      controllerWifi.showPassword.value =
+                                      !controllerWifi.showPassword.value;
+                                    },
+                                    icon: Icon(controllerWifi.showPassword.value
+                                        ? Icons.visibility
+                                        : Icons.visibility_off),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                           ElevatedButton(
                             onPressed: () async {
-                              // await snapshot.data![2].characteristics[0].write(utf8.encode(
-                              //     "+FRST;0")
-                              // );
+                              if (actualState == BluetoothDeviceState.disconnected){
+                                try {
+                                  await device.connect();
+                                } catch(e) {
+                                  developer.log(e.toString());
+                                }
+                              }
+                              developer.log(actualState.toString());
+                              List<BluetoothService> services = await device.discoverServices();
+                              if (services.length != 3){
+                                developer.log("not enough services");
+                              }
+                              var characteristics = services[2].characteristics;
+                              for(BluetoothCharacteristic c in characteristics) {
+                                List<int> value = await c.read();
+                                developer.log(value.toString());
+                              }
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) => AlertDialog(
                                   title: const Text('Pre overenie vyplň svoje heslo.'),
-                                  content: TextField(
-                                    controller: userPasswordController,
-                                    obscureText: controllerFirebase.showPassword.value,
-                                    decoration: InputDecoration(
-                                      border: const OutlineInputBorder(),
-                                      labelText: 'Heslo',
-                                      suffixIcon: IconButton(
-                                        onPressed: () {
-                                          controllerFirebase.showPassword.value =
-                                          !controllerFirebase.showPassword.value;
-                                        },
-                                        icon: Icon(controllerFirebase.showPassword.value
-                                            ? Icons.visibility
-                                            : Icons.visibility_off),
-                                      ),
-                                    ),
+                                  content: Obx(
+                                        () => TextField(
+                                            controller: userPasswordController,
+                                            obscureText: controllerFirebase.showPassword.value,
+                                            decoration: InputDecoration(
+                                              border: const OutlineInputBorder(),
+                                              labelText: 'Heslo',
+                                              suffixIcon: IconButton(
+                                                onPressed: () {
+                                                  controllerFirebase.showPassword.value =
+                                                  !controllerFirebase.showPassword.value;
+                                                },
+                                                icon: Icon(controllerFirebase.showPassword.value
+                                                    ? Icons.visibility
+                                                    : Icons.visibility_off),
+                                              ),
+                                            ),
+                                          ),
                                   ),
                                   actions: <Widget>[
                                     TextButton(
                                       onPressed: () async {
-                                        await device.discoverServices();
                                         //TODO loading indicator (optional)
-                                        String mailboxId = await Database.createMailbox();
-                                        var characteristic = snapshot.data![2].characteristics[0];
+                                        var characteristic = services[2].characteristics[0];
                                         await characteristic.write(utf8.encode(
                                             "WS;" + wifiNameController.text.trim())
                                         );
@@ -180,6 +197,8 @@ class DeviceScreen extends StatelessWidget {
                                         await characteristic.write(utf8.encode(
                                             "FBU;" + (Authentication.getUserId ?? '-'))
                                         );
+                                        await characteristic.read();
+                                        String mailboxId = await Database.createMailbox();
                                         await characteristic.write(utf8.encode(
                                             "FBI;" + mailboxId)
                                         );
