@@ -139,6 +139,8 @@ class Database {
     return data;
   }
 
+  //---------------------- SETTINGS ------------------------
+
   static void updateLowPower(String mailboxId, bool value) {
     _messagesRef
         .child(
@@ -154,6 +156,60 @@ class Database {
             (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
         .update({
       'name': title,
+    });
+  }
+
+  static void updateControlsInterval(String mailboxId, int value) {
+    _messagesRef
+        .child(
+        (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
+        .update({
+      'UCI': value,
+    });
+  }
+
+  static void updateExtraControls(String mailboxId, int value) {
+    _messagesRef
+        .child(
+        (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
+        .update({
+      'UEC': value,
+    });
+  }
+
+  static void updateExtraControlsInterval(String mailboxId, int value) {
+    _messagesRef
+        .child(
+        (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
+        .update({
+      'UECI': value,
+    });
+  }
+
+  static void updateTolerance(String mailboxId, double value) {
+    if (value == -1.0){
+      value = -0.99;
+    }
+    _messagesRef
+        .child(
+        (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
+        .update({
+      'UT': value,
+    });
+  }
+
+  static void defaultSettings(String mailboxId) {
+    _messagesRef
+        .child(
+        (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
+        .update({
+      'UCI': 7000000,
+      'UEC': 4,
+      'UT': 0.1,
+      'low_power': true,
+      'notif_empty': true,
+      'notif_full': true,
+      'notif_new': true,
     });
   }
 
@@ -225,7 +281,7 @@ class Database {
   //   });
   // }
 
-  //---------------------- ESP SETTINGS ------------------------
+  //---------------------- NOTIFICATIONS SETTINGS ------------------------
   static void updateNotificationsNewMail(String mailboxId, bool value) {
     _messagesRef
         .child(
@@ -250,60 +306,6 @@ class Database {
         (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
         .update({
       'notif_full': value,
-    });
-  }
-
-  static void updateControlsInterval(String mailboxId, int value) {
-    _messagesRef
-        .child(
-        (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
-        .update({
-      'UCI': value,
-    });
-  }
-
-  static void updateExtraControls(String mailboxId, int value) {
-    _messagesRef
-        .child(
-        (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
-        .update({
-      'UEC': value,
-    });
-  }
-
-  static void updateExtraControlsInterval(String mailboxId, int value) {
-    _messagesRef
-        .child(
-        (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
-        .update({
-      'UECI': value,
-    });
-  }
-
-  static void updateTolerance(String mailboxId, double value) {
-    if (value == -1.0){
-      value = -0.99;
-    }
-    _messagesRef
-        .child(
-        (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
-        .update({
-      'UT': value,
-    });
-  }
-
-  static void defaultSettings(String mailboxId) {
-    _messagesRef
-        .child(
-        (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
-        .update({
-      'UCI': 7000000,
-      'UEC': 4,
-      'UT': 0.1,
-      'low_power': true,
-      'notif_empty': true,
-      'notif_full': true,
-      'notif_new': true,
     });
   }
 
