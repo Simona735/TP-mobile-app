@@ -92,6 +92,25 @@ class Authentication{
     return Future.value('');
   }
 
+  static Future<bool> verifyUser(String password) async {
+    final user = firebaseAuth.currentUser;
+    final cred = EmailAuthProvider.credential(
+        email: firebaseAuth.currentUser?.email ?? '',
+        password: password
+    );
+    try {
+      user!.reauthenticateWithCredential(cred).then((value) {
+        return Future.value(true);
+      });
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      return Future.value(false);
+    } catch (e) {
+      print(e);
+    }
+    return Future.value(false);
+  }
+
   static Future<String> changePassword(String currentPassword, String newPassword) async {
     final user = firebaseAuth.currentUser;
     final cred = EmailAuthProvider.credential(
