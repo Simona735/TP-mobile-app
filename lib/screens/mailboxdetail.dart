@@ -488,7 +488,7 @@ class MailboxDetail extends StatelessWidget {
                                             ),
                                           ),
                                           content: const Text(
-                                              'Schránka sa resetuje do výrobných nastavení. Ozaj chcete pokračovať?'),
+                                              'Nastavenia schránky sa resetú do výrobných nastavení. Ozaj chcete pokračovať?'),
                                           actions: <Widget>[
                                             TextButton(
                                               onPressed: () =>
@@ -550,7 +550,7 @@ class MailboxDetail extends StatelessWidget {
                                             ),
                                           ),
                                           content: const Text(
-                                              'Schránka sa resetuje do výrobných nastavení a odstráni sa z tohto konta. Ozaj chcete pokračovať?'),
+                                              'Schránka sa resetuje do výrobných nastavení. Ozaj chcete pokračovať?'),
                                           actions: <Widget>[
                                             TextButton(
                                               onPressed: () =>
@@ -562,6 +562,7 @@ class MailboxDetail extends StatelessWidget {
                                                 Database.setReset(
                                                     controller.mailboxId);
                                                 Navigator.pop(context, 'OK');
+                                                Get.offAll(() => BottomBar(), binding: BottomBarBinding());
                                               },
                                               child: const Text(
                                                 'OK',
@@ -628,6 +629,7 @@ class MailboxDetail extends StatelessWidget {
                                                 // Database.setReset(
                                                 //     controller.mailboxId);
                                                 Navigator.pop(context, 'OK');
+                                                Get.offAll(() => BottomBar(), binding: BottomBarBinding());
                                               },
                                               child: const Text(
                                                 'OK',
