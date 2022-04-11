@@ -1,10 +1,9 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tp_mobile_app/controllers/passwordchange_controller.dart';
 import 'package:tp_mobile_app/firebase/authentication.dart';
-import 'package:tp_mobile_app/routes/router.gr.dart';
 import 'package:tp_mobile_app/screens/mailboxscreens/profilepage.dart';
+import 'dart:developer' as developer;
 
 class PasswordChangePage extends StatelessWidget {
   const PasswordChangePage({Key? key}) : super(key: key);
@@ -97,6 +96,7 @@ class PasswordChangePage extends StatelessWidget {
                   String message = await Authentication.changePassword(
                       controller.oldPasswordController.text,
                       controller.newPassword1Controller.text);
+                  developer.log(message);
                   if (message == 'OK') {
                     showDialog(
                         context: context,
@@ -104,14 +104,12 @@ class PasswordChangePage extends StatelessWidget {
                           title: const Text('Heslo bolo zmenené'),
                           actions: <Widget>[
                             TextButton(
-                              onPressed: () => Navigator.pop(context, 'OK'),
+                              onPressed: () => Get.back(),
                               child: const Text('OK'),
                             ),
                           ],
                         )
                     );
-                    // Navigator.of(context)..pop()..pop();
-                    // AutoRouter.of(context).push(const ProfilePageRoute());
                     Get.back();
                   }else{
                     controller.oldPasswordController.clear();
@@ -123,7 +121,7 @@ class PasswordChangePage extends StatelessWidget {
                           title: Text(message),
                           actions: <Widget>[
                             TextButton(
-                              onPressed: () => Navigator.pop(context, 'OK'),
+                              onPressed: () => Get.back(),
                               child: const Text('OK'),
                             ),
                           ],
@@ -139,7 +137,7 @@ class PasswordChangePage extends StatelessWidget {
                         title: const Text("Nové heslo sa nezhoduje"),
                         actions: <Widget>[
                           TextButton(
-                            onPressed: () => Navigator.pop(context, 'OK'),
+                            onPressed: () => Get.back(),
                             child: const Text('OK'),
                           ),
                         ],

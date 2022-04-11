@@ -1,11 +1,9 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tp_mobile_app/bindings/bottom_bar_binding.dart';
 import 'package:tp_mobile_app/controllers/login_controller.dart';
-import 'package:tp_mobile_app/routes/router.gr.dart';
 import 'package:tp_mobile_app/firebase/authentication.dart';
 import 'package:tp_mobile_app/screens/authscreens/passwordreset.dart';
 import 'package:tp_mobile_app/screens/authscreens/registrationpage.dart';
@@ -77,10 +75,7 @@ class LoginPage extends StatelessWidget {
                             const TextStyle(color: Colors.blue, fontSize: 16),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            Get.to(() => const PasswordChangePage(), transition: Transition.leftToRight);
-                            // Navigator.of(context).push(swipeRouteAnimation(PasswordResetPage()));
-                            // AutoRouter.of(context).pop();
-                            // AutoRouter.of(context).push(PasswordResetPageRoute());
+                            Get.to(() => PasswordResetPage(), transition: Transition.leftToRight);
                           },
                       ),
                     ],
@@ -98,8 +93,6 @@ class LoginPage extends StatelessWidget {
                           emailController.text.trim(), passwordController.text);
                   if (Authentication.isSignedIn) {
                     Get.offAll(() => BottomBar(), binding: BottomBarBinding());
-                    // Navigator.pop(context);
-                    // AutoRouter.of(context).push(BottomBarRoute());
                   } else {
                     passwordController.clear();
                     showDialog(
@@ -108,11 +101,12 @@ class LoginPage extends StatelessWidget {
                               title: Text(message),
                               actions: <Widget>[
                                 TextButton(
-                                  onPressed: () => Navigator.pop(context, 'OK'),
+                                  onPressed: () => Get.back(),
                                   child: const Text('OK'),
                                 ),
                               ],
-                            ));
+                            )
+                    );
                   }
                 },
                 child: const Text("Prihlásenie")),
@@ -122,9 +116,6 @@ class LoginPage extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () {
                 Get.to(() => RegistrationPage(), transition: Transition.leftToRight);
-                // AutoRouter.of(context).pop();
-                // Navigator.of(context)
-                //     .push(swipeRouteAnimation(RegistrationPage()));
               },
               child: const Text("Registrácia"),
               style: ElevatedButton.styleFrom(primary: Colors.red),

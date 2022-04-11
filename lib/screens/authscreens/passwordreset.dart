@@ -1,7 +1,6 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:tp_mobile_app/firebase/authentication.dart';
-import 'package:tp_mobile_app/routes/router.gr.dart';
+import 'package:get/get.dart';
 
 class PasswordResetPage extends StatelessWidget {
   PasswordResetPage({Key? key}) : super(key: key);
@@ -45,14 +44,15 @@ class PasswordResetPage extends StatelessWidget {
                       title: const Text("Skontrolujte si emailovú schránku"),
                       actions: <Widget>[
                         TextButton(
-                          onPressed: () => Navigator.pop(context, 'OK'),
+                          onPressed: () {
+                            Get.back();
+                            Get.back();
+                          },
                           child: const Text('OK'),
                         ),
                       ],
                     )
                 );
-                Navigator.pop(context);
-                AutoRouter.of(context).push(const LoginPageRoute());
               },
               child: const Text("Resetuj heslo"),
             ),

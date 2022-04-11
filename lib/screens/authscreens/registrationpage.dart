@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tp_mobile_app/bindings/bottom_bar_binding.dart';
@@ -6,7 +5,6 @@ import 'package:tp_mobile_app/controllers/login_controller.dart';
 import 'package:tp_mobile_app/controllers/registration_controller.dart';
 import 'package:tp_mobile_app/firebase/authentication.dart';
 import 'package:tp_mobile_app/firebase/database.dart';
-import 'package:tp_mobile_app/routes/router.gr.dart';
 import 'package:tp_mobile_app/widgets/bottombar.dart';
 
 class RegistrationPage extends StatelessWidget {
@@ -120,8 +118,6 @@ class RegistrationPage extends StatelessWidget {
                   if(Authentication.isSignedIn){
                     Database.createUser();
                     Get.offAll(() => BottomBar(), binding: BottomBarBinding());
-                    // Navigator.of(context)..pop()..pop();
-                    // AutoRouter.of(context).push(BottomBarRoute());
                   }else{
                     showDialog(
                         context: context,
@@ -129,7 +125,7 @@ class RegistrationPage extends StatelessWidget {
                           title: Text(message),
                           actions: <Widget>[
                             TextButton(
-                              onPressed: () => Navigator.pop(context, 'OK'),
+                              onPressed: () => Get.back(),
                               child: const Text('OK'),
                             ),
                           ],
@@ -145,7 +141,7 @@ class RegistrationPage extends StatelessWidget {
                         title: const Text("Heslá sa nezhodujú"),
                         actions: <Widget>[
                           TextButton(
-                            onPressed: () => Navigator.pop(context, 'OK'),
+                            onPressed: () => Get.back(),
                             child: const Text('OK'),
                           ),
                         ],
