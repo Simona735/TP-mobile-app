@@ -28,7 +28,7 @@ void main() async {
   });
 
   AwesomeNotifications().initialize(
-    null,
+    'resource://drawable/ic_stat_onesignal_default',
     [
       NotificationChannel(
         channelKey: 'key1',
