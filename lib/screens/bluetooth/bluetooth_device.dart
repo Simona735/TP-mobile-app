@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:tp_mobile_app/bindings/bottom_bar_binding.dart';
 import 'package:tp_mobile_app/controllers/ble_wifi_password_controller.dart';
 import 'package:tp_mobile_app/controllers/login_controller.dart';
 import 'package:tp_mobile_app/firebase/authentication.dart';
@@ -7,6 +8,7 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 import 'package:tp_mobile_app/firebase/database.dart';
 import 'package:get/get.dart';
+import 'package:tp_mobile_app/widgets/bottombar.dart';
 
 import '../mailboxdetail.dart';
 
@@ -83,6 +85,43 @@ class DeviceScreen extends StatelessWidget {
                     : const Icon(Icons.bluetooth_disabled, color: Colors.redAccent,),
                 title: Text(
                     'Zariadenie je ' + (snapshot.data.toString().split('.')[1] == 'connected' ? 'pripojené' : 'odpojené')
+                ),
+                trailing: ElevatedButton(
+                  child: const Text("Reset"),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.red,
+                  ),
+                  onPressed: () async {
+                    if (actualState == BluetoothDeviceState.disconnected){
+                      try {
+                        await device.connect();
+                      } catch(e) {
+                        developer.log(e.toString());
+                      }
+                    }
+                    List<BluetoothService> services = await device.discoverServices();
+                    if (services.length != 3){
+                      developer.log("not enough services");
+                    }
+                    var characteristic = services[2].characteristics[0];
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: const Text("Zariadenie sa resetuje."),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () async{
+                                await characteristic.write(utf8.encode(
+                                    "+FRST;0")
+                                );
+                                Get.offAll(() => BottomBar(), binding: BottomBarBinding());
+                              },
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        )
+                    );
+                  },
                 ),
               ),
             ),
@@ -180,7 +219,6 @@ class DeviceScreen extends StatelessWidget {
                                   actions: <Widget>[
                                     TextButton(
                                       onPressed: () async {
-                                        //TODO loading indicator (optional)
                                         var characteristic = services[2].characteristics[0];
                                         await characteristic.write(utf8.encode(
                                             "WS;" + wifiNameController.text.trim())
