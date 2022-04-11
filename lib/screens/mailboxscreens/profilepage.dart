@@ -108,7 +108,14 @@ class ProfilePage extends StatelessWidget {
                       overflow: TextOverflow.fade,
                       text: TextSpan(
                           text: (Authentication.getDisplayName) ?? "",
-                          style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold)
+                          style: settingsController.isDarkTheme.value ?
+                          const TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold) :
+                          const TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black)
                       ),
                     ),
                   ),
