@@ -67,7 +67,6 @@ class Database {
         .set({
       'UCI': 7000000,
       'UEC': 4,
-      'UECI': 500,
       'UT': 0.1,
       'reset': false,
       'low_power': true,
@@ -78,7 +77,7 @@ class Database {
       'last_event': "Prázdna schránka",
       'last_event_timestamp': ServerValue.timestamp,
     });
-    listenToAllNotifications('mailbox' + mailboxId, 'Schránka ' + mailboxId);
+    // listenToAllNotifications('mailbox' + mailboxId, 'Schránka ' + mailboxId);
     return 'mailbox' + mailboxId;
   }
 
@@ -176,73 +175,73 @@ class Database {
     });
   }
 
-  //---------------------- NOTIFICATIONS ------------------------
-
-  static void listenToAllNotifications(String mailboxId, String mailboxName) {
-    listenToNewMailNotification(mailboxId, mailboxName);
-    listenToEmptyBoxNotifications(mailboxId, mailboxName);
-    listenToFullBoxNotifications(mailboxId, mailboxName);
-  }
-
-  static Future<void> listenToNewMailNotification(String mailboxId, String mailboxName) async {
-    _messagesRef
-        .child(
-        (Authentication.getUserId ?? '') + '/' + mailboxId + '/events/NewMail')
-        .onValue.listen((event) async {
-            final result = await FirebaseDatabase.instance.reference()
-                .child((Authentication.getUserId ?? '') +
-                '/' + mailboxId + '/settings/notif_new').once();
-
-            bool cond = result.value as bool;
-            bool eventValue = event.snapshot.value as bool;
-            if(cond & eventValue){
-              Notifications.basicNotification(
-                  "Nová pošta",
-                  "Nový list v schránke: " + mailboxName,
-                  Random().nextInt(2147483647));
-            }
-      });
-  }
-
-  static void listenToEmptyBoxNotifications(String mailboxId, String mailboxName) {
-    _messagesRef
-        .child(
-        (Authentication.getUserId ?? '') + '/' + mailboxId + '/events/EmptyBox')
-        .onValue.listen((event) async {
-      final result = await FirebaseDatabase.instance.reference()
-          .child((Authentication.getUserId ?? '') +
-          '/' + mailboxId + '/settings/notif_empty').once();
-
-      bool cond = result.value as bool;
-      bool eventValue = event.snapshot.value as bool;
-      if(cond & eventValue){
-        Notifications.basicNotification(
-            "Prázdna schránka",
-            "Schránka '" + mailboxName + "' je prázdna.",
-            Random().nextInt(2147483647));
-      }
-    });
-  }
-
-  static void listenToFullBoxNotifications(String mailboxId, String mailboxName) {
-    _messagesRef
-        .child(
-        (Authentication.getUserId ?? '') + '/' + mailboxId + '/events/FullBox')
-        .onValue.listen((event) async {
-      final result = await FirebaseDatabase.instance.reference()
-          .child((Authentication.getUserId ?? '') +
-          '/' + mailboxId + '/settings/notif_full').once();
-
-      bool cond = result.value as bool;
-      bool eventValue = event.snapshot.value as bool;
-      if(cond & eventValue){
-        Notifications.basicNotification(
-            "Plná schránka",
-            "Schránka '" + mailboxName + "' je plná.",
-            Random().nextInt(2147483647));
-      }
-    });
-  }
+  // //---------------------- NOTIFICATIONS ------------------------
+  //
+  // static void listenToAllNotifications(String mailboxId, String mailboxName) {
+  //   listenToNewMailNotification(mailboxId, mailboxName);
+  //   listenToEmptyBoxNotifications(mailboxId, mailboxName);
+  //   listenToFullBoxNotifications(mailboxId, mailboxName);
+  // }
+  //
+  // static Future<void> listenToNewMailNotification(String mailboxId, String mailboxName) async {
+  //   _messagesRef
+  //       .child(
+  //       (Authentication.getUserId ?? '') + '/' + mailboxId + '/events/NewMail')
+  //       .onValue.listen((event) async {
+  //           final result = await FirebaseDatabase.instance.reference()
+  //               .child((Authentication.getUserId ?? '') +
+  //               '/' + mailboxId + '/settings/notif_new').once();
+  //
+  //           bool cond = result.value as bool;
+  //           bool eventValue = event.snapshot.value as bool;
+  //           if(cond & eventValue){
+  //             Notifications.basicNotification(
+  //                 "Nová pošta",
+  //                 "Nový list v schránke: " + mailboxName,
+  //                 Random().nextInt(2147483647));
+  //           }
+  //     });
+  // }
+  //
+  // static void listenToEmptyBoxNotifications(String mailboxId, String mailboxName) {
+  //   _messagesRef
+  //       .child(
+  //       (Authentication.getUserId ?? '') + '/' + mailboxId + '/events/EmptyBox')
+  //       .onValue.listen((event) async {
+  //     final result = await FirebaseDatabase.instance.reference()
+  //         .child((Authentication.getUserId ?? '') +
+  //         '/' + mailboxId + '/settings/notif_empty').once();
+  //
+  //     bool cond = result.value as bool;
+  //     bool eventValue = event.snapshot.value as bool;
+  //     if(cond & eventValue){
+  //       Notifications.basicNotification(
+  //           "Prázdna schránka",
+  //           "Schránka '" + mailboxName + "' je prázdna.",
+  //           Random().nextInt(2147483647));
+  //     }
+  //   });
+  // }
+  //
+  // static void listenToFullBoxNotifications(String mailboxId, String mailboxName) {
+  //   _messagesRef
+  //       .child(
+  //       (Authentication.getUserId ?? '') + '/' + mailboxId + '/events/FullBox')
+  //       .onValue.listen((event) async {
+  //     final result = await FirebaseDatabase.instance.reference()
+  //         .child((Authentication.getUserId ?? '') +
+  //         '/' + mailboxId + '/settings/notif_full').once();
+  //
+  //     bool cond = result.value as bool;
+  //     bool eventValue = event.snapshot.value as bool;
+  //     if(cond & eventValue){
+  //       Notifications.basicNotification(
+  //           "Plná schránka",
+  //           "Schránka '" + mailboxName + "' je plná.",
+  //           Random().nextInt(2147483647));
+  //     }
+  //   });
+  // }
 
   //---------------------- ESP SETTINGS ------------------------
   static void updateNotificationsNewMail(String mailboxId, bool value) {
