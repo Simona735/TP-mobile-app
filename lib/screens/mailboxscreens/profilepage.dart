@@ -15,7 +15,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
-    final settingsController = Get.find<SettingsController>();
+    final settingsController = Get.put(SettingsController());
     return Scaffold(
       appBar: AppBar(
         title: const Text("Profil"),
@@ -41,7 +41,7 @@ class ProfilePage extends StatelessWidget {
                       overflow: TextOverflow.clip,
                       text: TextSpan(
                           text: (Authentication.getDisplayName) ?? "",
-                          style: settingsController.isDarkTheme.value ?
+                          style: Get.isDarkMode ?
                           const TextStyle(
                               fontSize: 32,
                               fontWeight: FontWeight.bold) :
@@ -108,7 +108,7 @@ class ProfilePage extends StatelessWidget {
                       overflow: TextOverflow.fade,
                       text: TextSpan(
                           text: (Authentication.getDisplayName) ?? "",
-                          style: settingsController.isDarkTheme.value ?
+                          style: Get.isDarkMode ?
                           const TextStyle(
                               fontSize: 32,
                               fontWeight: FontWeight.bold) :
