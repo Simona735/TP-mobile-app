@@ -35,7 +35,7 @@ class MailboxDetail extends StatelessWidget {
             controller.updateMailboxDetail();
             return FutureBuilder<Settings>(
               future: controller.futureMailbox,
-              initialData: Settings(false, false, "", true, true, true, 7, 4, 500, 0.1, "Prázdna schránka", DateTime.now().millisecondsSinceEpoch),
+              initialData: Settings(false, "", true, true, true, 7, 4, 500, 0.1, "Prázdna schránka", DateTime.now().millisecondsSinceEpoch),
               builder: (BuildContext context, AsyncSnapshot<Settings> snapshot) {
                 if (snapshot.hasError) {
                   return Center(
@@ -517,66 +517,6 @@ class MailboxDetail extends StatelessWidget {
                               ListTile(
                                 title: const Text(''),
                                 leading: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Colors.red,
-                                    minimumSize: const Size(150, 36),
-                                  ),
-                                  child: const Text('Reset schránky'),
-                                  onPressed: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) => AlertDialog(
-                                          title: RichText(
-                                            text: const TextSpan(
-                                              children: [
-                                                WidgetSpan(
-                                                  child: Icon(
-                                                    Icons.warning,
-                                                    size: 20,
-                                                    color: Colors.red,
-                                                  ),
-                                                ),
-                                                TextSpan(
-                                                    text: " Reset schránky",
-                                                    style: TextStyle(
-                                                      color: Colors.red,
-                                                      fontWeight: FontWeight.bold,
-                                                    )),
-                                              ],
-                                            ),
-                                          ),
-                                          content: const Text(
-                                              'Schránka sa resetuje do výrobných nastavení. Ozaj chcete pokračovať?'),
-                                          actions: <Widget>[
-                                            TextButton(
-                                              onPressed: () =>
-                                                  Navigator.pop(context, 'Cancel'),
-                                              child: const Text('Cancel'),
-                                            ),
-                                            TextButton(
-                                              onPressed: () {
-                                                Database.setReset(
-                                                    controller.mailboxId);
-                                                Navigator.pop(context, 'OK');
-                                                Get.offAll(() => BottomBar(), binding: BottomBarBinding());
-                                              },
-                                              child: const Text(
-                                                'OK',
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.red,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ));
-                                  },
-                                ),
-                              ),
-                              const Divider(height: 1),
-                              ListTile(
-                                title: const Text(''),
-                                leading: ElevatedButton(
                                   // style: ElevatedButton.styleFrom(
                                   //     primary: Colors.red,
                                   //     minimumSize: const Size(150, 36)),
@@ -609,7 +549,7 @@ class MailboxDetail extends StatelessWidget {
                                             ),
                                           ),
                                           content: const Text(
-                                              'Schránka sa odstráni sa z tohto účtu. Ozaj chcete pokračovať?'),
+                                              'Schránka sa odstráni z tohto účtu. Ozaj chcete pokračovať?'),
                                           actions: <Widget>[
                                             TextButton(
                                               onPressed: () =>

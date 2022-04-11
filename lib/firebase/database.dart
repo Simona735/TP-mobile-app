@@ -68,7 +68,6 @@ class Database {
       'UCI': 7000000,
       'UEC': 4,
       'UT': 0.1,
-      'reset': false,
       'low_power': true,
       'notif_empty': true,
       'notif_full': true,
@@ -79,15 +78,6 @@ class Database {
     });
     // listenToAllNotifications('mailbox' + mailboxId, 'Schránka ' + mailboxId);
     return 'mailbox' + mailboxId;
-  }
-
-  static void setReset(String mailboxId) {
-    _messagesRef
-        .child((Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
-        .update({
-      'reset': true,
-    });
-    _mailboxes[mailboxId]!.settings.reset = true;
   }
 
   static Future<Map<String, Mailbox>> getMailboxes() async {
@@ -147,14 +137,6 @@ class Database {
       data = Settings.fromJson(detail);
     }
     return data;
-  }
-
-  static void updateLimit(String mailboxId, int limit) {
-      _messagesRef.child(
-          (Authentication.getUserId ?? '') + '/' + mailboxId + '/settings/')
-          .update({
-      'limit': limit,
-    });
   }
 
   static void updateLowPower(String mailboxId, bool value) {
