@@ -45,7 +45,7 @@ class DeviceScreen extends StatelessWidget {
                 case BluetoothDeviceState.disconnected:
                   onPressed = () async {
                     try {
-                      await device.connect(autoConnect: true);
+                      await device.connect(autoConnect: false);
                     } catch (e) {
                       device.disconnect();
                       developer.log(e.toString());
@@ -100,9 +100,6 @@ class DeviceScreen extends StatelessWidget {
                       }
                     }
                     List<BluetoothService> services = await device.discoverServices();
-                    if (services.length != 3){
-                      developer.log("not enough services");
-                    }
                     var characteristic = services[2].characteristics[0];
                     showDialog(
                         context: context,
@@ -110,8 +107,8 @@ class DeviceScreen extends StatelessWidget {
                           title: const Text("Zariadenie sa resetuje."),
                           actions: <Widget>[
                             TextButton(
-                              onPressed: () async{
-                                await characteristic.write(utf8.encode(
+                              onPressed: () {
+                                characteristic.write(utf8.encode(
                                     "+FRST;0")
                                 );
                                 Get.offAll(() => BottomBar(), binding: BottomBarBinding());
@@ -176,7 +173,8 @@ class DeviceScreen extends StatelessWidget {
                           ),
                           ElevatedButton(
                             onPressed: () async {
-                              var mailboxCount = int.parse(Database.getMailboxIter() as String);
+                              var mailboxCountStr = await Database.getMailboxIter();
+                              var mailboxCount = int.parse(mailboxCountStr);
                               if (mailboxCount >= 30){
                                 showDialog(
                                     context: context,
@@ -190,8 +188,7 @@ class DeviceScreen extends StatelessWidget {
                                               onPressed: () {
                                                 Get.offAll(() => BottomBar(), binding: BottomBarBinding());
                                               },
-                                              child: const Text(
-                                                  'OK'),
+                                              child: const Text('OK'),
                                             ),
                                           ],
                                         )
@@ -204,8 +201,7 @@ class DeviceScreen extends StatelessWidget {
                                   } catch (e) {
                                     developer.log(e.toString());
                                   }
-                                }
-                                developer.log(actualState.toString());
+                                };
                                 List<BluetoothService> services = await device
                                     .discoverServices();
                                 if (services.length != 3) {
@@ -214,8 +210,7 @@ class DeviceScreen extends StatelessWidget {
                                 var characteristics = services[2]
                                     .characteristics;
                                 for (BluetoothCharacteristic c in characteristics) {
-                                  List<int> value = await c.read();
-                                  developer.log(value.toString());
+                                  await c.read();
                                 }
                                 showDialog(
                                     context: context,
@@ -309,15 +304,11 @@ class DeviceScreen extends StatelessWidget {
                                                                 onPressed: () {
                                                                   device
                                                                       .disconnect();
-                                                                  Get
-                                                                      .offAll(() =>
-                                                                      MailboxDetail(),
-                                                                      arguments: {
-                                                                        'mailboxId': mailboxId
-                                                                      });
-                                                                  // Get.to(() => const MailboxDetail(),
-                                                                  //     arguments: {'mailboxId': mailboxId},
-                                                                  //     transition: Transition.leftToRight);
+                                                                  Get.back();
+                                                                  Get.back();
+                                                                  Get.back();
+                                                                  Get.to(() => MailboxDetail(),
+                                                                      arguments: {'mailboxId': mailboxId});
                                                                 },
                                                                 child: const Text(
                                                                     'OK'),

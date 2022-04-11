@@ -29,7 +29,7 @@ class FindDevicesScreen extends StatelessWidget {
                         style: const TextStyle(fontSize: 20),
                       ),
                       onTap: () async {
-                          await result.device.connect();
+                          await result.device.connect(autoConnect: false);
                           result.device.requestMtu(512);
                           Get.to(() => DeviceScreen(device: result.device), transition: Transition.leftToRight);
                       }
@@ -58,8 +58,15 @@ class FindDevicesScreen extends StatelessWidget {
             return FloatingActionButton(
                 child: const Icon(Icons.search),
                 backgroundColor: Colors.blue,
-                onPressed: () => FlutterBlue.instance
-                    .startScan(timeout: const Duration(seconds: 6)));
+                onPressed: () {
+                    FlutterBlue.instance.startScan(timeout: const Duration(seconds: 6));
+                    FlutterBlue.instance.scanResults.listen((results) {
+                      for (ScanResult r in results) {
+                        r.device.disconnect();
+                      }
+                    });
+                }
+            );
           }
         },
       ),
