@@ -249,66 +249,19 @@ class DeviceScreen extends StatelessWidget {
                                           actions: <Widget>[
                                             TextButton(
                                               onPressed: () async {
-                                                var characteristic = services[2]
-                                                    .characteristics[0];
-                                                await characteristic.write(
-                                                    utf8.encode(
-                                                        "WS;" +
-                                                            wifiNameController
-                                                                .text.trim())
-                                                );
-                                                await characteristic.write(
-                                                    utf8.encode(
-                                                        "WP;" +
-                                                            wifiPasswordController
-                                                                .text)
-                                                );
-                                                await characteristic.write(
-                                                    utf8.encode(
-                                                        "FBP;" +
-                                                            userPasswordController
-                                                                .text)
-                                                );
-                                                await characteristic.write(
-                                                    utf8.encode(
-                                                        "FBM;" + (Authentication
-                                                            .getUserEmail ??
-                                                            '-'))
-                                                );
-                                                await characteristic.write(
-                                                    utf8.encode(
-                                                        "FBU;" + (Authentication
-                                                            .getUserId ?? '-'))
-                                                );
-                                                await characteristic.read();
-                                                String mailboxId = await Database
-                                                    .createMailbox();
-                                                await characteristic.write(
-                                                    utf8.encode(
-                                                        "FBI;" + mailboxId)
-                                                );
-                                                characteristic.write(
-                                                    utf8.encode(
-                                                        "+CONF;0"),
-                                                    withoutResponse: true
-                                                ).then((value) {
+                                                var isVerified = await Authentication.verifyUser(userPasswordController.text);
+                                                if (!isVerified){
                                                   showDialog(
                                                       context: context,
                                                       builder: (
                                                           BuildContext context) =>
                                                           AlertDialog(
                                                             title: const Text(
-                                                                "Zariadenie sa pokúsi pripojiť k sieti. "),
+                                                                "Nesprávne heslo."),
                                                             actions: <Widget>[
                                                               TextButton(
                                                                 onPressed: () {
-                                                                  device
-                                                                      .disconnect();
                                                                   Get.back();
-                                                                  Get.back();
-                                                                  Get.back();
-                                                                  Get.to(() => MailboxDetail(),
-                                                                      arguments: {'mailboxId': mailboxId});
                                                                 },
                                                                 child: const Text(
                                                                     'OK'),
@@ -316,7 +269,76 @@ class DeviceScreen extends StatelessWidget {
                                                             ],
                                                           )
                                                   );
-                                                });
+                                                }else{
+                                                  var characteristic = services[2]
+                                                      .characteristics[0];
+                                                  await characteristic.write(
+                                                      utf8.encode(
+                                                          "WS;" +
+                                                              wifiNameController
+                                                                  .text.trim())
+                                                  );
+                                                  await characteristic.write(
+                                                      utf8.encode(
+                                                          "WP;" +
+                                                              wifiPasswordController
+                                                                  .text)
+                                                  );
+                                                  await characteristic.write(
+                                                      utf8.encode(
+                                                          "FBP;" +
+                                                              userPasswordController
+                                                                  .text)
+                                                  );
+                                                  await characteristic.write(
+                                                      utf8.encode(
+                                                          "FBM;" + (Authentication
+                                                              .getUserEmail ??
+                                                              '-'))
+                                                  );
+                                                  await characteristic.write(
+                                                      utf8.encode(
+                                                          "FBU;" + (Authentication
+                                                              .getUserId ?? '-'))
+                                                  );
+                                                  await characteristic.read();
+                                                  String mailboxId = await Database
+                                                      .createMailbox();
+                                                  await characteristic.write(
+                                                      utf8.encode(
+                                                          "FBI;" + mailboxId)
+                                                  );
+                                                  characteristic.write(
+                                                      utf8.encode(
+                                                          "+CONF;0"),
+                                                      withoutResponse: true
+                                                  ).then((value) {
+                                                    showDialog(
+                                                        context: context,
+                                                        builder: (
+                                                            BuildContext context) =>
+                                                            AlertDialog(
+                                                              title: const Text(
+                                                                  "Zariadenie sa pokúsi pripojiť k sieti. "),
+                                                              actions: <Widget>[
+                                                                TextButton(
+                                                                  onPressed: () {
+                                                                    device
+                                                                        .disconnect();
+                                                                    Get.back();
+                                                                    Get.back();
+                                                                    Get.back();
+                                                                    Get.to(() => MailboxDetail(),
+                                                                        arguments: {'mailboxId': mailboxId});
+                                                                  },
+                                                                  child: const Text(
+                                                                      'OK'),
+                                                                ),
+                                                              ],
+                                                            )
+                                                    );
+                                                  });
+                                                }
                                               },
                                               child: const Text('Pripojiť'),
                                             ),
