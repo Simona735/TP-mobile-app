@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart'; // new
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'dart:developer' as developer;
 
 class Authentication{
   static FirebaseAuth firebaseAuth = FirebaseAuth.instance;
@@ -99,16 +100,16 @@ class Authentication{
         password: password
     );
     try {
-      user!.reauthenticateWithCredential(cred).then((value) {
-        return Future.value(true);
-      });
+      await user!.reauthenticateWithCredential(cred);
+      return Future.value(true);
     } on FirebaseAuthException catch (e) {
-      print(e);
-      return Future.value(false);
+      if (e.code == 'wrong-password') {
+        return Future.value(false);
+      }
     } catch (e) {
       print(e);
     }
-    return Future.value(false);
+    return false;
   }
 
   static Future<String> changePassword(String currentPassword, String newPassword) async {
@@ -118,11 +119,10 @@ class Authentication{
         password: currentPassword
     );
     try {
-      user!.reauthenticateWithCredential(cred).then((value) {
-        user.updatePassword(newPassword).then((_) {
-          return Future.value('OK');
-        });
+      await user!.reauthenticateWithCredential(cred).then((value) async {
+        await user.updatePassword(newPassword);
       });
+      return Future.value('OK');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return Future.value('Slabé heslo');
@@ -132,6 +132,8 @@ class Authentication{
         return Future.value('Chyba siete');
       } else if(e.code == 'unknown'){
         return Future.value('Neznáma chyba');
+      } else if(e.code == 'wrong-password'){
+        return Future.value('Nesprávne heslo');
       }
     } catch (e) {
       print(e);
