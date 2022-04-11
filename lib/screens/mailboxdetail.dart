@@ -457,10 +457,8 @@ class MailboxDetail extends StatelessWidget {
                                 title: const Text(''),
                                 leading: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    onPrimary: Colors.red,
-                                    primary: const Color(0xfffafafa),
+                                    primary: Colors.red,
                                     minimumSize: const Size(150, 36),
-                                    side: const BorderSide( color: Colors.red, width: 1),
                                   ),
                                   child: const Text('Reset nastavení'),
                                   onPressed: () {
@@ -520,10 +518,8 @@ class MailboxDetail extends StatelessWidget {
                                 title: const Text(''),
                                 leading: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    onPrimary: Colors.red,
-                                    primary: const Color(0xfffafafa),
+                                    primary: Colors.red,
                                     minimumSize: const Size(150, 36),
-                                    side: const BorderSide( color: Colors.red, width: 1),
                                   ),
                                   child: const Text('Reset schránky'),
                                   onPressed: () {
@@ -585,10 +581,8 @@ class MailboxDetail extends StatelessWidget {
                                   //     primary: Colors.red,
                                   //     minimumSize: const Size(150, 36)),
                                   style: ElevatedButton.styleFrom(
-                                    onPrimary: Colors.red,
-                                    primary: const Color(0xfffafafa),
+                                    primary: Colors.red,
                                     minimumSize: const Size(150, 36),
-                                    side: const BorderSide( color: Colors.red, width: 1),
                                   ),
                                   child: const Text('Zmazať schránku'),
                                   onPressed: () {
