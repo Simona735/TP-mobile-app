@@ -104,13 +104,15 @@ class PasswordChangePage extends StatelessWidget {
                           title: const Text('Heslo bolo zmenené'),
                           actions: <Widget>[
                             TextButton(
-                              onPressed: () => Get.back(),
+                              onPressed: () {
+                                Get.back();
+                                Get.back();
+                                },
                               child: const Text('OK'),
                             ),
                           ],
                         )
                     );
-                    Get.back();
                   }else{
                     controller.oldPasswordController.clear();
                     controller.newPassword1Controller.clear();
