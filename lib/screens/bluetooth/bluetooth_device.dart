@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:tp_mobile_app/bindings/bottom_bar_binding.dart';
 import 'package:tp_mobile_app/controllers/ble_wifi_password_controller.dart';
 import 'package:tp_mobile_app/controllers/login_controller.dart';
 import 'package:tp_mobile_app/firebase/authentication.dart';
@@ -7,6 +8,7 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 import 'package:tp_mobile_app/firebase/database.dart';
 import 'package:get/get.dart';
+import 'package:tp_mobile_app/widgets/bottombar.dart';
 
 import '../mailboxdetail.dart';
 
@@ -43,7 +45,7 @@ class DeviceScreen extends StatelessWidget {
                 case BluetoothDeviceState.disconnected:
                   onPressed = () async {
                     try {
-                      await device.connect(autoConnect: true);
+                      await device.connect(autoConnect: false);
                     } catch (e) {
                       device.disconnect();
                       developer.log(e.toString());
@@ -83,6 +85,40 @@ class DeviceScreen extends StatelessWidget {
                     : const Icon(Icons.bluetooth_disabled, color: Colors.redAccent,),
                 title: Text(
                     'Zariadenie je ' + (snapshot.data.toString().split('.')[1] == 'connected' ? 'pripojené' : 'odpojené')
+                ),
+                trailing: ElevatedButton(
+                  child: const Text("Reset"),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.red,
+                  ),
+                  onPressed: () async {
+                    if (actualState == BluetoothDeviceState.disconnected){
+                      try {
+                        await device.connect();
+                      } catch(e) {
+                        developer.log(e.toString());
+                      }
+                    }
+                    List<BluetoothService> services = await device.discoverServices();
+                    var characteristic = services[2].characteristics[0];
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: const Text("Zariadenie sa resetuje."),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                characteristic.write(utf8.encode(
+                                    "+FRST;0")
+                                );
+                                Get.offAll(() => BottomBar(), binding: BottomBarBinding());
+                              },
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        )
+                    );
+                  },
                 ),
               ),
             ),
@@ -137,99 +173,157 @@ class DeviceScreen extends StatelessWidget {
                           ),
                           ElevatedButton(
                             onPressed: () async {
-                              if (actualState == BluetoothDeviceState.disconnected){
-                                try {
-                                  await device.connect();
-                                } catch(e) {
-                                  developer.log(e.toString());
-                                }
-                              }
-                              developer.log(actualState.toString());
-                              List<BluetoothService> services = await device.discoverServices();
-                              if (services.length != 3){
-                                developer.log("not enough services");
-                              }
-                              var characteristics = services[2].characteristics;
-                              for(BluetoothCharacteristic c in characteristics) {
-                                List<int> value = await c.read();
-                                developer.log(value.toString());
-                              }
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) => AlertDialog(
-                                  title: const Text('Pre overenie vyplň svoje heslo.'),
-                                  content: Obx(
-                                        () => TextField(
-                                            controller: userPasswordController,
-                                            obscureText: controllerFirebase.showPassword.value,
-                                            decoration: InputDecoration(
-                                              border: const OutlineInputBorder(),
-                                              labelText: 'Heslo',
-                                              suffixIcon: IconButton(
-                                                onPressed: () {
-                                                  controllerFirebase.showPassword.value =
-                                                  !controllerFirebase.showPassword.value;
-                                                },
-                                                icon: Icon(controllerFirebase.showPassword.value
-                                                    ? Icons.visibility
-                                                    : Icons.visibility_off),
-                                              ),
+                              var mailboxCountStr = await Database.getMailboxIter();
+                              var mailboxCount = int.parse(mailboxCountStr);
+                              if (mailboxCount >= 30){
+                                showDialog(
+                                    context: context,
+                                    builder: (
+                                        BuildContext context) =>
+                                        AlertDialog(
+                                          title: const Text(
+                                              "Bol prekročený limit schránok. Pred pridaním novej schránky najprv nejakú odstráňte."),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              onPressed: () {
+                                                Get.offAll(() => BottomBar(), binding: BottomBarBinding());
+                                              },
+                                              child: const Text('OK'),
                                             ),
-                                          ),
-                                  ),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () async {
-                                        //TODO loading indicator (optional)
-                                        var characteristic = services[2].characteristics[0];
-                                        await characteristic.write(utf8.encode(
-                                            "WS;" + wifiNameController.text.trim())
-                                        );
-                                        await characteristic.write(utf8.encode(
-                                            "WP;" + wifiPasswordController.text)
-                                        );
-                                        await characteristic.write(utf8.encode(
-                                            "FBP;" + userPasswordController.text)
-                                        );
-                                        await characteristic.write(utf8.encode(
-                                            "FBM;" + (Authentication.getUserEmail ?? '-'))
-                                        );
-                                        await characteristic.write(utf8.encode(
-                                            "FBU;" + (Authentication.getUserId ?? '-'))
-                                        );
-                                        await characteristic.read();
-                                        String mailboxId = await Database.createMailbox();
-                                        await characteristic.write(utf8.encode(
-                                            "FBI;" + mailboxId)
-                                        );
-                                        characteristic.write(utf8.encode(
-                                            "+CONF;0"), withoutResponse: true
-                                        ).then((value) {
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) => AlertDialog(
-                                              title: const Text("Zariadenie sa pokúsi pripojiť k sieti. "),
-                                              actions: <Widget>[
-                                                TextButton(
-                                                  onPressed: () {
-                                                    device.disconnect();
-                                                    Get.offAll(() => MailboxDetail(), arguments: {'mailboxId': mailboxId});
-                                                    // Get.to(() => const MailboxDetail(),
-                                                    //     arguments: {'mailboxId': mailboxId},
-                                                    //     transition: Transition.leftToRight);
-                                                  },
-                                                  child: const Text('OK'),
+                                          ],
+                                        )
+                                );
+                              }else {
+                                if (actualState ==
+                                    BluetoothDeviceState.disconnected) {
+                                  try {
+                                    await device.connect();
+                                  } catch (e) {
+                                    developer.log(e.toString());
+                                  }
+                                };
+                                List<BluetoothService> services = await device
+                                    .discoverServices();
+                                if (services.length != 3) {
+                                  developer.log("not enough services");
+                                }
+                                var characteristics = services[2]
+                                    .characteristics;
+                                for (BluetoothCharacteristic c in characteristics) {
+                                  await c.read();
+                                }
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        AlertDialog(
+                                          title: const Text(
+                                              'Pre overenie vyplň svoje heslo.'),
+                                          content: Obx(
+                                                () =>
+                                                TextField(
+                                                  controller: userPasswordController,
+                                                  obscureText: controllerFirebase
+                                                      .showPassword.value,
+                                                  decoration: InputDecoration(
+                                                    border: const OutlineInputBorder(),
+                                                    labelText: 'Heslo',
+                                                    suffixIcon: IconButton(
+                                                      onPressed: () {
+                                                        controllerFirebase
+                                                            .showPassword
+                                                            .value =
+                                                        !controllerFirebase
+                                                            .showPassword.value;
+                                                      },
+                                                      icon: Icon(
+                                                          controllerFirebase
+                                                              .showPassword
+                                                              .value
+                                                              ? Icons.visibility
+                                                              : Icons
+                                                              .visibility_off),
+                                                    ),
+                                                  ),
                                                 ),
-                                              ],
-                                            )
-                                          );
-                                        });
-                                      },
-                                      child: const Text('Pripojiť'),
-                                    ),
-                                  ],
-                                )
-                              );
+                                          ),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              onPressed: () async {
+                                                var characteristic = services[2]
+                                                    .characteristics[0];
+                                                await characteristic.write(
+                                                    utf8.encode(
+                                                        "WS;" +
+                                                            wifiNameController
+                                                                .text.trim())
+                                                );
+                                                await characteristic.write(
+                                                    utf8.encode(
+                                                        "WP;" +
+                                                            wifiPasswordController
+                                                                .text)
+                                                );
+                                                await characteristic.write(
+                                                    utf8.encode(
+                                                        "FBP;" +
+                                                            userPasswordController
+                                                                .text)
+                                                );
+                                                await characteristic.write(
+                                                    utf8.encode(
+                                                        "FBM;" + (Authentication
+                                                            .getUserEmail ??
+                                                            '-'))
+                                                );
+                                                await characteristic.write(
+                                                    utf8.encode(
+                                                        "FBU;" + (Authentication
+                                                            .getUserId ?? '-'))
+                                                );
+                                                await characteristic.read();
+                                                String mailboxId = await Database
+                                                    .createMailbox();
+                                                await characteristic.write(
+                                                    utf8.encode(
+                                                        "FBI;" + mailboxId)
+                                                );
+                                                characteristic.write(
+                                                    utf8.encode(
+                                                        "+CONF;0"),
+                                                    withoutResponse: true
+                                                ).then((value) {
+                                                  showDialog(
+                                                      context: context,
+                                                      builder: (
+                                                          BuildContext context) =>
+                                                          AlertDialog(
+                                                            title: const Text(
+                                                                "Zariadenie sa pokúsi pripojiť k sieti. "),
+                                                            actions: <Widget>[
+                                                              TextButton(
+                                                                onPressed: () {
+                                                                  device
+                                                                      .disconnect();
+                                                                  Get.back();
+                                                                  Get.back();
+                                                                  Get.back();
+                                                                  Get.to(() => MailboxDetail(),
+                                                                      arguments: {'mailboxId': mailboxId});
+                                                                },
+                                                                child: const Text(
+                                                                    'OK'),
+                                                              ),
+                                                            ],
+                                                          )
+                                                  );
+                                                });
+                                              },
+                                              child: const Text('Pripojiť'),
+                                            ),
+                                          ],
+                                        )
+                                );
+                              }
                             },
                             child: const Text("Potvrdiť"),
                           ),

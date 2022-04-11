@@ -24,7 +24,7 @@ class LoginPage extends StatelessWidget {
     final controller = Get.put(LoginController());
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Login"),
+        title: const Text("Prihlásenie"),
       ),
       resizeToAvoidBottomInset: true,
       body: ListView(
