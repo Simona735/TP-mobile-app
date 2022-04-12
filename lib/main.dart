@@ -34,7 +34,7 @@ void main() async {
         channelKey: 'key1',
         channelName: 'Mailbox app',
         channelDescription: 'Test',
-        defaultColor: const Color(0xff9050dd),
+        defaultColor: const Color(0xffb0a700),
         enableLights: true,
         enableVibration: true,
       ),
