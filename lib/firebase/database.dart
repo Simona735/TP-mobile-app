@@ -68,6 +68,7 @@ class Database {
       'UCI': 7000000,
       'UEC': 4,
       'UT': 0.1,
+      'UECI': 500,
       'low_power': true,
       'notif_empty': true,
       'notif_full': true,
