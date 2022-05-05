@@ -35,7 +35,7 @@ class MailboxDetail extends StatelessWidget {
             controller.updateMailboxDetail();
             return FutureBuilder<Settings>(
               future: controller.futureMailbox,
-              initialData: Settings(false, "", true, true, true, 7, 4, 500, 0.1, "Prázdna schránka", DateTime.now().millisecondsSinceEpoch),
+              initialData: Settings(false, "", true, true, true, 300, 4, 500, 0.1, "Prázdna schránka", DateTime.now().millisecondsSinceEpoch),
               builder: (BuildContext context, AsyncSnapshot<Settings> snapshot) {
                 if (snapshot.hasError) {
                   return Center(
@@ -180,7 +180,7 @@ class MailboxDetail extends StatelessWidget {
                                             bottom: 6.0,
                                           ),
                                           child: Text(
-                                            "Časvoý interval medzi kontralmi schránky. Od 5 sekúnd až po 300 sekúnd (5 minút)",
+                                            "Časvoý interval medzi kontralmi schránky. Od 30 sekúnd až po 3600 sekúnd (1 hodina)",
                                           ),
                                         ),
                                         Obx(() => Slider(
@@ -189,8 +189,8 @@ class MailboxDetail extends StatelessWidget {
                                             controller.mailbox.UCI = value.round();
                                             controller.updateMailbox();
                                           },
-                                          min: 5000000,
-                                          max: 300000000,
+                                          min: 30000000,
+                                          max: 3600000000,
                                           activeColor: Colors.yellow,
                                           inactiveColor: Colors.yellow[100],
                                           label: (controller.mailbox.UCI / 1000000).round().toString(),

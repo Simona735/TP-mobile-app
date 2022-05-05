@@ -21,7 +21,7 @@ class Settings{
         _notif_full = true,
         _notif_new = true,
         _notif_empty = true,
-        _UCI = 7,
+        _UCI = 300,
         _UEC = 4,
         _UECI = 500,
         _UT = 0.1,

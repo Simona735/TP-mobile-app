@@ -65,7 +65,7 @@ class Database {
             mailboxId +
             '/settings/')
         .set({
-      'UCI': 7000000,
+      'UCI': 300000000,
       'UEC': 4,
       'UT': 0.1,
       'UECI': 500,
